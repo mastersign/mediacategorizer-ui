@@ -1,8 +1,25 @@
-﻿<Application x:Class="de.fhb.oll.mediacategorizer.App"
+﻿<Application
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="de.fhb.oll.mediacategorizer.App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <Style x:Key="CleanMenuStyle" TargetType="Menu">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="White" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="BrightWindowStyle" TargetType="Window">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="White" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Application.Resources>
 </Application>
