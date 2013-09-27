@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaCategorizer", "MediaCategorizer.csproj", "{BA1ACDF4-C963-4512-9EE7-E214814099DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaCategorizer", "MediaCategorizer.csproj", "{B4759E0C-90F4-4F6A-938B-63932AD5D8EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BA1ACDF4-C963-4512-9EE7-E214814099DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA1ACDF4-C963-4512-9EE7-E214814099DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA1ACDF4-C963-4512-9EE7-E214814099DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA1ACDF4-C963-4512-9EE7-E214814099DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4759E0C-90F4-4F6A-938B-63932AD5D8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4759E0C-90F4-4F6A-938B-63932AD5D8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4759E0C-90F4-4F6A-938B-63932AD5D8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4759E0C-90F4-4F6A-938B-63932AD5D8EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

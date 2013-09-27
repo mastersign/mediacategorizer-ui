@@ -22,23 +22,5 @@ namespace de.fhb.oll.mediacategorizer.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tools\\distillery\\distillery.jar")]
-        public string DistilleryPath {
-            get {
-                return ((string)(this["DistilleryPath"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tools\\transcripter\\transcripter.exe")]
-        public string TranscripterPath {
-            get {
-                return ((string)(this["TranscripterPath"]));
-            }
-        }
     }
 }

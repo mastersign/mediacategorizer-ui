@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using System.Windows;
 
 namespace de.fhb.oll.mediacategorizer
 {
-    public partial class MainForm : Form
+    /// <summary>
+    /// Interaktionslogik für MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
-        public MainForm()
+        public MainWindow()
         {
             InitializeComponent();
         }
