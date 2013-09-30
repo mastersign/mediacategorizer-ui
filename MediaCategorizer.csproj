@@ -94,6 +94,18 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="model\Category.cs" />
+    <Compile Include="model\CategoryResource.cs" />
+    <Compile Include="model\CategoryResourceType.cs" />
+    <Compile Include="model\CloudParameter.cs" />
+    <Compile Include="model\CloudPrecision.cs" />
+    <Compile Include="model\ColorRGB.cs" />
+    <Compile Include="model\ColorRGBA.cs" />
+    <Compile Include="model\Configuration.cs" />
+    <Compile Include="model\FilterParameter.cs" />
+    <Compile Include="model\Media.cs" />
+    <Compile Include="model\ModelBase.cs" />
+    <Compile Include="model\Project.cs" />
     <Compile Include="PageCategories.xaml.cs">
       <DependentUpon>PageCategories.xaml</DependentUpon>
     </Compile>
