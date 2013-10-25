@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Scaleton" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="KIND_OF_TYPE">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Class" />
+      <xs:enumeration value="Struct" />
+      <xs:enumeration value="Interface" />
+      <xs:enumeration value="Enum" />
+      <xs:enumeration value="Delegate" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="COLLECTION_TYPE">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BindingList" />
+      <xs:enumeration value="ObservableCollection" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="FEATURE_EQUATABLE">
+    <xs:attribute name="overrideOperators" type="xs:boolean" default="false" use="optional" />
+  </xs:complexType>
+
+  <xs:simpleType name="FEATURE_CHANGE_TRACKING_LEVEL">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Notification" />
+      <xs:enumeration value="Tracking" />
+      <xs:enumeration value="Revertible" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="FEATURE_CHANGE_TRACKING">
+    <xs:attribute name="level" type="FEATURE_CHANGE_TRACKING_LEVEL" default="Notification" use="optional" />
+    <xs:attribute name="collectionType" type="COLLECTION_TYPE" default="ObservableCollection" use="optional" />
+    <xs:attribute name="escalateChangeState" type="xs:boolean" default="false" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="MODEL_FEATURES">
+    <xs:all>
+      <xs:element name="ToString" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Equatable" minOccurs="0" maxOccurs="1" type="FEATURE_EQUATABLE" />
+      <xs:element name="Comparable" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ChangeTracking" minOccurs="0" maxOccurs="1" type="FEATURE_CHANGE_TRACKING" />
+      <xs:element name="Cloneable" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="DOCUMENTATION" mixed="true">
+    <xs:sequence>
+      <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ENUM_MEMBER">
+    <xs:sequence>
+      <xs:element name="Doc" type="DOCUMENTATION" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:Name" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="CLASS_PROPERTY">
+    <xs:sequence>
+      <xs:element name="Doc" type="DOCUMENTATION" minOccurs="0" maxOccurs="1" />
+      <xs:element name="DefaultValue" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:Name" use="required" />
+    <xs:attribute name="type" type="xs:string" default="string" use="optional" />
+    <xs:attribute name="isCollection" type="xs:boolean" default="false" use="optional" />
+    <xs:attribute name="defaultInitialization" type="xs:boolean" default="true" use="optional" />
+  </xs:complexType>
+
+  <xs:element name="Model">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Namespace" type="xs:string" minOccurs="1" maxOccurs="1" />
+        <xs:element name="Dependencies" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Assembly" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ReferencedTypes" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="ReferencedType">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Interface" minOccurs="0" maxOccurs="unbounded" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:Name" use="required" />
+                  <xs:attribute name="name" type="xs:string" use="required" />
+                  <xs:attribute name="kind" type="KIND_OF_TYPE" use="optional" default="Class" />
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ModelFeatures" type="MODEL_FEATURES" minOccurs="0" maxOccurs="1" />
+        <xs:element name="Types" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="Class">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Doc" type="DOCUMENTATION" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="CustomInitializer" type="xs:Name" minOccurs="0" maxOccurs="1" />
+                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                      <xs:element name="Property" type="CLASS_PROPERTY" />
+                    </xs:choice>
+                    <xs:element name="EqualityMembers" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Property" type="xs:Name" minOccurs="1" maxOccurs="unbounded" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:Name" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Enum">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Doc" type="DOCUMENTATION" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="Member" type="ENUM_MEMBER" minOccurs="1" maxOccurs="unbounded" />
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:Name" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

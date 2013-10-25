@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../Scaleton/Scaleton.xsd">
+  
+  <Namespace>de.fhb.oll.mediacategorizer.model</Namespace>
+  
+  <ReferencedTypes></ReferencedTypes>
+  
+  <ModelFeatures>
+    <ToString />
+    <Equatable />
+    <ChangeTracking level="Tracking" />
+  </ModelFeatures>
+  
+  <Types>
+    <Class name="Project">
+      <CustomInitializer>Initialize</CustomInitializer>
+      <Property name="Name">
+        <DefaultValue>No Name</DefaultValue>
+      </Property>
+      <Property name="Description">
+        <DefaultValue>No Description</DefaultValue>
+      </Property>
+      
+      <Property name="OutputDir" type="string">
+        <DefaultValue>output</DefaultValue>
+      </Property>
+
+      <Property name="Configuration" type="Configuration" />
+      <Property name="Categories" type="Category" isCollection="true" />
+      <Property name="Media" type="Media" isCollection="true" />
+    </Class>
+    
+    <Class name="Configuration">
+      <Property name="MinConfidence" type="float">
+        <DefaultValue>0.4</DefaultValue>
+      </Property>
+      <Property name="GoodConfidence" type="float">
+        <DefaultValue>0.7</DefaultValue>
+      </Property>
+      <Property name="MinRelativeAppearance" type="float">
+        <DefaultValue>0.25</DefaultValue>
+      </Property>
+      <Property name="MinMatchScore" type="float">
+        <DefaultValue>0.0</DefaultValue>
+      </Property>
+
+      <Property name="IndexFilter" type="FilterParameter" />
+
+      <Property name="MainCloud" type="CloudParameter" />
+      <Property name="MediaCloud" type="CloudParameter" />
+      <Property name="CategoryCloud" type="CloudParameter" />
+
+      <Property name="ParallelProc" type="bool">
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="SkipWordClouds" type="bool">
+        <DefaultValue>false</DefaultValue>
+      </Property>
+      <Property name="SkipWordIncludes" type="bool">
+        <DefaultValue>false</DefaultValue>
+      </Property>
+      <Property name="SkipMatchIncludes" type="bool">
+        <DefaultValue>false</DefaultValue>
+      </Property>
+      <Property name="SkipMediaCopy" type="bool">
+        <DefaultValue>false</DefaultValue>
+      </Property>
+    </Class>
+
+    <Class name="FilterParameter">
+      <Property name="BlacklistResource" type="string">
+        <DefaultValue>top10000de.txt</DefaultValue>
+      </Property>
+      <Property name="BlacklistMaxSize" type="int">
+        <DefaultValue>2000</DefaultValue>
+      </Property>
+      
+      <Property name="FilterNotShort" type="bool">
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="FilterNoun" type="bool">
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="FilterMinConfidence" type="bool">
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="FilterGoodConfidence" type="bool">
+        <DefaultValue>false</DefaultValue>
+      </Property>
+      <Property name="FilterNoPunctuation" type="bool">
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="FilterNotInBlacklist" type="bool">
+        <DefaultValue>true</DefaultValue>
+      </Property>
+    </Class>
+
+    <Enum name="CloudPrecision">
+      <Member name="Low" />
+      <Member name="Medium" />
+      <Member name="High" />
+    </Enum>
+
+    <Class name="ColorRGBA">
+      <Property name="R" type="float">
+        <DefaultValue>0.0</DefaultValue>
+      </Property>
+      <Property name="G" type="float">
+        <DefaultValue>0.5</DefaultValue>
+      </Property>
+      <Property name="B" type="float">
+        <DefaultValue>1.0</DefaultValue>
+      </Property>
+      <Property name="A" type="float">
+        <DefaultValue>1.0</DefaultValue>
+      </Property>
+    </Class>
+
+    <Class name="CloudParameter">
+      <CustomInitializer>Initialize</CustomInitializer>
+      
+      <Property name="Width" type="int">
+        <DefaultValue>640</DefaultValue>
+      </Property>
+      <Property name="Height" type="int">
+        <DefaultValue>480</DefaultValue>
+      </Property>
+      
+      <Property name="Precision" type="CloudPrecision">
+        <DefaultValue>Medium</DefaultValue>
+      </Property>
+      <Property name="OrderPriority" type="float">
+        <DefaultValue>0.6</DefaultValue>
+      </Property>
+      
+      <Property name="FontFamily" type="string">
+        <DefaultValue>Arial</DefaultValue>
+      </Property>
+      <Property name="FontBold" type="bool">
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="FontItalic" type="bool">
+        <DefaultValue>false</DefaultValue>
+      </Property>
+      <Property name="MinFontSize" type="float">
+        <DefaultValue>13.0</DefaultValue>
+      </Property>
+      <Property name="MaxFontSize" type="float">
+        <DefaultValue>80.0</DefaultValue>
+      </Property>
+
+      <Property name="Color" type="ColorRGBA" />
+      <Property name="BackgroundColor" type="ColorRGBA" />
+    </Class>
+    
+    <Enum name="CategoryResourceType">
+      <Member name="Plain" />
+      <Member name="Html" />
+      <Member name="Wikipedia" />
+    </Enum>
+
+    <Class name="CategoryResource">
+      <Property name="Type" type="CategoryResourceType">
+        <DefaultValue>Plain</DefaultValue>
+      </Property>
+      <Property name="Url" type="string">
+        <DefaultValue>null</DefaultValue>
+      </Property>
+    </Class>
+
+    <Class name="Category">
+      <Property name="Id">
+        <DefaultValue>_empty_</DefaultValue>
+      </Property>
+      <Property name="Name">
+        <DefaultValue>No Name</DefaultValue>
+      </Property>
+      
+      <Property name="Resources" type="CategoryResource" isCollection="true" />
+    </Class>
+
+    <Class name="Media">
+      <Property name="Id" />
+      <Property name="Name" />
+      <Property name="MediaFile" />
+      <Property name="AudioFile" />
+      <Property name="ResultsFile" />
+      <EqualityMembers>
+        <Property>Id</Property>
+      </EqualityMembers>
+    </Class>
+  </Types>
+</Model>

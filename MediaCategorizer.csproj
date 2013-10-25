@@ -94,16 +94,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="model\Category.cs" />
-    <Compile Include="model\CategoryResource.cs" />
-    <Compile Include="model\CategoryResourceType.cs" />
     <Compile Include="model\CloudParameter.cs" />
-    <Compile Include="model\CloudPrecision.cs" />
-    <Compile Include="model\ColorRGB.cs" />
-    <Compile Include="model\ColorRGBA.cs" />
-    <Compile Include="model\Configuration.cs" />
-    <Compile Include="model\FilterParameter.cs" />
-    <Compile Include="model\Media.cs" />
+    <Compile Include="model\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\ModelBase.cs" />
     <Compile Include="model\Project.cs" />
     <Compile Include="PageCategories.xaml.cs">
@@ -138,6 +134,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="model\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -146,6 +146,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="model\Model.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
