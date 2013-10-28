@@ -9,7 +9,7 @@
   <ModelFeatures>
     <ToString />
     <Equatable />
-    <ChangeTracking level="Tracking" />
+    <ChangeTracking level="Tracking" escalateChangeState="true" propagateTransaction="true" />
   </ModelFeatures>
   
   <Types>
