@@ -18,6 +18,10 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:complexType name="FEATURE_TO_STRING">
+    <xs:attribute name="invariantDefaultCulture" type="xs:boolean" default="false" use="optional" />
+  </xs:complexType>
+
   <xs:complexType name="FEATURE_EQUATABLE">
     <xs:attribute name="overrideOperators" type="xs:boolean" default="false" use="optional" />
   </xs:complexType>
@@ -34,6 +38,7 @@
     <xs:attribute name="level" type="FEATURE_CHANGE_TRACKING_LEVEL" default="Notification" use="optional" />
     <xs:attribute name="collectionType" type="COLLECTION_TYPE" default="ObservableCollection" use="optional" />
     <xs:attribute name="escalateChangeState" type="xs:boolean" default="false" use="optional" />
+    <xs:attribute name="propagateTransaction" type="xs:boolean" default="false" use="optional" />
   </xs:complexType>
 
   <xs:complexType name="MODEL_FEATURES">
