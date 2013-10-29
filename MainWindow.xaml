@@ -15,8 +15,8 @@
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <Menu Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.ColumnSpan="2" Margin="0,2">
-            <MenuItem Header="Neues Projekt" Click="MenuNewProjectHandler"/>
-            <MenuItem Header="Projekt öffnen" Click="MenuOpenProjectHandler"/>
+            <MenuItem Header="NEUES PROJEKT" Click="MenuNewProjectHandler"/>
+            <MenuItem Header="PROJEKT ÖFFNEN" Click="MenuOpenProjectHandler"/>
         </Menu>
         <Frame x:Name="frame" Content="Frame" Grid.Row="1" Grid.Column="0" Margin="8" NavigationUIVisibility="Hidden"/>
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,8,8,8" x:Name="navigationPanel">
