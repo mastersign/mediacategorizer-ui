@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
+using de.fhb.oll.mediacategorizer.model;
 
 namespace de.fhb.oll.mediacategorizer
 {
@@ -15,13 +17,35 @@ namespace de.fhb.oll.mediacategorizer
     {
         public MainWindow()
         {
+            Project = new Project();
             InitializeComponent();
-            MyNavigate("Start");
+            GoToPage("Start");
         }
 
-        private void MyNavigate(string page)
+        public Project Project { get { return DataContext as Project; } set { DataContext = value; } }
+
+        private void GoToPage(string page)
         {
             frame.Navigate(new Uri("Page" + page + ".xaml", UriKind.Relative));
+        }
+
+        private void FrameDataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            UpdatePageDataContext();
+        }
+
+        private void FrameLoadCompleteHandler(object sender, NavigationEventArgs e)
+        {
+            UpdatePageDataContext();
+        }
+
+        private void UpdatePageDataContext()
+        {
+            var page = frame.Content as Page;
+            if (page != null)
+            {
+                page.DataContext = DataContext;
+            }
         }
 
         private void ExpanderExpandedHandler(object sender, RoutedEventArgs e)
@@ -31,18 +55,34 @@ namespace de.fhb.oll.mediacategorizer
             {
                 exp.IsExpanded = false;
             }
-            var nextPage = ((string)expander.Tag);
-            MyNavigate(nextPage);
+            var nextPage = expander.Tag as string;
+            if (nextPage != null)
+            {
+                GoToPage(nextPage);
+            }
+        }
+
+        private bool CheckProjectStateBeforeClosing(string dialogCaption)
+        {
+            return Project == null || !Project.IsChanged ||
+                   MessageBox.Show(this,
+                       "Das aktuelle Projekt wurde nicht gespeichert.\nWollen Sie es dennoch schließen?",
+                       dialogCaption, 
+                       MessageBoxButton.YesNo, MessageBoxImage.Question)
+                   == MessageBoxResult.Yes;
         }
 
         private void MenuNewProjectHandler(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(this, "NewProject", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (!CheckProjectStateBeforeClosing("Neues Projekt")) return;
+            DataContext = new Project();
         }
 
         private void MenuOpenProjectHandler(object sender, RoutedEventArgs e)
         {
+            if (!CheckProjectStateBeforeClosing("Projekt öffnen")) return;
             MessageBox.Show(this, "OpenProject", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
     }
 }

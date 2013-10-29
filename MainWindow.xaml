@@ -18,7 +18,8 @@
             <MenuItem Header="NEUES PROJEKT" Click="MenuNewProjectHandler"/>
             <MenuItem Header="PROJEKT ÖFFNEN" Click="MenuOpenProjectHandler"/>
         </Menu>
-        <Frame x:Name="frame" Content="Frame" Grid.Row="1" Grid.Column="0" Margin="8" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="frame" Content="Frame" Grid.Row="1" Grid.Column="0" Margin="8" NavigationUIVisibility="Hidden"
+               LoadCompleted="FrameLoadCompleteHandler" DataContextChanged="FrameDataContextChangedHandler"/>
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,8,8,8" x:Name="navigationPanel">
             <Expander Header="Start" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" IsExpanded="True" Tag="Start" FontWeight="Bold">
                 <TextBlock TextWrapping="Wrap" Text="Geben Sie einen Namen und eine Beschreibung für das Projekt an." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
