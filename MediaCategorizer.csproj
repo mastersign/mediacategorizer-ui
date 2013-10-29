@@ -94,6 +94,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="model\Category.cs" />
     <Compile Include="model\CloudParameter.cs" />
     <Compile Include="model\Model.cs">
       <AutoGen>True</AutoGen>
