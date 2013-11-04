@@ -10,8 +10,16 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="30"/>
+			<RowDefinition Height="2*"/>
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 		<Label Grid.Row="0" Content="Medien" Style="{StaticResource PageHeaderStyle}" />
+		<DataGrid Grid.Row="1" x:Name="mediaDataGrid" Margin="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Background="{Binding Background, ElementName=page}" ItemsSource="{Binding Media}" GridLinesVisibility="None" AutoGenerateColumns="False" SelectionMode="Extended" HeadersVisibility="Column" CanUserResizeRows="False" CanUserAddRows="True" CanUserDeleteRows="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn Binding="{Binding Id}" Header="ID" Width="1*"/>
+				<DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="2*"/>
+				<DataGridTextColumn Binding="{Binding MediaFile}" Header="Mediendatei" Width="3*"/>
+			</DataGrid.Columns>
+		</DataGrid>
 	</Grid>
 </Page>
