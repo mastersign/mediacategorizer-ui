@@ -2591,7 +2591,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 (Environment.NewLine + @"    Name = " + ((!ReferenceEquals(_name, null)) ? _name.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    MediaFile = " + ((!ReferenceEquals(_mediaFile, null)) ? _mediaFile.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    AudioFile = " + ((!ReferenceEquals(_audioFile, null)) ? _audioFile.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    ResultsFile = " + ((!ReferenceEquals(_resultsFile, null)) ? _resultsFile.ToString(formatProvider) : @"null").Replace("\n", "\n    "))));
+                (Environment.NewLine + @"    ResultsFile = " + ((!ReferenceEquals(_resultsFile, null)) ? _resultsFile.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    WaveformFile = " + ((!ReferenceEquals(_waveformFile, null)) ? _waveformFile.ToString(formatProvider) : @"null").Replace("\n", "\n    "))));
         }
         
         #endregion
@@ -2816,6 +2817,38 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _resultsFile = value;
                 this.OnResultsFileChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property WaveformFile
+        
+        private string _waveformFile;
+        
+        public event EventHandler WaveformFileChanged;
+        
+        protected virtual void OnWaveformFileChanged()
+        {
+            this.IsChanged = true;
+            if ((!ReferenceEquals(WaveformFileChanged, null)))
+            {
+                WaveformFileChanged(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"WaveformFile");
+        }
+        
+        public virtual string WaveformFile
+        {
+            get { return _waveformFile; }
+            set
+            {
+                if (string.Equals(value, _waveformFile))
+                {
+                    return;
+                }
+                _waveformFile = value;
+                this.OnWaveformFileChanged();
             }
         }
         

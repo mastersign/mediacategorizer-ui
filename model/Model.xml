@@ -186,6 +186,7 @@
       <Property name="MediaFile" />
       <Property name="AudioFile" />
       <Property name="ResultsFile" />
+      <Property name="WaveformFile" />
       <EqualityMembers>
         <Property>Id</Property>
       </EqualityMembers>
