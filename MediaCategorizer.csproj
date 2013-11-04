@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="model\Category.cs" />
     <Compile Include="model\CloudParameter.cs" />
+    <Compile Include="model\FilterParameter.cs" />
     <Compile Include="model\Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

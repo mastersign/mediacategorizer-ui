@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace de.fhb.oll.mediacategorizer.model
 {
@@ -45,6 +46,10 @@ namespace de.fhb.oll.mediacategorizer.model
                 Name="Video B",
                 MediaFile = @"C:\Temp\video2.mp4",
             });
+
+            Configuration.MainCloud.FontFamily = new FontFamily("Arial");
+            Configuration.CategoryCloud.FontFamily = new FontFamily("Arial");
+            Configuration.MediaCloud.FontFamily = new FontFamily("Arial");
         }
     }
 }

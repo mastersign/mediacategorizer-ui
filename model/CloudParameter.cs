@@ -11,8 +11,13 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         private void Initialize()
         {
-            Color = new ColorRGBA {R=0.0f, G=0.3f, B=0.8f, A=1.0f};
-            BackgroundColor = new ColorRGBA {R = 0.0f, G = 0.0f, B = 0.0f, A = 0.0f};
+            Color = System.Windows.Media.Color.FromRgb(0, 76, 204);
+            BackgroundColor = System.Windows.Media.Colors.Transparent;
+        }
+
+        public override string ToString()
+        {
+            return "Wortwolke";
         }
     }
 }
