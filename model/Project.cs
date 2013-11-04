@@ -32,6 +32,19 @@ namespace de.fhb.oll.mediacategorizer.model
                     new CategoryResource { Type = CategoryResourceType.Wikipedia, Url="http://de.wikipedia.org/wiki/V%C3%B6gel" },
                 },
             });
+
+            Media.Add(new Media
+            {
+                Id = "a",
+                Name="Video A",
+                MediaFile = @"C:\Temp\video1.mp4",
+            });
+            Media.Add(new Media
+            {
+                Id = "b",
+                Name="Video B",
+                MediaFile = @"C:\Temp\video2.mp4",
+            });
         }
     }
 }
