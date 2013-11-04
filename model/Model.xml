@@ -2,17 +2,22 @@
 <Model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://scaleton.mastersign.de/2013/model"
        xsi:noNamespaceSchemaLocation="../Scaleton/Scaleton.xsd">
-  
+
   <Namespace>de.fhb.oll.mediacategorizer.model</Namespace>
-  
-  <ReferencedTypes></ReferencedTypes>
-  
+
+  <Dependencies>
+    <Assembly>PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly>
+  </Dependencies>
+
+  <ReferencedTypes>
+    <ReferencedType id="ExpandableObjectAttribute" kind="Class" name="Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute" />
+  </ReferencedTypes>
+
   <ModelFeatures>
-    <ToString />
     <Equatable />
     <ChangeTracking level="Tracking" escalateChangeState="true" propagateTransaction="true" />
   </ModelFeatures>
-  
+
   <Types>
     <Class name="Project">
       <CustomInitializer>Initialize</CustomInitializer>
@@ -22,77 +27,133 @@
       <Property name="Description">
         <DefaultValue>No Description</DefaultValue>
       </Property>
-      
+
       <Property name="OutputDir" type="string">
         <DefaultValue>output</DefaultValue>
       </Property>
 
-      <Property name="Configuration" type="Configuration" />
+      <Property name="Configuration" type="Configuration">
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
       <Property name="Categories" type="Category" isCollection="true" />
       <Property name="Media" type="Media" isCollection="true" />
     </Class>
-    
+
     <Class name="Configuration">
       <Property name="MinConfidence" type="float">
+        <Category>Analyse</Category>
+        <DisplayName>Minimale Erkennungssicherheit</DisplayName>
+        <Description>Die minimale Erkennungssicherheit für Worte die in die Analyse berücksichtigt werden sollen.</Description>
         <DefaultValue>0.4</DefaultValue>
       </Property>
       <Property name="GoodConfidence" type="float">
+        <Category>Analyse</Category>
+        <DisplayName>Gute Erkennungssicherheit</DisplayName>
+        <Description>Die Erkennungssicherheit für Worte die in der Ausgabe erscheinen dürfen.</Description>
         <DefaultValue>0.7</DefaultValue>
       </Property>
       <Property name="MinRelativeAppearance" type="float">
+        <Category>Analyse</Category>
+        <DisplayName>Minimales Erscheinen</DisplayName>
         <DefaultValue>0.25</DefaultValue>
       </Property>
       <Property name="MinMatchScore" type="float">
+        <Category>Analyse</Category>
+        <DisplayName>Minimale Übereinstimmung</DisplayName>
         <DefaultValue>0.0</DefaultValue>
       </Property>
 
-      <Property name="IndexFilter" type="FilterParameter" />
+      <Property name="IndexFilter" type="FilterParameter">
+        <Category>Analyse</Category>
+        <DisplayName>Wortfilter</DisplayName>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
 
-      <Property name="MainCloud" type="CloudParameter" />
-      <Property name="MediaCloud" type="CloudParameter" />
-      <Property name="CategoryCloud" type="CloudParameter" />
+      <Property name="MainCloud" type="CloudParameter">
+        <Category>Wortwolken</Category>
+        <DisplayName>Globale Wolke</DisplayName>
+        <Description>Die Parameter für die globale Wortwolke für das gesamte Projekt.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+      <Property name="MediaCloud" type="CloudParameter">
+        <Category>Wortwolken</Category>
+        <DisplayName>Medienwolke</DisplayName>
+        <Description>Die Parameter für die Wortwolke eines Mediums.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+      <Property name="CategoryCloud" type="CloudParameter">
+        <Category>Wortwolken</Category>
+        <DisplayName>Kategoriewolke</DisplayName>
+        <Description>Die Parameter für die Wortwolke einer Kategorie.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
 
       <Property name="ParallelProc" type="bool">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Mehrprozessorunterstützung</DisplayName>
         <DefaultValue>true</DefaultValue>
       </Property>
+      
       <Property name="SkipWordClouds" type="bool">
+        <Category>Ausgabe</Category>
+        <DisplayName>Keine Wortwolken</DisplayName>
         <DefaultValue>false</DefaultValue>
       </Property>
       <Property name="SkipWordIncludes" type="bool">
+        <Category>Ausgabe</Category>
+        <DisplayName>Keine Wortseiten</DisplayName>
         <DefaultValue>false</DefaultValue>
       </Property>
       <Property name="SkipMatchIncludes" type="bool">
+        <Category>Ausgabe</Category>
+        <DisplayName>Keine Übereinstimmungsdetails</DisplayName>
         <DefaultValue>false</DefaultValue>
       </Property>
       <Property name="SkipMediaCopy" type="bool">
+        <Category>Ausgabe</Category>
+        <DisplayName>Mediendateien nicht kopieren</DisplayName>
         <DefaultValue>false</DefaultValue>
       </Property>
     </Class>
 
     <Class name="FilterParameter">
-      <Property name="BlacklistResource" type="string">
+      <Property name="BlacklistResource" type="string" browsable="false">
         <DefaultValue>top10000de.txt</DefaultValue>
       </Property>
       <Property name="BlacklistMaxSize" type="int">
+        <DisplayName>Blacklist-Worte</DisplayName>
+        <Description>Gibt die Anzahl der Worte an, die vom Anfang der Blacklist für das Filtern verwendet werden. Es wird eine nach Relevanz sortierte Blacklist vorausgesetzt.</Description>
         <DefaultValue>2000</DefaultValue>
       </Property>
-      
+
       <Property name="FilterNotShort" type="bool">
+        <DisplayName>Keine kurzen Worte</DisplayName>
+        <Description>Es werden nur Worte mit einer Mindestlänge berücksichtigt.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
       <Property name="FilterNoun" type="bool">
+        <DisplayName>Nur Substantive</DisplayName>
+        <Description>Es werden nur Substantive berücksichtigt. Die Erkennung von Substantiven findet zur Zeit nur mittels Großschreibung statt.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
       <Property name="FilterMinConfidence" type="bool">
+        <DisplayName>Erkennungssicherheit minimal</DisplayName>
+        <Description>Es werden nur Worte brücksichtigt, die mit einer minimalen Erkennungssicherheit erkannt wurden.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
       <Property name="FilterGoodConfidence" type="bool">
+        <DisplayName>Erkennungssicherheit gut</DisplayName>
+        <Description>Es werden nur Worte brücksichtigt, die mit einer guten Erkennungssicherheit erkannt wurden.</Description>
         <DefaultValue>false</DefaultValue>
       </Property>
       <Property name="FilterNoPunctuation" type="bool">
+        <DisplayName>Keine Sonderzeichen</DisplayName>
+        <Description>Es werden keine Satzzeichen, Klammern oder andere Sonderzeichen berücksichtigt.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
       <Property name="FilterNotInBlacklist" type="bool">
+        <DisplayName>Blacklist</DisplayName>
+        <Description>Es werden nur Worte brücksichtigt, die nicht auf der Blacklist stehen.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
     </Class>
@@ -103,58 +164,67 @@
       <Member name="High" />
     </Enum>
 
-    <Class name="ColorRGBA">
-      <Property name="R" type="float">
-        <DefaultValue>0.0</DefaultValue>
-      </Property>
-      <Property name="G" type="float">
-        <DefaultValue>0.5</DefaultValue>
-      </Property>
-      <Property name="B" type="float">
-        <DefaultValue>1.0</DefaultValue>
-      </Property>
-      <Property name="A" type="float">
-        <DefaultValue>1.0</DefaultValue>
-      </Property>
-    </Class>
-
     <Class name="CloudParameter">
       <CustomInitializer>Initialize</CustomInitializer>
-      
+
       <Property name="Width" type="int">
+        <DisplayName>Breite (px)</DisplayName>
+        <Description>Die Breite der Wortwolke in Pixel.</Description>
         <DefaultValue>640</DefaultValue>
       </Property>
       <Property name="Height" type="int">
+        <DisplayName>Höhe (px)</DisplayName>
+        <Description>Die Höhe der Wortwolke in Pixel.</Description>
         <DefaultValue>480</DefaultValue>
       </Property>
-      
+
       <Property name="Precision" type="CloudPrecision">
+        <DisplayName>Genauigkeit</DisplayName>
+        <Description>Die Genauigkeit ber der Wortwolkengenerierung. Eine hohe Genauigkeit erlaubt das engere Platzieren von Worten an- und ineinander, benötigt jedoch mehr Rechenzeit.</Description>
         <DefaultValue>Medium</DefaultValue>
       </Property>
       <Property name="OrderPriority" type="float">
+        <DisplayName>Priorität der Sortierung</DisplayName>
+        <Description>Gibt an, wie wichtig die alphabetische sortierung der Worte ist. Ein Wert zwischen 0 und 1. Die 1 steht für sehr strenge Sortierung, die 0 für keine Sortierung.</Description>
         <DefaultValue>0.6</DefaultValue>
       </Property>
-      
-      <Property name="FontFamily" type="string">
-        <DefaultValue>Arial</DefaultValue>
+
+      <Property name="FontFamily" type="System.Windows.Media.FontFamily">
+        <DisplayName>Schriftfamilie</DisplayName>
+        <Description>Der Name der Schriftfamilie für die Worte in der Wolke.</Description>
       </Property>
       <Property name="FontBold" type="bool">
+        <DisplayName>Schriftstärke (fett)</DisplayName>
+        <Description>Ein Wert der angibt, ob die Schrift fett gedruckt werden soll.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
       <Property name="FontItalic" type="bool">
+        <DisplayName>Schriftschnitt (kursiv)</DisplayName>
+        <Description>Ein Wert der angibt, ob die Schrift kursiv gedruckt werden soll.</Description>
         <DefaultValue>false</DefaultValue>
       </Property>
+      
       <Property name="MinFontSize" type="float">
+        <DisplayName>Schriftgröße (minimal)</DisplayName>
+        <Description>Die kleinstmögliche Schriftgröße von Worten in der Wolke.</Description>
         <DefaultValue>13.0</DefaultValue>
       </Property>
       <Property name="MaxFontSize" type="float">
+        <DisplayName>Schriftgröße (maximal)</DisplayName>
+        <Description>Die größtmögliche Schriftgröße von Worten in der Wolke.</Description>
         <DefaultValue>80.0</DefaultValue>
       </Property>
 
-      <Property name="Color" type="ColorRGBA" />
-      <Property name="BackgroundColor" type="ColorRGBA" />
+      <Property name="Color" type="System.Windows.Media.Color">
+        <DisplayName>Schriftfarbe</DisplayName>
+        <Description>Die Farbe der Worte in der Wortwolke.</Description>
+      </Property>
+      <Property name="BackgroundColor" type="System.Windows.Media.Color">
+        <DisplayName>Hintergrundfarbe</DisplayName>
+        <Description>Die Farbe des Hintergrundes.</Description>
+      </Property>
     </Class>
-    
+
     <Enum name="CategoryResourceType">
       <Member name="Plain" />
       <Member name="Html" />
@@ -177,7 +247,7 @@
       <Property name="Name">
         <DefaultValue>No Name</DefaultValue>
       </Property>
-      
+
       <Property name="Resources" type="CategoryResource" isCollection="true" />
     </Class>
 

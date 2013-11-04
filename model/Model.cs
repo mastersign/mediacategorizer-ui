@@ -27,31 +27,13 @@ namespace de.fhb.oll.mediacategorizer.model
             _name = DEF_NAME;
             _description = DEF_DESCRIPTION;
             _outputDir = DEF_OUTPUTDIR;
-            _configuration = new Configuration();
-            _categories = new global::System.Collections.ObjectModel.ObservableCollection<Category>();
-            _media = new global::System.Collections.ObjectModel.ObservableCollection<Media>();
+            Configuration = new Configuration();
+            Categories = new global::System.Collections.ObjectModel.ObservableCollection<Category>();
+            Media = new global::System.Collections.ObjectModel.ObservableCollection<Media>();
             this.Initialize();
+            
+            this.IsChanged = false;
         }
-        
-        #region String Representation
-        
-        public override string ToString()
-        {
-            return this.ToString(global::System.Globalization.CultureInfo.CurrentUICulture);
-        }
-        
-        public string ToString(IFormatProvider formatProvider)
-        {
-            return (this.GetType().FullName + @": " + (
-                (Environment.NewLine + @"    Name = " + ((!ReferenceEquals(_name, null)) ? _name.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Description = " + ((!ReferenceEquals(_description, null)) ? _description.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    OutputDir = " + ((!ReferenceEquals(_outputDir, null)) ? _outputDir.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Configuration = " + ((!ReferenceEquals(_configuration, null)) ? _configuration.ToString() : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Categories = " + ((!ReferenceEquals(_categories, null)) ? _categories.ToString() : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Media = " + ((!ReferenceEquals(_media, null)) ? _media.ToString() : @"null").Replace("\n", "\n    "))));
-        }
-        
-        #endregion
         
         #region Equatability
         
@@ -110,6 +92,8 @@ namespace de.fhb.oll.mediacategorizer.model
         
         private bool _isChanged = false;
         
+        [Browsable(false)]
+        
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -123,11 +107,6 @@ namespace de.fhb.oll.mediacategorizer.model
                 _configuration.AcceptChanges();
             }
             this.IsChanged = false;
-        }
-        
-        private void ChildPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
-        {
-            this.IsChanged = true;
         }
         
         #endregion
@@ -253,11 +232,12 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Configuration");
         }
         
-        private void ConfigurationContentChangedHandler(object sender, EventArgs ea)
+        private void ConfigurationPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
         {
             this.OnConfigurationChanged();
         }
         
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
         public virtual Configuration Configuration
         {
             get { return _configuration; }
@@ -269,12 +249,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 if ((!ReferenceEquals(_configuration, null)))
                 {
-                    _configuration.PropertyChanged -= this.ConfigurationContentChangedHandler;
+                    _configuration.PropertyChanged -= this.ConfigurationPropertyChangedHandler;
                 }
                 _configuration = value;
                 if ((!ReferenceEquals(_configuration, null)))
                 {
-                    _configuration.PropertyChanged += this.ConfigurationContentChangedHandler;
+                    _configuration.PropertyChanged += this.ConfigurationPropertyChangedHandler;
                 }
                 this.OnConfigurationChanged();
             }
@@ -298,9 +278,34 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Categories");
         }
         
-        private void CategoriesContentChangedHandler(object sender, EventArgs ea)
+        private void CategoriesItemPropertyChanged(object sender, EventArgs ea)
         {
             this.OnCategoriesChanged();
+        }
+        
+        private void CategoriesCollectionChangedHandler(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs ea)
+        {
+            if ((!ReferenceEquals(ea.OldItems, null)))
+            {
+                foreach (Category item in ea.OldItems)
+                {
+                    if ((!ReferenceEquals(item, null)))
+                    {
+                        item.PropertyChanged -= this.CategoriesItemPropertyChanged;
+                    }
+                }
+            }
+            this.OnCategoriesChanged();
+            if ((!ReferenceEquals(ea.NewItems, null)))
+            {
+                foreach (Category item in ea.NewItems)
+                {
+                    if ((!ReferenceEquals(item, null)))
+                    {
+                        item.PropertyChanged += this.CategoriesItemPropertyChanged;
+                    }
+                }
+            }
         }
         
         public virtual global::System.Collections.ObjectModel.ObservableCollection<Category> Categories
@@ -314,12 +319,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 if ((!ReferenceEquals(_categories, null)))
                 {
-                    _categories.CollectionChanged -= this.CategoriesContentChangedHandler;
+                    _categories.CollectionChanged -= this.CategoriesCollectionChangedHandler;
                 }
                 _categories = value;
                 if ((!ReferenceEquals(_categories, null)))
                 {
-                    _categories.CollectionChanged += this.CategoriesContentChangedHandler;
+                    _categories.CollectionChanged += this.CategoriesCollectionChangedHandler;
                 }
                 this.OnCategoriesChanged();
             }
@@ -343,9 +348,34 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Media");
         }
         
-        private void MediaContentChangedHandler(object sender, EventArgs ea)
+        private void MediaItemPropertyChanged(object sender, EventArgs ea)
         {
             this.OnMediaChanged();
+        }
+        
+        private void MediaCollectionChangedHandler(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs ea)
+        {
+            if ((!ReferenceEquals(ea.OldItems, null)))
+            {
+                foreach (Media item in ea.OldItems)
+                {
+                    if ((!ReferenceEquals(item, null)))
+                    {
+                        item.PropertyChanged -= this.MediaItemPropertyChanged;
+                    }
+                }
+            }
+            this.OnMediaChanged();
+            if ((!ReferenceEquals(ea.NewItems, null)))
+            {
+                foreach (Media item in ea.NewItems)
+                {
+                    if ((!ReferenceEquals(item, null)))
+                    {
+                        item.PropertyChanged += this.MediaItemPropertyChanged;
+                    }
+                }
+            }
         }
         
         public virtual global::System.Collections.ObjectModel.ObservableCollection<Media> Media
@@ -359,12 +389,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 if ((!ReferenceEquals(_media, null)))
                 {
-                    _media.CollectionChanged -= this.MediaContentChangedHandler;
+                    _media.CollectionChanged -= this.MediaCollectionChangedHandler;
                 }
                 _media = value;
                 if ((!ReferenceEquals(_media, null)))
                 {
-                    _media.CollectionChanged += this.MediaContentChangedHandler;
+                    _media.CollectionChanged += this.MediaCollectionChangedHandler;
                 }
                 this.OnMediaChanged();
             }
@@ -381,43 +411,18 @@ namespace de.fhb.oll.mediacategorizer.model
             _goodConfidence = DEF_GOODCONFIDENCE;
             _minRelativeAppearance = DEF_MINRELATIVEAPPEARANCE;
             _minMatchScore = DEF_MINMATCHSCORE;
-            _indexFilter = new FilterParameter();
-            _mainCloud = new CloudParameter();
-            _mediaCloud = new CloudParameter();
-            _categoryCloud = new CloudParameter();
+            IndexFilter = new FilterParameter();
+            MainCloud = new CloudParameter();
+            MediaCloud = new CloudParameter();
+            CategoryCloud = new CloudParameter();
             _parallelProc = DEF_PARALLELPROC;
             _skipWordClouds = DEF_SKIPWORDCLOUDS;
             _skipWordIncludes = DEF_SKIPWORDINCLUDES;
             _skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
             _skipMediaCopy = DEF_SKIPMEDIACOPY;
+            
+            this.IsChanged = false;
         }
-        
-        #region String Representation
-        
-        public override string ToString()
-        {
-            return this.ToString(global::System.Globalization.CultureInfo.CurrentUICulture);
-        }
-        
-        public string ToString(IFormatProvider formatProvider)
-        {
-            return (this.GetType().FullName + @": " + (
-                (Environment.NewLine + @"    MinConfidence = " + _minConfidence.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    GoodConfidence = " + _goodConfidence.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    MinRelativeAppearance = " + _minRelativeAppearance.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    MinMatchScore = " + _minMatchScore.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    IndexFilter = " + ((!ReferenceEquals(_indexFilter, null)) ? _indexFilter.ToString() : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    MainCloud = " + ((!ReferenceEquals(_mainCloud, null)) ? _mainCloud.ToString() : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    MediaCloud = " + ((!ReferenceEquals(_mediaCloud, null)) ? _mediaCloud.ToString() : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    CategoryCloud = " + ((!ReferenceEquals(_categoryCloud, null)) ? _categoryCloud.ToString() : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    ParallelProc = " + _parallelProc.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    SkipWordClouds = " + _skipWordClouds.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    SkipWordIncludes = " + _skipWordIncludes.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    SkipMatchIncludes = " + _skipMatchIncludes.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    SkipMediaCopy = " + _skipMediaCopy.ToString(formatProvider).Replace("\n", "\n    "))));
-        }
-        
-        #endregion
         
         #region Equatability
         
@@ -490,6 +495,8 @@ namespace de.fhb.oll.mediacategorizer.model
         
         private bool _isChanged = false;
         
+        [Browsable(false)]
+        
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -517,11 +524,6 @@ namespace de.fhb.oll.mediacategorizer.model
             this.IsChanged = false;
         }
         
-        private void ChildPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
-        {
-            this.IsChanged = true;
-        }
-        
         #endregion
         
         #region Property MinConfidence
@@ -543,6 +545,9 @@ namespace de.fhb.oll.mediacategorizer.model
         private const float DEF_MINCONFIDENCE = 0.4F;
         
         [DefaultValue(DEF_MINCONFIDENCE)]
+        [Category(@"Analyse")]
+        [DisplayName(@"Minimale Erkennungssicherheit")]
+        [Description(@"Die minimale Erkennungssicherheit für Worte die in die Analyse berücksichtigt werden sollen.")]
         public virtual float MinConfidence
         {
             get { return _minConfidence; }
@@ -578,6 +583,9 @@ namespace de.fhb.oll.mediacategorizer.model
         private const float DEF_GOODCONFIDENCE = 0.7F;
         
         [DefaultValue(DEF_GOODCONFIDENCE)]
+        [Category(@"Analyse")]
+        [DisplayName(@"Gute Erkennungssicherheit")]
+        [Description(@"Die Erkennungssicherheit für Worte die in der Ausgabe erscheinen dürfen.")]
         public virtual float GoodConfidence
         {
             get { return _goodConfidence; }
@@ -613,6 +621,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const float DEF_MINRELATIVEAPPEARANCE = 0.25F;
         
         [DefaultValue(DEF_MINRELATIVEAPPEARANCE)]
+        [Category(@"Analyse")]
+        [DisplayName(@"Minimales Erscheinen")]
         public virtual float MinRelativeAppearance
         {
             get { return _minRelativeAppearance; }
@@ -648,6 +658,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const float DEF_MINMATCHSCORE = 0.0F;
         
         [DefaultValue(DEF_MINMATCHSCORE)]
+        [Category(@"Analyse")]
+        [DisplayName(@"Minimale Übereinstimmung")]
         public virtual float MinMatchScore
         {
             get { return _minMatchScore; }
@@ -680,11 +692,14 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"IndexFilter");
         }
         
-        private void IndexFilterContentChangedHandler(object sender, EventArgs ea)
+        private void IndexFilterPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
         {
             this.OnIndexFilterChanged();
         }
         
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [Category(@"Analyse")]
+        [DisplayName(@"Wortfilter")]
         public virtual FilterParameter IndexFilter
         {
             get { return _indexFilter; }
@@ -696,12 +711,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 if ((!ReferenceEquals(_indexFilter, null)))
                 {
-                    _indexFilter.PropertyChanged -= this.IndexFilterContentChangedHandler;
+                    _indexFilter.PropertyChanged -= this.IndexFilterPropertyChangedHandler;
                 }
                 _indexFilter = value;
                 if ((!ReferenceEquals(_indexFilter, null)))
                 {
-                    _indexFilter.PropertyChanged += this.IndexFilterContentChangedHandler;
+                    _indexFilter.PropertyChanged += this.IndexFilterPropertyChangedHandler;
                 }
                 this.OnIndexFilterChanged();
             }
@@ -725,11 +740,15 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"MainCloud");
         }
         
-        private void MainCloudContentChangedHandler(object sender, EventArgs ea)
+        private void MainCloudPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
         {
             this.OnMainCloudChanged();
         }
         
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [Category(@"Wortwolken")]
+        [DisplayName(@"Globale Wolke")]
+        [Description(@"Die Parameter für die globale Wortwolke für das gesamte Projekt.")]
         public virtual CloudParameter MainCloud
         {
             get { return _mainCloud; }
@@ -741,12 +760,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 if ((!ReferenceEquals(_mainCloud, null)))
                 {
-                    _mainCloud.PropertyChanged -= this.MainCloudContentChangedHandler;
+                    _mainCloud.PropertyChanged -= this.MainCloudPropertyChangedHandler;
                 }
                 _mainCloud = value;
                 if ((!ReferenceEquals(_mainCloud, null)))
                 {
-                    _mainCloud.PropertyChanged += this.MainCloudContentChangedHandler;
+                    _mainCloud.PropertyChanged += this.MainCloudPropertyChangedHandler;
                 }
                 this.OnMainCloudChanged();
             }
@@ -770,11 +789,15 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"MediaCloud");
         }
         
-        private void MediaCloudContentChangedHandler(object sender, EventArgs ea)
+        private void MediaCloudPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
         {
             this.OnMediaCloudChanged();
         }
         
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [Category(@"Wortwolken")]
+        [DisplayName(@"Medienwolke")]
+        [Description(@"Die Parameter für die Wortwolke eines Mediums.")]
         public virtual CloudParameter MediaCloud
         {
             get { return _mediaCloud; }
@@ -786,12 +809,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 if ((!ReferenceEquals(_mediaCloud, null)))
                 {
-                    _mediaCloud.PropertyChanged -= this.MediaCloudContentChangedHandler;
+                    _mediaCloud.PropertyChanged -= this.MediaCloudPropertyChangedHandler;
                 }
                 _mediaCloud = value;
                 if ((!ReferenceEquals(_mediaCloud, null)))
                 {
-                    _mediaCloud.PropertyChanged += this.MediaCloudContentChangedHandler;
+                    _mediaCloud.PropertyChanged += this.MediaCloudPropertyChangedHandler;
                 }
                 this.OnMediaCloudChanged();
             }
@@ -815,11 +838,15 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"CategoryCloud");
         }
         
-        private void CategoryCloudContentChangedHandler(object sender, EventArgs ea)
+        private void CategoryCloudPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
         {
             this.OnCategoryCloudChanged();
         }
         
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [Category(@"Wortwolken")]
+        [DisplayName(@"Kategoriewolke")]
+        [Description(@"Die Parameter für die Wortwolke einer Kategorie.")]
         public virtual CloudParameter CategoryCloud
         {
             get { return _categoryCloud; }
@@ -831,12 +858,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 if ((!ReferenceEquals(_categoryCloud, null)))
                 {
-                    _categoryCloud.PropertyChanged -= this.CategoryCloudContentChangedHandler;
+                    _categoryCloud.PropertyChanged -= this.CategoryCloudPropertyChangedHandler;
                 }
                 _categoryCloud = value;
                 if ((!ReferenceEquals(_categoryCloud, null)))
                 {
-                    _categoryCloud.PropertyChanged += this.CategoryCloudContentChangedHandler;
+                    _categoryCloud.PropertyChanged += this.CategoryCloudPropertyChangedHandler;
                 }
                 this.OnCategoryCloudChanged();
             }
@@ -863,6 +890,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_PARALLELPROC = true;
         
         [DefaultValue(DEF_PARALLELPROC)]
+        [Category(@"Verarbeitung")]
+        [DisplayName(@"Mehrprozessorunterstützung")]
         public virtual bool ParallelProc
         {
             get { return _parallelProc; }
@@ -898,6 +927,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_SKIPWORDCLOUDS = false;
         
         [DefaultValue(DEF_SKIPWORDCLOUDS)]
+        [Category(@"Ausgabe")]
+        [DisplayName(@"Keine Wortwolken")]
         public virtual bool SkipWordClouds
         {
             get { return _skipWordClouds; }
@@ -933,6 +964,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_SKIPWORDINCLUDES = false;
         
         [DefaultValue(DEF_SKIPWORDINCLUDES)]
+        [Category(@"Ausgabe")]
+        [DisplayName(@"Keine Wortseiten")]
         public virtual bool SkipWordIncludes
         {
             get { return _skipWordIncludes; }
@@ -968,6 +1001,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_SKIPMATCHINCLUDES = false;
         
         [DefaultValue(DEF_SKIPMATCHINCLUDES)]
+        [Category(@"Ausgabe")]
+        [DisplayName(@"Keine Übereinstimmungsdetails")]
         public virtual bool SkipMatchIncludes
         {
             get { return _skipMatchIncludes; }
@@ -1003,6 +1038,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_SKIPMEDIACOPY = false;
         
         [DefaultValue(DEF_SKIPMEDIACOPY)]
+        [Category(@"Ausgabe")]
+        [DisplayName(@"Mediendateien nicht kopieren")]
         public virtual bool SkipMediaCopy
         {
             get { return _skipMediaCopy; }
@@ -1032,29 +1069,9 @@ namespace de.fhb.oll.mediacategorizer.model
             _filterGoodConfidence = DEF_FILTERGOODCONFIDENCE;
             _filterNoPunctuation = DEF_FILTERNOPUNCTUATION;
             _filterNotInBlacklist = DEF_FILTERNOTINBLACKLIST;
+            
+            this.IsChanged = false;
         }
-        
-        #region String Representation
-        
-        public override string ToString()
-        {
-            return this.ToString(global::System.Globalization.CultureInfo.CurrentUICulture);
-        }
-        
-        public string ToString(IFormatProvider formatProvider)
-        {
-            return (this.GetType().FullName + @": " + (
-                (Environment.NewLine + @"    BlacklistResource = " + ((!ReferenceEquals(_blacklistResource, null)) ? _blacklistResource.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    BlacklistMaxSize = " + _blacklistMaxSize.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FilterNotShort = " + _filterNotShort.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FilterNoun = " + _filterNoun.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FilterMinConfidence = " + _filterMinConfidence.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FilterGoodConfidence = " + _filterGoodConfidence.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FilterNoPunctuation = " + _filterNoPunctuation.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FilterNotInBlacklist = " + _filterNotInBlacklist.ToString(formatProvider).Replace("\n", "\n    "))));
-        }
-        
-        #endregion
         
         #region Equatability
         
@@ -1117,6 +1134,8 @@ namespace de.fhb.oll.mediacategorizer.model
         
         private bool _isChanged = false;
         
+        [Browsable(false)]
+        
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -1126,11 +1145,6 @@ namespace de.fhb.oll.mediacategorizer.model
         public void AcceptChanges()
         {
             this.IsChanged = false;
-        }
-        
-        private void ChildPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
-        {
-            this.IsChanged = true;
         }
         
         #endregion
@@ -1154,6 +1168,7 @@ namespace de.fhb.oll.mediacategorizer.model
         private const string DEF_BLACKLISTRESOURCE = @"top10000de.txt";
         
         [DefaultValue(DEF_BLACKLISTRESOURCE)]
+        [Browsable(false)]
         public virtual string BlacklistResource
         {
             get { return _blacklistResource; }
@@ -1189,6 +1204,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const int DEF_BLACKLISTMAXSIZE = 2000;
         
         [DefaultValue(DEF_BLACKLISTMAXSIZE)]
+        [DisplayName(@"Blacklist-Worte")]
+        [Description(@"Gibt die Anzahl der Worte an, die vom Anfang der Blacklist für das Filtern verwendet werden. Es wird eine nach Relevanz sortierte Blacklist vorausgesetzt.")]
         public virtual int BlacklistMaxSize
         {
             get { return _blacklistMaxSize; }
@@ -1224,6 +1241,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_FILTERNOTSHORT = true;
         
         [DefaultValue(DEF_FILTERNOTSHORT)]
+        [DisplayName(@"Keine kurzen Worte")]
+        [Description(@"Es werden nur Worte mit einer Mindestlänge berücksichtigt.")]
         public virtual bool FilterNotShort
         {
             get { return _filterNotShort; }
@@ -1259,6 +1278,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_FILTERNOUN = true;
         
         [DefaultValue(DEF_FILTERNOUN)]
+        [DisplayName(@"Nur Substantive")]
+        [Description(@"Es werden nur Substantive berücksichtigt. Die Erkennung von Substantiven findet zur Zeit nur mittels Großschreibung statt.")]
         public virtual bool FilterNoun
         {
             get { return _filterNoun; }
@@ -1294,6 +1315,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_FILTERMINCONFIDENCE = true;
         
         [DefaultValue(DEF_FILTERMINCONFIDENCE)]
+        [DisplayName(@"Erkennungssicherheit minimal")]
+        [Description(@"Es werden nur Worte brücksichtigt, die mit einer minimalen Erkennungssicherheit erkannt wurden.")]
         public virtual bool FilterMinConfidence
         {
             get { return _filterMinConfidence; }
@@ -1329,6 +1352,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_FILTERGOODCONFIDENCE = false;
         
         [DefaultValue(DEF_FILTERGOODCONFIDENCE)]
+        [DisplayName(@"Erkennungssicherheit gut")]
+        [Description(@"Es werden nur Worte brücksichtigt, die mit einer guten Erkennungssicherheit erkannt wurden.")]
         public virtual bool FilterGoodConfidence
         {
             get { return _filterGoodConfidence; }
@@ -1364,6 +1389,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_FILTERNOPUNCTUATION = true;
         
         [DefaultValue(DEF_FILTERNOPUNCTUATION)]
+        [DisplayName(@"Keine Sonderzeichen")]
+        [Description(@"Es werden keine Satzzeichen, Klammern oder andere Sonderzeichen berücksichtigt.")]
         public virtual bool FilterNoPunctuation
         {
             get { return _filterNoPunctuation; }
@@ -1399,6 +1426,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_FILTERNOTINBLACKLIST = true;
         
         [DefaultValue(DEF_FILTERNOTINBLACKLIST)]
+        [DisplayName(@"Blacklist")]
+        [Description(@"Es werden nur Worte brücksichtigt, die nicht auf der Blacklist stehen.")]
         public virtual bool FilterNotInBlacklist
         {
             get { return _filterNotInBlacklist; }
@@ -1416,246 +1445,6 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
-    public partial class ColorRGBA : IEquatable<ColorRGBA>, INotifyPropertyChanged, IChangeTracking
-    {
-        public ColorRGBA()
-        {
-            _r = DEF_R;
-            _g = DEF_G;
-            _b = DEF_B;
-            _a = DEF_A;
-        }
-        
-        #region String Representation
-        
-        public override string ToString()
-        {
-            return this.ToString(global::System.Globalization.CultureInfo.CurrentUICulture);
-        }
-        
-        public string ToString(IFormatProvider formatProvider)
-        {
-            return (this.GetType().FullName + @": " + (
-                (Environment.NewLine + @"    R = " + _r.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    G = " + _g.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    B = " + _b.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    A = " + _a.ToString(formatProvider).Replace("\n", "\n    "))));
-        }
-        
-        #endregion
-        
-        #region Equatability
-        
-        public bool Equals(ColorRGBA o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                (this._r == o._r) && 
-                (this._g == o._g) && 
-                (this._b == o._b) && 
-                (this._a == o._a));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if ((!(o.GetType() == typeof(ColorRGBA))))
-            {
-                return false;
-            }
-            return this.Equals(((ColorRGBA)o));
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                this._r.GetHashCode() ^ 
-                this._g.GetHashCode() ^ 
-                this._b.GetHashCode() ^ 
-                this._a.GetHashCode());
-        }
-        
-        #endregion
-        
-        #region Change Tracking
-        
-        public event PropertyChangedEventHandler PropertyChanged;
-        
-        protected virtual void OnPropertyChanged(string name)
-        {
-            if ((!ReferenceEquals(PropertyChanged, null)))
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-        
-        private bool _isChanged = false;
-        
-        public bool IsChanged
-        {
-            get { return this._isChanged; }
-            protected set { this._isChanged = value; }
-        }
-        
-        public void AcceptChanges()
-        {
-            this.IsChanged = false;
-        }
-        
-        private void ChildPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
-        {
-            this.IsChanged = true;
-        }
-        
-        #endregion
-        
-        #region Property R
-        
-        private float _r;
-        
-        public event EventHandler RChanged;
-        
-        protected virtual void OnRChanged()
-        {
-            this.IsChanged = true;
-            if ((!ReferenceEquals(RChanged, null)))
-            {
-                RChanged(this, EventArgs.Empty);
-            }
-            this.OnPropertyChanged(@"R");
-        }
-        
-        private const float DEF_R = 0.0F;
-        
-        [DefaultValue(DEF_R)]
-        public virtual float R
-        {
-            get { return _r; }
-            set
-            {
-                if ((Math.Abs(value - _r) < float.Epsilon))
-                {
-                    return;
-                }
-                _r = value;
-                this.OnRChanged();
-            }
-        }
-        
-        #endregion
-        
-        #region Property G
-        
-        private float _g;
-        
-        public event EventHandler GChanged;
-        
-        protected virtual void OnGChanged()
-        {
-            this.IsChanged = true;
-            if ((!ReferenceEquals(GChanged, null)))
-            {
-                GChanged(this, EventArgs.Empty);
-            }
-            this.OnPropertyChanged(@"G");
-        }
-        
-        private const float DEF_G = 0.5F;
-        
-        [DefaultValue(DEF_G)]
-        public virtual float G
-        {
-            get { return _g; }
-            set
-            {
-                if ((Math.Abs(value - _g) < float.Epsilon))
-                {
-                    return;
-                }
-                _g = value;
-                this.OnGChanged();
-            }
-        }
-        
-        #endregion
-        
-        #region Property B
-        
-        private float _b;
-        
-        public event EventHandler BChanged;
-        
-        protected virtual void OnBChanged()
-        {
-            this.IsChanged = true;
-            if ((!ReferenceEquals(BChanged, null)))
-            {
-                BChanged(this, EventArgs.Empty);
-            }
-            this.OnPropertyChanged(@"B");
-        }
-        
-        private const float DEF_B = 1.0F;
-        
-        [DefaultValue(DEF_B)]
-        public virtual float B
-        {
-            get { return _b; }
-            set
-            {
-                if ((Math.Abs(value - _b) < float.Epsilon))
-                {
-                    return;
-                }
-                _b = value;
-                this.OnBChanged();
-            }
-        }
-        
-        #endregion
-        
-        #region Property A
-        
-        private float _a;
-        
-        public event EventHandler AChanged;
-        
-        protected virtual void OnAChanged()
-        {
-            this.IsChanged = true;
-            if ((!ReferenceEquals(AChanged, null)))
-            {
-                AChanged(this, EventArgs.Empty);
-            }
-            this.OnPropertyChanged(@"A");
-        }
-        
-        private const float DEF_A = 1.0F;
-        
-        [DefaultValue(DEF_A)]
-        public virtual float A
-        {
-            get { return _a; }
-            set
-            {
-                if ((Math.Abs(value - _a) < float.Epsilon))
-                {
-                    return;
-                }
-                _a = value;
-                this.OnAChanged();
-            }
-        }
-        
-        #endregion
-    }
-    
     public partial class CloudParameter : IEquatable<CloudParameter>, INotifyPropertyChanged, IChangeTracking
     {
         public CloudParameter()
@@ -1664,40 +1453,15 @@ namespace de.fhb.oll.mediacategorizer.model
             _height = DEF_HEIGHT;
             _precision = DEF_PRECISION;
             _orderPriority = DEF_ORDERPRIORITY;
-            _fontFamily = DEF_FONTFAMILY;
+            FontFamily = new global::System.Windows.Media.FontFamily();
             _fontBold = DEF_FONTBOLD;
             _fontItalic = DEF_FONTITALIC;
             _minFontSize = DEF_MINFONTSIZE;
             _maxFontSize = DEF_MAXFONTSIZE;
-            _color = new ColorRGBA();
-            _backgroundColor = new ColorRGBA();
             this.Initialize();
+            
+            this.IsChanged = false;
         }
-        
-        #region String Representation
-        
-        public override string ToString()
-        {
-            return this.ToString(global::System.Globalization.CultureInfo.CurrentUICulture);
-        }
-        
-        public string ToString(IFormatProvider formatProvider)
-        {
-            return (this.GetType().FullName + @": " + (
-                (Environment.NewLine + @"    Width = " + _width.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Height = " + _height.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Precision = " + _precision.ToString().Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    OrderPriority = " + _orderPriority.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FontFamily = " + ((!ReferenceEquals(_fontFamily, null)) ? _fontFamily.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FontBold = " + _fontBold.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    FontItalic = " + _fontItalic.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    MinFontSize = " + _minFontSize.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    MaxFontSize = " + _maxFontSize.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Color = " + ((!ReferenceEquals(_color, null)) ? _color.ToString() : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    BackgroundColor = " + ((!ReferenceEquals(_backgroundColor, null)) ? _backgroundColor.ToString() : @"null").Replace("\n", "\n    "))));
-        }
-        
-        #endregion
         
         #region Equatability
         
@@ -1717,8 +1481,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 this._fontItalic.Equals(o._fontItalic) && 
                 (this._minFontSize == o._minFontSize) && 
                 (this._maxFontSize == o._maxFontSize) && 
-                object.Equals(this._color, o._color) && 
-                object.Equals(this._backgroundColor, o._backgroundColor));
+                this._color.Equals(o._color) && 
+                this._backgroundColor.Equals(o._backgroundColor));
         }
         
         public override bool Equals(object o)
@@ -1746,8 +1510,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 this._fontItalic.GetHashCode() ^ 
                 this._minFontSize.GetHashCode() ^ 
                 this._maxFontSize.GetHashCode() ^ 
-                ((!ReferenceEquals(this._color, null)) ? this._color.GetHashCode() : 0) ^ 
-                ((!ReferenceEquals(this._backgroundColor, null)) ? this._backgroundColor.GetHashCode() : 0));
+                this._color.GetHashCode() ^ 
+                this._backgroundColor.GetHashCode());
         }
         
         #endregion
@@ -1766,6 +1530,8 @@ namespace de.fhb.oll.mediacategorizer.model
         
         private bool _isChanged = false;
         
+        [Browsable(false)]
+        
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -1774,20 +1540,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         public void AcceptChanges()
         {
-            if ((!ReferenceEquals(_color, null)))
-            {
-                _color.AcceptChanges();
-            }
-            if ((!ReferenceEquals(_backgroundColor, null)))
-            {
-                _backgroundColor.AcceptChanges();
-            }
             this.IsChanged = false;
-        }
-        
-        private void ChildPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
-        {
-            this.IsChanged = true;
         }
         
         #endregion
@@ -1811,6 +1564,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const int DEF_WIDTH = 640;
         
         [DefaultValue(DEF_WIDTH)]
+        [DisplayName(@"Breite (px)")]
+        [Description(@"Die Breite der Wortwolke in Pixel.")]
         public virtual int Width
         {
             get { return _width; }
@@ -1846,6 +1601,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const int DEF_HEIGHT = 480;
         
         [DefaultValue(DEF_HEIGHT)]
+        [DisplayName(@"Höhe (px)")]
+        [Description(@"Die Höhe der Wortwolke in Pixel.")]
         public virtual int Height
         {
             get { return _height; }
@@ -1881,6 +1638,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const CloudPrecision DEF_PRECISION = CloudPrecision.Medium;
         
         [DefaultValue(DEF_PRECISION)]
+        [DisplayName(@"Genauigkeit")]
+        [Description(@"Die Genauigkeit ber der Wortwolkengenerierung. Eine hohe Genauigkeit erlaubt das engere Platzieren von Worten an- und ineinander, benötigt jedoch mehr Rechenzeit.")]
         public virtual CloudPrecision Precision
         {
             get { return _precision; }
@@ -1916,6 +1675,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const float DEF_ORDERPRIORITY = 0.6F;
         
         [DefaultValue(DEF_ORDERPRIORITY)]
+        [DisplayName(@"Priorität der Sortierung")]
+        [Description(@"Gibt an, wie wichtig die alphabetische sortierung der Worte ist. Ein Wert zwischen 0 und 1. Die 1 steht für sehr strenge Sortierung, die 0 für keine Sortierung.")]
         public virtual float OrderPriority
         {
             get { return _orderPriority; }
@@ -1934,7 +1695,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property FontFamily
         
-        private string _fontFamily;
+        private global::System.Windows.Media.FontFamily _fontFamily;
         
         public event EventHandler FontFamilyChanged;
         
@@ -1948,15 +1709,14 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"FontFamily");
         }
         
-        private const string DEF_FONTFAMILY = @"Arial";
-        
-        [DefaultValue(DEF_FONTFAMILY)]
-        public virtual string FontFamily
+        [DisplayName(@"Schriftfamilie")]
+        [Description(@"Der Name der Schriftfamilie für die Worte in der Wolke.")]
+        public virtual global::System.Windows.Media.FontFamily FontFamily
         {
             get { return _fontFamily; }
             set
             {
-                if (string.Equals(value, _fontFamily))
+                if ((value == _fontFamily))
                 {
                     return;
                 }
@@ -1986,6 +1746,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_FONTBOLD = true;
         
         [DefaultValue(DEF_FONTBOLD)]
+        [DisplayName(@"Schriftstärke (fett)")]
+        [Description(@"Ein Wert der angibt, ob die Schrift fett gedruckt werden soll.")]
         public virtual bool FontBold
         {
             get { return _fontBold; }
@@ -2021,6 +1783,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const bool DEF_FONTITALIC = false;
         
         [DefaultValue(DEF_FONTITALIC)]
+        [DisplayName(@"Schriftschnitt (kursiv)")]
+        [Description(@"Ein Wert der angibt, ob die Schrift kursiv gedruckt werden soll.")]
         public virtual bool FontItalic
         {
             get { return _fontItalic; }
@@ -2056,6 +1820,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const float DEF_MINFONTSIZE = 13.0F;
         
         [DefaultValue(DEF_MINFONTSIZE)]
+        [DisplayName(@"Schriftgröße (minimal)")]
+        [Description(@"Die kleinstmögliche Schriftgröße von Worten in der Wolke.")]
         public virtual float MinFontSize
         {
             get { return _minFontSize; }
@@ -2091,6 +1857,8 @@ namespace de.fhb.oll.mediacategorizer.model
         private const float DEF_MAXFONTSIZE = 80.0F;
         
         [DefaultValue(DEF_MAXFONTSIZE)]
+        [DisplayName(@"Schriftgröße (maximal)")]
+        [Description(@"Die größtmögliche Schriftgröße von Worten in der Wolke.")]
         public virtual float MaxFontSize
         {
             get { return _maxFontSize; }
@@ -2109,7 +1877,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property Color
         
-        private ColorRGBA _color;
+        private global::System.Windows.Media.Color _color;
         
         public event EventHandler ColorChanged;
         
@@ -2123,29 +1891,18 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Color");
         }
         
-        private void ColorContentChangedHandler(object sender, EventArgs ea)
-        {
-            this.OnColorChanged();
-        }
-        
-        public virtual ColorRGBA Color
+        [DisplayName(@"Schriftfarbe")]
+        [Description(@"Die Farbe der Worte in der Wortwolke.")]
+        public virtual global::System.Windows.Media.Color Color
         {
             get { return _color; }
             set
             {
-                if ((value == _color))
+                if (value.Equals(_color))
                 {
                     return;
                 }
-                if ((!ReferenceEquals(_color, null)))
-                {
-                    _color.PropertyChanged -= this.ColorContentChangedHandler;
-                }
                 _color = value;
-                if ((!ReferenceEquals(_color, null)))
-                {
-                    _color.PropertyChanged += this.ColorContentChangedHandler;
-                }
                 this.OnColorChanged();
             }
         }
@@ -2154,7 +1911,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property BackgroundColor
         
-        private ColorRGBA _backgroundColor;
+        private global::System.Windows.Media.Color _backgroundColor;
         
         public event EventHandler BackgroundColorChanged;
         
@@ -2168,29 +1925,18 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"BackgroundColor");
         }
         
-        private void BackgroundColorContentChangedHandler(object sender, EventArgs ea)
-        {
-            this.OnBackgroundColorChanged();
-        }
-        
-        public virtual ColorRGBA BackgroundColor
+        [DisplayName(@"Hintergrundfarbe")]
+        [Description(@"Die Farbe des Hintergrundes.")]
+        public virtual global::System.Windows.Media.Color BackgroundColor
         {
             get { return _backgroundColor; }
             set
             {
-                if ((value == _backgroundColor))
+                if (value.Equals(_backgroundColor))
                 {
                     return;
                 }
-                if ((!ReferenceEquals(_backgroundColor, null)))
-                {
-                    _backgroundColor.PropertyChanged -= this.BackgroundColorContentChangedHandler;
-                }
                 _backgroundColor = value;
-                if ((!ReferenceEquals(_backgroundColor, null)))
-                {
-                    _backgroundColor.PropertyChanged += this.BackgroundColorContentChangedHandler;
-                }
                 this.OnBackgroundColorChanged();
             }
         }
@@ -2204,23 +1950,9 @@ namespace de.fhb.oll.mediacategorizer.model
         {
             _type = DEF_TYPE;
             _url = DEF_URL;
+            
+            this.IsChanged = false;
         }
-        
-        #region String Representation
-        
-        public override string ToString()
-        {
-            return this.ToString(global::System.Globalization.CultureInfo.CurrentUICulture);
-        }
-        
-        public string ToString(IFormatProvider formatProvider)
-        {
-            return (this.GetType().FullName + @": " + (
-                (Environment.NewLine + @"    Type = " + _type.ToString().Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Url = " + ((!ReferenceEquals(_url, null)) ? _url.ToString(formatProvider) : @"null").Replace("\n", "\n    "))));
-        }
-        
-        #endregion
         
         #region Equatability
         
@@ -2271,6 +2003,8 @@ namespace de.fhb.oll.mediacategorizer.model
         
         private bool _isChanged = false;
         
+        [Browsable(false)]
+        
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -2280,11 +2014,6 @@ namespace de.fhb.oll.mediacategorizer.model
         public void AcceptChanges()
         {
             this.IsChanged = false;
-        }
-        
-        private void ChildPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
-        {
-            this.IsChanged = true;
         }
         
         #endregion
@@ -2366,25 +2095,10 @@ namespace de.fhb.oll.mediacategorizer.model
         {
             _id = DEF_ID;
             _name = DEF_NAME;
-            _resources = new global::System.Collections.ObjectModel.ObservableCollection<CategoryResource>();
+            Resources = new global::System.Collections.ObjectModel.ObservableCollection<CategoryResource>();
+            
+            this.IsChanged = false;
         }
-        
-        #region String Representation
-        
-        public override string ToString()
-        {
-            return this.ToString(global::System.Globalization.CultureInfo.CurrentUICulture);
-        }
-        
-        public string ToString(IFormatProvider formatProvider)
-        {
-            return (this.GetType().FullName + @": " + (
-                (Environment.NewLine + @"    Id = " + ((!ReferenceEquals(_id, null)) ? _id.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Name = " + ((!ReferenceEquals(_name, null)) ? _name.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Resources = " + ((!ReferenceEquals(_resources, null)) ? _resources.ToString() : @"null").Replace("\n", "\n    "))));
-        }
-        
-        #endregion
         
         #region Equatability
         
@@ -2437,6 +2151,8 @@ namespace de.fhb.oll.mediacategorizer.model
         
         private bool _isChanged = false;
         
+        [Browsable(false)]
+        
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -2446,11 +2162,6 @@ namespace de.fhb.oll.mediacategorizer.model
         public void AcceptChanges()
         {
             this.IsChanged = false;
-        }
-        
-        private void ChildPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
-        {
-            this.IsChanged = true;
         }
         
         #endregion
@@ -2541,9 +2252,34 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Resources");
         }
         
-        private void ResourcesContentChangedHandler(object sender, EventArgs ea)
+        private void ResourcesItemPropertyChanged(object sender, EventArgs ea)
         {
             this.OnResourcesChanged();
+        }
+        
+        private void ResourcesCollectionChangedHandler(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs ea)
+        {
+            if ((!ReferenceEquals(ea.OldItems, null)))
+            {
+                foreach (CategoryResource item in ea.OldItems)
+                {
+                    if ((!ReferenceEquals(item, null)))
+                    {
+                        item.PropertyChanged -= this.ResourcesItemPropertyChanged;
+                    }
+                }
+            }
+            this.OnResourcesChanged();
+            if ((!ReferenceEquals(ea.NewItems, null)))
+            {
+                foreach (CategoryResource item in ea.NewItems)
+                {
+                    if ((!ReferenceEquals(item, null)))
+                    {
+                        item.PropertyChanged += this.ResourcesItemPropertyChanged;
+                    }
+                }
+            }
         }
         
         public virtual global::System.Collections.ObjectModel.ObservableCollection<CategoryResource> Resources
@@ -2557,12 +2293,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 if ((!ReferenceEquals(_resources, null)))
                 {
-                    _resources.CollectionChanged -= this.ResourcesContentChangedHandler;
+                    _resources.CollectionChanged -= this.ResourcesCollectionChangedHandler;
                 }
                 _resources = value;
                 if ((!ReferenceEquals(_resources, null)))
                 {
-                    _resources.CollectionChanged += this.ResourcesContentChangedHandler;
+                    _resources.CollectionChanged += this.ResourcesCollectionChangedHandler;
                 }
                 this.OnResourcesChanged();
             }
@@ -2575,27 +2311,8 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public Media()
         {
+            this.IsChanged = false;
         }
-        
-        #region String Representation
-        
-        public override string ToString()
-        {
-            return this.ToString(global::System.Globalization.CultureInfo.CurrentUICulture);
-        }
-        
-        public string ToString(IFormatProvider formatProvider)
-        {
-            return (this.GetType().FullName + @": " + (
-                (Environment.NewLine + @"    Id = " + ((!ReferenceEquals(_id, null)) ? _id.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Name = " + ((!ReferenceEquals(_name, null)) ? _name.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    MediaFile = " + ((!ReferenceEquals(_mediaFile, null)) ? _mediaFile.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    AudioFile = " + ((!ReferenceEquals(_audioFile, null)) ? _audioFile.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    ResultsFile = " + ((!ReferenceEquals(_resultsFile, null)) ? _resultsFile.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    WaveformFile = " + ((!ReferenceEquals(_waveformFile, null)) ? _waveformFile.ToString(formatProvider) : @"null").Replace("\n", "\n    "))));
-        }
-        
-        #endregion
         
         #region Equatability
         
@@ -2644,6 +2361,8 @@ namespace de.fhb.oll.mediacategorizer.model
         
         private bool _isChanged = false;
         
+        [Browsable(false)]
+        
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -2653,11 +2372,6 @@ namespace de.fhb.oll.mediacategorizer.model
         public void AcceptChanges()
         {
             this.IsChanged = false;
-        }
-        
-        private void ChildPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
-        {
-            this.IsChanged = true;
         }
         
         #endregion
