@@ -20,6 +20,21 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <Style x:Key="PageHeaderStyle" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Padding" Value="5,0" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TranslateTransform Y="-3"/>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </Application.Resources>
 </Application>
