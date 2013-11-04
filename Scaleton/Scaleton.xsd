@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="Scaleton" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema id="Scaleton" elementFormDefault="qualified" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://scaleton.mastersign.de/2013/model"
+           xmlns="http://scaleton.mastersign.de/2013/model">
 
   <xs:simpleType name="KIND_OF_TYPE">
     <xs:restriction base="xs:string">
@@ -43,7 +46,7 @@
 
   <xs:complexType name="MODEL_FEATURES">
     <xs:all>
-      <xs:element name="ToString" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ToString" minOccurs="0" maxOccurs="1" type="FEATURE_TO_STRING" />
       <xs:element name="Equatable" minOccurs="0" maxOccurs="1" type="FEATURE_EQUATABLE" />
       <xs:element name="Comparable" minOccurs="0" maxOccurs="1" />
       <xs:element name="ChangeTracking" minOccurs="0" maxOccurs="1" type="FEATURE_CHANGE_TRACKING" />
@@ -67,18 +70,23 @@
   <xs:complexType name="CLASS_PROPERTY">
     <xs:sequence>
       <xs:element name="Doc" type="DOCUMENTATION" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Category" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="DisplayName" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="CustomAttribute" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="DefaultValue" type="xs:string" minOccurs="0" maxOccurs="1" />
     </xs:sequence>
     <xs:attribute name="name" type="xs:Name" use="required" />
     <xs:attribute name="type" type="xs:string" default="string" use="optional" />
     <xs:attribute name="isCollection" type="xs:boolean" default="false" use="optional" />
     <xs:attribute name="defaultInitialization" type="xs:boolean" default="true" use="optional" />
+    <xs:attribute name="browsable" type="xs:boolean" default="true" use="optional" />
   </xs:complexType>
 
   <xs:element name="Model">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="Namespace" type="xs:string" minOccurs="1" maxOccurs="1" />
+        <xs:element name="Namespace" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="Dependencies" minOccurs="0" maxOccurs="1">
           <xs:complexType>
             <xs:sequence>
@@ -110,6 +118,7 @@
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="Doc" type="DOCUMENTATION" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="CustomAttribute" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="CustomInitializer" type="xs:Name" minOccurs="0" maxOccurs="1" />
                     <xs:choice minOccurs="0" maxOccurs="unbounded">
                       <xs:element name="Property" type="CLASS_PROPERTY" />
@@ -129,6 +138,7 @@
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="Doc" type="DOCUMENTATION" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="CustomAttribute" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="Member" type="ENUM_MEMBER" minOccurs="1" maxOccurs="unbounded" />
                   </xs:sequence>
                   <xs:attribute name="name" type="xs:Name" use="required" />

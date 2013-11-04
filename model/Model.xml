@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://scaleton.mastersign.de/2013/model"
        xsi:noNamespaceSchemaLocation="../Scaleton/Scaleton.xsd">
   
   <Namespace>de.fhb.oll.mediacategorizer.model</Namespace>

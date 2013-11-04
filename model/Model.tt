@@ -3,7 +3,7 @@
 <#@ output extension=".cs" #>
 <#
 var modelPath = this.Host.ResolvePath(System.IO.Path.GetFileNameWithoutExtension(this.Host.TemplateFile) + ".xml");
-var modelLoader = new de.mastersign.scaleton.XmlModelLoader();
+var modelLoader = new de.mastersign.scaleton.XmlModelLoader("Model");
 var codeWriter = new de.mastersign.scaleton.CSharpCodeWriter();
 var scaleton = new de.mastersign.scaleton.Scaleton(codeWriter);
 var model = modelLoader.LoadModel(modelPath);
