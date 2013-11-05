@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://scaleton.mastersign.de/2013/model"
+       xsi:schemaLocation="http://scaleton.mastersign.de/2013/model http://scaleton.mastersign.de/Scaleton_Model_2013.xsd">
+
+  <ModelFeatures>
+    <ChangeTracking level="Tracking" escalateChangeState="true" />
+    <ToString />
+    <Equatable />
+  </ModelFeatures>
+
+  <Types>
+    <Class name="Setup">
+      <Property name="Ffmpeg">
+        <Category>Tools</Category>
+        <DisplayName>ffmpeg</DisplayName>
+        <Description>Der Pfad von ffmpeg.exe.</Description>
+        <DefaultValue>tools/ffmpeg/bin/ffmpeg.exe</DefaultValue>
+      </Property>
+      <Property name="WaveViz">
+        <Category>Tools</Category>
+        <DisplayName>WaveViz</DisplayName>
+        <Description>Der Pfad von WaveViz.exe.</Description>
+        <DefaultValue>tools/WaveViz/WaveViz.exe</DefaultValue>
+      </Property>
+      <Property name="Transcripter">
+        <Category>Tools</Category>
+        <DisplayName>Transcripter</DisplayName>
+        <Description>Der Pfad von Transcripter.exe.</Description>
+        <DefaultValue>tools/Transcripter/Transcripter.exe</DefaultValue>
+      </Property>
+      <Property name="Distillery">
+        <Category>Tools</Category>
+        <DisplayName>distillery</DisplayName>
+        <Description>Der Pfad von distillery.jar.</Description>
+        <DefaultValue>tools/distillery.jar</DefaultValue>
+      </Property>
+    </Class>
+  </Types>
+</Model>

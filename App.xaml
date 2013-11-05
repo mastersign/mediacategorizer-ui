@@ -2,8 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="de.fhb.oll.mediacategorizer.App"
+             xmlns:settings="clr-namespace:de.fhb.oll.mediacategorizer.settings"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
+        <settings:SetupManager x:Key="SetupManager" />
 
         <Style x:Key="CleanMenuStyle" TargetType="Menu">
             <Setter Property="Background">
