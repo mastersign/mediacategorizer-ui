@@ -100,10 +100,10 @@
     <Compile Include="model\Category.cs" />
     <Compile Include="model\CloudParameter.cs" />
     <Compile Include="model\FilterParameter.cs" />
-    <Compile Include="model\Model.cs">
+    <Compile Include="model\Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Model.xml</DependentUpon>
     </Compile>
     <Compile Include="model\ModelBase.cs" />
     <Compile Include="model\Project.cs" />
@@ -139,10 +139,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="model\Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model.cs</LastGenOutput>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -155,6 +151,8 @@
   <ItemGroup>
     <Resource Include="model\Model.xml">
       <SubType>Designer</SubType>
+      <Generator>Scaleton Code Generator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </Resource>
   </ItemGroup>
   <ItemGroup>
