@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace de.fhb.oll.mediacategorizer.model
 {
     partial class Project
     {
+        private const string WORKING_DIR_NAME = "_tmp_";
+
         private void Initialize()
         {
             LoadDemoData();
@@ -65,6 +68,11 @@ namespace de.fhb.oll.mediacategorizer.model
             Configuration.MainCloud.FontFamily = new FontFamily("Arial");
             Configuration.CategoryCloud.FontFamily = new FontFamily("Arial");
             Configuration.MediaCloud.FontFamily = new FontFamily("Arial");
+        }
+
+        public string GetWorkingDirectory()
+        {
+            return Path.Combine(OutputDir, WORKING_DIR_NAME);
         }
     }
 }
