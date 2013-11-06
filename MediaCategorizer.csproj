@@ -63,6 +63,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PageSetup.xaml.cs">
+      <DependentUpon>PageSetup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="processing\AudioExtractionProcess.cs" />
     <Compile Include="processing\ProcessResultEventArgs.cs" />
     <Compile Include="processing\IProcess.cs" />
@@ -84,6 +87,10 @@
     <Compile Include="tools\ToolProvider.cs" />
     <Compile Include="tools\TranscripterTool.cs" />
     <Compile Include="tools\WaveVizTool.cs" />
+    <Page Include="PageSetup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
