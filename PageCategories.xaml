@@ -7,7 +7,7 @@
 	  xmlns:model="clr-namespace:de.fhb.oll.mediacategorizer.model"
 	  mc:Ignorable="d" 
 	  d:DesignHeight="400" d:DesignWidth="500"
-	Title="PageCategories">
+	Title="Kategorien">
 	<Page.Resources>
 		<ObjectDataProvider MethodName="GetValues"
 			ObjectType="{x:Type sys:Enum}"
@@ -24,7 +24,7 @@
 			<RowDefinition Height="2*"/>
 			<RowDefinition Height="3*"/>
 		</Grid.RowDefinitions>
-		<Label Grid.Row="0" Content="Kategorien" Style="{StaticResource PageHeaderStyle}" />
+		<Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
 		<StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top">
 			<Button x:Name="btnCreateCategory" Content="Kategorie hinzufügen" Style="{DynamicResource LabelButtonStyle}" Click="CreateCategoryHandler" />
 			<Button x:Name="btnDeleteCategory" Content="Kategorie entfernen" Style="{DynamicResource LabelButtonStyle}" Click="DeleteCategoryHandler" IsEnabled="False" />
