@@ -73,6 +73,12 @@
       <DependentUpon>Settings.xml</DependentUpon>
     </Compile>
     <Compile Include="settings\SetupManager.cs" />
+    <Compile Include="tools\DistilleryTool.cs" />
+    <Compile Include="tools\FfmpegTool.cs" />
+    <Compile Include="tools\ToolBase.cs" />
+    <Compile Include="tools\ToolProvider.cs" />
+    <Compile Include="tools\TranscripterTool.cs" />
+    <Compile Include="tools\WaveVizTool.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
