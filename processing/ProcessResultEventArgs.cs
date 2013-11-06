@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace de.fhb.oll.mediacategorizer
+namespace de.fhb.oll.mediacategorizer.processing
 {
-    class EndStateEventArgs : EventArgs
+    class ProcessResultEventArgs : EventArgs
     {
         public bool Success { get; private set; }
 
         public string ErrorMessage { get; private set; }
 
-        public EndStateEventArgs(bool success, string errorMessage)
+        public ProcessResultEventArgs(bool success, string errorMessage)
         {
             Success = success;
             ErrorMessage = errorMessage;

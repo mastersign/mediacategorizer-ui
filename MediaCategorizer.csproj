@@ -63,10 +63,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AudioExtractionProcess.cs" />
-    <Compile Include="EndStateEventArgs.cs" />
-    <Compile Include="IProcessStep.cs" />
-    <Compile Include="ProgressEventArgs.cs" />
+    <Compile Include="processing\AudioExtractionProcess.cs" />
+    <Compile Include="processing\ProcessResultEventArgs.cs" />
+    <Compile Include="processing\IProcess.cs" />
+    <Compile Include="processing\FinalizeProjectProcess.cs" />
+    <Compile Include="processing\PrepareProjectProcess.cs" />
+    <Compile Include="processing\ProcessBase.cs" />
+    <Compile Include="processing\ProcessChain.cs" />
+    <Compile Include="processing\ProcessState.cs" />
+    <Compile Include="processing\ProcessProgressEventArgs.cs" />
     <Compile Include="settings\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
