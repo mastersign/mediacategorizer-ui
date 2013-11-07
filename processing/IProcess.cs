@@ -9,7 +9,7 @@ using de.fhb.oll.mediacategorizer.tools;
 
 namespace de.fhb.oll.mediacategorizer.processing
 {
-    interface IProcess : INotifyPropertyChanged
+    public interface IProcess : INotifyPropertyChanged
     {
         string Name { get; }
 

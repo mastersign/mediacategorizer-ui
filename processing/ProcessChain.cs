@@ -12,7 +12,7 @@ using de.fhb.oll.mediacategorizer.tools;
 
 namespace de.fhb.oll.mediacategorizer.processing
 {
-    class ProcessChain : INotifyPropertyChanged
+    public class ProcessChain : INotifyPropertyChanged
     {
         private readonly IProcess[] processes;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace de.fhb.oll.mediacategorizer.processing
 {
-    enum ProcessState
+    public enum ProcessState
     {
         Waiting,
         Running,

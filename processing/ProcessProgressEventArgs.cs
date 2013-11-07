@@ -5,7 +5,7 @@ using System.Text;
 
 namespace de.fhb.oll.mediacategorizer.processing
 {
-    class ProcessProgressEventArgs : EventArgs
+    public class ProcessProgressEventArgs : EventArgs
     {
         public float Progress { get; private set; }
 

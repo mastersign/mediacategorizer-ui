@@ -5,7 +5,7 @@ using System.Text;
 
 namespace de.fhb.oll.mediacategorizer.processing
 {
-    class ProcessResultEventArgs : EventArgs
+    public class ProcessResultEventArgs : EventArgs
     {
         public bool Success { get; private set; }
 
