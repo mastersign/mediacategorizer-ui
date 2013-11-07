@@ -23,6 +23,10 @@ namespace de.fhb.oll.mediacategorizer.model
         [Conditional("DEBUG")]
         private void LoadDemoData()
         {
+            Name = "Testprojekt";
+            Description = "Ein Testprojekt zum Testen.";
+            OutputDir = @"C:\Temp\MediaCategorizerOutput";
+
             Categories.Add(new Category
             {
                 Id = "tarnung",
