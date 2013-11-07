@@ -7,7 +7,7 @@ using de.fhb.oll.mediacategorizer.settings;
 
 namespace de.fhb.oll.mediacategorizer.tools
 {
-    class ToolProvider
+    public class ToolProvider
     {
         private readonly Setup applicationSetup;
 
