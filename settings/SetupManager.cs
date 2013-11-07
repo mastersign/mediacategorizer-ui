@@ -29,6 +29,20 @@ namespace de.fhb.oll.mediacategorizer.settings
             }
         }
 
+        public Setup Setup
+        {
+            get { return setup; }
+            private set
+            {
+                if (ReferenceEquals(setup, value)) return;
+                setup = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Setup"));
+                }
+            }
+        }
+
         public void Load()
         {
             var path = SetupFilePath;
@@ -37,29 +51,25 @@ namespace de.fhb.oll.mediacategorizer.settings
                 var r = new XmlSerializer(typeof(Setup));
                 using (var s = File.OpenRead(path))
                 {
-                    setup = (Setup)r.Deserialize(s);
+                    Setup = (Setup)r.Deserialize(s);
                 }
             }
             else
             {
-                setup = new Setup();
-            }
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("Setup"));
+                Setup = new Setup();
             }
         }
 
         public void Save()
         {
-            if (setup == null || setup.IsChanged) return;
+            if (Setup == null || Setup.IsChanged) return;
             var w = new XmlSerializer(typeof(Setup));
             var path = SetupFilePath;
             using (var s = File.OpenWrite(path))
             {
-                w.Serialize(s, setup);
+                w.Serialize(s, Setup);
             }
-            setup.AcceptChanges();
+            Setup.AcceptChanges();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
