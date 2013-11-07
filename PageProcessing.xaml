@@ -6,11 +6,46 @@
 	  mc:Ignorable="d" 
 	  d:DesignHeight="300" d:DesignWidth="400"
 	Title="Ausführung">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="30"/>
-			<RowDefinition Height="1*"/>
-		</Grid.RowDefinitions>
-		<Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
-	</Grid>
+    <Page.Resources>
+        <DataTemplate x:Key="WaitingProcessTemplate">
+            <Label Content="{Binding Path=SimpleStringRepresentation}" />
+        </DataTemplate>
+        <DataTemplate x:Key="RunningProcessTemplate">
+            <Label Content="{Binding Path=SimpleStringRepresentation}" />
+        </DataTemplate>
+        <DataTemplate x:Key="EndedProcessTemplate">
+            <Label Content="{Binding Path=SimpleStringRepresentation}" />
+        </DataTemplate>
+        <SolidColorBrush x:Key="ListRegionBackground" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
+
+        <Grid x:Name="gridProcessChain" DataContext="{x:Null}" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="Wartende Prozesse" Grid.Row="0" FontWeight="Bold" Padding="5,2" Background="{DynamicResource ListRegionBackground}"/>
+            <ListBox x:Name="listWaiting" Margin="0" Grid.Row="1" BorderThickness="0" ItemsSource="{Binding WaitingProcesses}" ItemTemplate="{StaticResource WaitingProcessTemplate}" />
+            <Label Content="Laufende Prozesse" Grid.Row="2" FontWeight="Bold" Padding="5,2" Background="{DynamicResource ListRegionBackground}"/>
+            <ListBox x:Name="listRunning" Margin="0" Grid.Row="3" BorderThickness="0" ItemsSource="{Binding RunningProcesses}"
+              ItemTemplate="{StaticResource RunningProcessTemplate}"/>
+            <Label Content="Abgeschlossene Prozesse" Grid.Row="4" FontWeight="Bold" Padding="5,2" Background="{DynamicResource ListRegionBackground}"/>
+            <ListBox x:Name="listEnded" Margin="0" Grid.Row="5" BorderThickness="0" ItemsSource="{Binding EndedProcesses}"
+              ItemTemplate="{StaticResource EndedProcessTemplate}"/>
+        </Grid>
+
+        <Button Content="Ausführung starten" HorizontalAlignment="Right" Margin="0" Grid.Row="2" VerticalAlignment="Bottom" Click="StartProcessHandler" Padding="6,1"/>
+    </Grid>
 </Page>
