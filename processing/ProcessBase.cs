@@ -198,5 +198,12 @@ namespace de.fhb.oll.mediacategorizer.processing
         }
 
         protected abstract void Work();
+
+        public override string ToString()
+        {
+            return string.Format("Prozess {0}: {1:P1} ({2})", Name, CurrentProgress, State);
+        }
+
+        public string SimpleStringRepresentation { get { return ToString(); } }
     }
 }
