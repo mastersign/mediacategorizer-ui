@@ -50,7 +50,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 p.Ended += ProcessEndedHandler;
             }
 
-            WaitingProcesses = new ObservableCollection<IProcess>(CollectWaitingProcesses());
+            WaitingProcesses = new ObservableCollection<IProcess>(processes);
             RunningProcesses = new ObservableCollection<IProcess>();
             EndedProcesses = new ObservableCollection<IProcess>();
         }
