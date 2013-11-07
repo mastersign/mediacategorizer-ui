@@ -22,14 +22,28 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         public ObservableCollection<IProcess> EndedProcesses { get; private set; }
 
+        public event EventHandler ChainStarted;
+
+        public event EventHandler ChainEnded;
+
         private bool isRunning;
 
         private bool isFailed;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public Setup Setup { get; private set; }
+
+        public ToolProvider ToolProvider { get; private set; }
+
+        public Project Project { get; private set; }
+
         public ProcessChain(Setup setup, ToolProvider toolProvider, Project project)
         {
+            Setup = setup;
+            ToolProvider = toolProvider;
+            Project = project;
+
             var prepareProject = new PrepareProjectProcess();
             var audioExtraction = new AudioExtractionProcess(prepareProject);
             var finalizeProject = new FinalizeProjectProcess(audioExtraction);
@@ -113,6 +127,15 @@ namespace de.fhb.oll.mediacategorizer.processing
             return from p in processes
                    where p.GetDependencies().All(dp => dp.State == ProcessState.Finished)
                    select p;
+        }
+
+        public void Start()
+        {
+            var waitingProcesses = CollectWaitingProcesses().ToArray();
+            foreach (var p in waitingProcesses)
+            {
+                p.Start();
+            }
         }
     }
 }
