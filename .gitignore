@@ -1,3 +1,8 @@
-bin/
-obj/
+*.user
+*.suo
+*.cache
+
+obj
+bin
+
 /res/*.zip
