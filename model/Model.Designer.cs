@@ -94,6 +94,7 @@ namespace de.fhb.oll.mediacategorizer.model
         private bool _isChanged = false;
         
         [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
         
         public bool IsChanged
         {
@@ -504,6 +505,7 @@ namespace de.fhb.oll.mediacategorizer.model
         private bool _isChanged = false;
         
         [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
         
         public bool IsChanged
         {
@@ -1157,6 +1159,7 @@ namespace de.fhb.oll.mediacategorizer.model
         private bool _isChanged = false;
         
         [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
         
         public bool IsChanged
         {
@@ -1562,6 +1565,7 @@ namespace de.fhb.oll.mediacategorizer.model
         private bool _isChanged = false;
         
         [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
         
         public bool IsChanged
         {
@@ -2047,6 +2051,7 @@ namespace de.fhb.oll.mediacategorizer.model
         private bool _isChanged = false;
         
         [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
         
         public bool IsChanged
         {
@@ -2198,6 +2203,7 @@ namespace de.fhb.oll.mediacategorizer.model
         private bool _isChanged = false;
         
         [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
         
         public bool IsChanged
         {
@@ -2412,6 +2418,7 @@ namespace de.fhb.oll.mediacategorizer.model
         private bool _isChanged = false;
         
         [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
         
         public bool IsChanged
         {

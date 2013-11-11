@@ -34,6 +34,7 @@ namespace de.fhb.oll.mediacategorizer.settings
         private bool _isChanged = false;
         
         [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
         
         public bool IsChanged
         {
