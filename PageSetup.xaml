@@ -13,6 +13,7 @@
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 		<Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
-		<wpftk:PropertyGrid Grid.Row="1" Background="{Binding Background, ElementName=page}" ShowSearchBox="False" ShowSortOptions="False" ShowTitle="False" BorderBrush="{x:Null}" IsManipulationEnabled="True" SelectedObject="{Binding Configuration}" NameColumnWidth="220"/>
+		<wpftk:PropertyGrid x:Name="pgSetup" Grid.Row="1" Background="{Binding Background, ElementName=page}" ShowSearchBox="False" ShowSortOptions="False" ShowTitle="False" BorderBrush="{x:Null}" IsManipulationEnabled="True" NameColumnWidth="220"
+                            SelectedObject="{Binding Source={StaticResource SetupManager}, Path=Setup}"/>
 	</Grid>
 </Page>

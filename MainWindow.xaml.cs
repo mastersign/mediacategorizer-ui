@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using de.fhb.oll.mediacategorizer.model;
+using de.fhb.oll.mediacategorizer.settings;
 
 namespace de.fhb.oll.mediacategorizer
 {
@@ -82,6 +83,21 @@ namespace de.fhb.oll.mediacategorizer
         {
             if (!CheckProjectStateBeforeClosing("Projekt öffnen")) return;
             MessageBox.Show(this, "OpenProject", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void MenuSetupHandler(object sender, RoutedEventArgs e)
+        {
+            GoToPage("Setup");
+            foreach (var exp in navigationPanel.Children.OfType<Expander>())
+            {
+                exp.IsExpanded = false;
+            }
+        }
+
+        private void ClosedHandler(object sender, EventArgs e)
+        {
+            var sm = (SetupManager)Application.Current.Resources["SetupManager"];
+            sm.Save();
         }
 
     }

@@ -63,10 +63,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.xml</DependentUpon>
+    </Compile>
     <Compile Include="PageSetup.xaml.cs">
       <DependentUpon>PageSetup.xaml</DependentUpon>
     </Compile>
     <Compile Include="processing\AudioExtractionProcess.cs" />
+    <Compile Include="processing\DummyProcess.cs" />
     <Compile Include="processing\ProcessResultEventArgs.cs" />
     <Compile Include="processing\IProcess.cs" />
     <Compile Include="processing\FinalizeProjectProcess.cs" />
@@ -128,11 +134,6 @@
     <Compile Include="model\Category.cs" />
     <Compile Include="model\CloudParameter.cs" />
     <Compile Include="model\FilterParameter.cs" />
-    <Compile Include="model\Model.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.xml</DependentUpon>
-    </Compile>
     <Compile Include="model\ModelBase.cs" />
     <Compile Include="model\Project.cs" />
     <Compile Include="PageCategories.xaml.cs">
@@ -179,8 +180,8 @@
   <ItemGroup>
     <Resource Include="model\Model.xml">
       <SubType>Designer</SubType>
-      <Generator>Scaleton Code Generator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
+      <Generator>Scaleton Code Generator</Generator>
     </Resource>
   </ItemGroup>
   <ItemGroup>
