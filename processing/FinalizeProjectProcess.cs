@@ -21,6 +21,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 OnProgress("Arbeitsverzeichnis aufräumen");
                 Directory.Delete(Project.GetWorkingDirectory(), true);
             }
+            OnProgress(1, "abgeschlossen");
         }
     }
 }

@@ -11,13 +11,14 @@ namespace de.fhb.oll.mediacategorizer.processing
     class PrepareProjectProcess : ProcessBase
     {
         public PrepareProjectProcess(params IProcess[] dependencies) 
-            : base("Project initialisieren", dependencies)
+            : base("Projekt initialisieren", dependencies)
         { }
 
         protected override void Work()
         {
             PrepareProjectDirectory();
             CheckTools();
+            OnProgress(1, "abgeschlossen");
         }
 
         private void PrepareProjectDirectory()
@@ -39,6 +40,9 @@ namespace de.fhb.oll.mediacategorizer.processing
             WorkItem = "Überprüfe Hilfsprogramme";
             foreach (var tt in ToolProvider.ToolTypes)
             {
+                // TODO build and provide distillery.jar
+                if (tt == typeof(DistilleryTool)) continue;
+
                 var tool = (ToolBase)ToolProvider.Create(tt);
                 OnProgress(string.Format("Überprüfe {0}", tool.Name));
                 if (!tool.CheckTool())
