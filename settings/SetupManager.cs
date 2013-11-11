@@ -62,10 +62,10 @@ namespace de.fhb.oll.mediacategorizer.settings
 
         public void Save()
         {
-            if (Setup == null || Setup.IsChanged) return;
+            if (Setup == null || !Setup.IsChanged) return;
             var w = new XmlSerializer(typeof(Setup));
             var path = SetupFilePath;
-            using (var s = File.OpenWrite(path))
+            using (var s = File.Open(path, FileMode.Create, FileAccess.Write))
             {
                 w.Serialize(s, Setup);
             }
