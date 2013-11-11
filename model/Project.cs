@@ -23,6 +23,11 @@ namespace de.fhb.oll.mediacategorizer.model
         [Conditional("DEBUG")]
         private void LoadDemoData()
         {
+            var appDir = Path.GetDirectoryName(
+                new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)
+                .LocalPath);
+            var basePath = Path.Combine(appDir, @"..\..\..\..");
+
             Name = "Testprojekt";
             Description = "Ein Testprojekt zum Testen.";
             OutputDir = @"C:\Temp\MediaCategorizerOutput";
@@ -58,15 +63,15 @@ namespace de.fhb.oll.mediacategorizer.model
 
             Media.Add(new Media
             {
-                Id = "a",
-                Name = "Video A",
-                MediaFile = @"C:\Temp\video1.mp4",
+                Id = "11-01-Informatik",
+                Name = "11.01 Theoretische, technische, praktische, angewandte Informatik",
+                MediaFile = Path.Combine(basePath, @"Media\Video\de-DE\11.01 Theoretische, technische, praktische, angewandte Informatik.mp4"),
             });
             Media.Add(new Media
             {
-                Id = "b",
-                Name = "Video B",
-                MediaFile = @"C:\Temp\video2.mp4",
+                Id = "12-01-2-Baum",
+                Name = "12.01.2 Baum als Datenstruktur",
+                MediaFile = Path.Combine(basePath, @"Media\Video\de-DE\12.01.2 Baum als Datenstruktur.mp4"),
             });
 
             Configuration.MainCloud.FontFamily = new FontFamily("Arial");
