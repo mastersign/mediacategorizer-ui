@@ -8,15 +8,63 @@
 	Title="Ausführung">
     <Page.Resources>
         <DataTemplate x:Key="WaitingProcessTemplate">
-            <Label Content="{Binding Path=SimpleStringRepresentation}" />
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblName" Grid.Row="0" Grid.Column="0" Content="{Binding Name, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
+                <Label x:Name="lblWorkItem" Grid.Row="0" Grid.Column="1" Content="{Binding WorkItem, Mode=OneWay}" HorizontalContentAlignment="Right"  Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="RunningProcessTemplate">
-            <Label Content="{Binding Path=SimpleStringRepresentation}" />
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="15" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblName" Grid.Row="0" Grid.Column="0" Content="{Binding Name, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
+                <Label x:Name="lblWorkItem" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalContentAlignment="Right" Content="{Binding WorkItem, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
+                <Label x:Name="lblProgressMessage" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding ProgressMessage, Mode=OneWay}" Margin="0" Padding="5,1,5,2" Height="20" />
+                <Label x:Name="lblProgress" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Right" Content="{Binding Path=CurrentProgress, Mode=OneWay}" ContentStringFormat="P" Padding="5,1,5,2" VerticalAlignment="Top" Height="20" />
+                <ProgressBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Margin="0,2,0,0"
+                             Minimum="0.0" Maximum="1.0" Value="{Binding CurrentProgress, Mode=OneWay}" Height="Auto" />
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="EndedProcessTemplate">
-            <Label Content="{Binding Path=SimpleStringRepresentation}" />
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblName" Grid.Row="0" Grid.Column="0" Content="{Binding Name, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
+                <Label x:Name="lblWorkItem" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalContentAlignment="Right" Content="{Binding WorkItem, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
+                <Label x:Name="lblProgressMessage" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding ProgressMessage, Mode=OneWay}" Margin="0" Padding="5,1,5,3" Height="20" />
+                <Label x:Name="lblProgress" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Right" Content="{Binding Path=CurrentProgress, Mode=OneWay}" ContentStringFormat="P" Padding="5,1,5,3" VerticalAlignment="Top" Height="20" />
+            </Grid>
         </DataTemplate>
         <SolidColorBrush x:Key="ListRegionBackground" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+        <Style x:Key="ListHeaderStyle" TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,6,0,0" />
+            <Setter Property="Padding" Value="5,2" />
+            <Setter Property="Background" Value="{DynamicResource ListRegionBackground}" />
+        </Style>
+
     </Page.Resources>
 
     <Grid>
@@ -30,20 +78,34 @@
         <Grid x:Name="gridProcessChain" DataContext="{x:Null}" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition/>
                 <RowDefinition Height="Auto" />
-                <RowDefinition/>
                 <RowDefinition Height="Auto" />
-                <RowDefinition/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label Content="Wartende Prozesse" Grid.Row="0" FontWeight="Bold" Padding="5,2" Background="{DynamicResource ListRegionBackground}"/>
-            <ListBox x:Name="listWaiting" Margin="0" Grid.Row="1" BorderThickness="0" ItemsSource="{Binding WaitingProcesses}" ItemTemplate="{StaticResource WaitingProcessTemplate}" />
-            <Label Content="Laufende Prozesse" Grid.Row="2" FontWeight="Bold" Padding="5,2" Background="{DynamicResource ListRegionBackground}"/>
-            <ListBox x:Name="listRunning" Margin="0" Grid.Row="3" BorderThickness="0" ItemsSource="{Binding RunningProcesses}"
-              ItemTemplate="{StaticResource RunningProcessTemplate}"/>
-            <Label Content="Abgeschlossene Prozesse" Grid.Row="4" FontWeight="Bold" Padding="5,2" Background="{DynamicResource ListRegionBackground}"/>
-            <ListBox x:Name="listEnded" Margin="0" Grid.Row="5" BorderThickness="0" ItemsSource="{Binding EndedProcesses}"
-              ItemTemplate="{StaticResource EndedProcessTemplate}"/>
+            <Label Content="Wartende Prozesse" Grid.Row="3" Style="{StaticResource ListHeaderStyle}"/>
+            <ListBox x:Name="listWaiting" Margin="0" Grid.Row="4" BorderThickness="0" ItemsSource="{Binding WaitingProcesses}" ItemTemplate="{StaticResource WaitingProcessTemplate}" HorizontalContentAlignment="Stretch" />
+            <Label Content="Laufende Prozesse" Grid.Row="5" Style="{StaticResource ListHeaderStyle}"/>
+            <ListBox x:Name="listRunning" Margin="0" Grid.Row="6" BorderThickness="0" ItemsSource="{Binding RunningProcesses}"
+              ItemTemplate="{StaticResource RunningProcessTemplate}" HorizontalContentAlignment="Stretch"/>
+            <Label Content="Abgeschlossene Prozesse" Grid.Row="7" Style="{StaticResource ListHeaderStyle}"/>
+            <ListBox x:Name="listEnded" Margin="0" Grid.Row="8" BorderThickness="0" ItemsSource="{Binding EndedProcesses}"
+              ItemTemplate="{StaticResource EndedProcessTemplate}" HorizontalContentAlignment="Stretch"/>
+
+            <Label Content="Gesamt" Grid.Row="0" Style="{StaticResource ListHeaderStyle}"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblStatus" Grid.Column="0" Content="Wartend"/>
+                <Label x:Name="lblFortschritt" Grid.Column="1" Content="{Binding Progress, Mode=OneWay}" ContentStringFormat="P" HorizontalContentAlignment="Right"/>
+            </Grid>
+            <ProgressBar x:Name="pbProgress" Grid.Row="2" Minimum="0" Maximum="1" Value="{Binding Progress, Mode=OneWay}" Height="14"/>
         </Grid>
 
         <Button Content="Ausführung starten" HorizontalAlignment="Right" Margin="0" Grid.Row="2" VerticalAlignment="Bottom" Click="StartProcessHandler" Padding="6,1"/>
