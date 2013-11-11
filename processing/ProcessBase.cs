@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.settings;
 using de.fhb.oll.mediacategorizer.tools;
@@ -23,6 +25,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         private ProcessState state;
         private string workItem;
         private float currentProgress;
+        private string progressMessage;
         private string errorMessage;
 
         public event EventHandler Started;
@@ -30,6 +33,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         public event EventHandler<ProcessProgressEventArgs> Progress;
         public event EventHandler<ProcessResultEventArgs> Ended;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Dispatcher Dispatcher { get; set; }
 
         protected ProcessBase(string name, IProcess[] dependencies)
         {
@@ -39,13 +44,22 @@ namespace de.fhb.oll.mediacategorizer.processing
             State = ProcessState.Waiting;
         }
 
+        protected void PostSynced(Delegate d, params object[] args)
+        {
+            if (d == null) return;
+            if (Dispatcher == null)
+            {
+                d.DynamicInvoke(args);
+            }
+            else
+            {
+                Dispatcher.InvokeAsync(() => d.DynamicInvoke(args));
+            }
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
+            PostSynced(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
 
         public Setup Setup
@@ -126,6 +140,17 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
         }
 
+        public string ProgressMessage
+        {
+            get { return progressMessage; }
+            private set
+            {
+                if (string.Equals(progressMessage, value)) return;
+                progressMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string ErrorMessage
         {
             get { return errorMessage; }
@@ -139,8 +164,12 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void OnStarted()
         {
-            var handler = Started;
-            if (handler != null) handler(this, EventArgs.Empty);
+            PostSynced(Started, this, EventArgs.Empty);
+        }
+
+        protected void OnProgress(float progress)
+        {
+            OnProgress(progress, ProgressMessage);
         }
 
         protected void OnProgress(string message)
@@ -151,23 +180,21 @@ namespace de.fhb.oll.mediacategorizer.processing
         protected virtual void OnProgress(float progress, string message)
         {
             CurrentProgress = progress;
-            var handler = Progress;
-            if (handler != null)
-            {
-                handler(this, new ProcessProgressEventArgs(progress, message));
-            }
+            ProgressMessage = message;
+            PostSynced(Progress, this, new ProcessProgressEventArgs(progress, message));
+        }
+
+        protected void OnError(string message)
+        {
+            ErrorMessage = message;
         }
 
         private void OnEnded(bool success, string errMsg = null)
         {
-            OnProgress(1f, success ? "Prozess abgeschlossen" : "Prozess fehlgeschlagen");
+            //OnProgress(1f, success ? "Prozess abgeschlossen" : "Prozess fehlgeschlagen");
             ErrorMessage = errMsg;
             State = success ? ProcessState.Finished : ProcessState.Failed;
-            var handler = Ended;
-            if (handler != null)
-            {
-                handler(this, new ProcessResultEventArgs(success, errMsg));
-            }
+            PostSynced(Ended, this, new ProcessResultEventArgs(success, errMsg));
         }
 
         public IEnumerable<IProcess> GetDependencies()
@@ -188,8 +215,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         private void WorkFinalizer(Task workTask)
         {
             OnEnded(
-                !workTask.IsFaulted && !workTask.IsCanceled,
-                workTask.Exception != null ? workTask.Exception.Message : null);
+                ErrorMessage == null && !workTask.IsFaulted && !workTask.IsCanceled,
+                ErrorMessage ?? (workTask.Exception != null ? workTask.Exception.Message : null));
         }
 
         protected float CalculateProgress(int workItemCount, int workItemNo, float itemProgress)

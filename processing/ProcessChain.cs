@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.settings;
 using de.fhb.oll.mediacategorizer.tools;
 
 namespace de.fhb.oll.mediacategorizer.processing
 {
-    public class ProcessChain : INotifyPropertyChanged
+    public class ProcessChain : DispatcherObject, INotifyPropertyChanged
     {
         private readonly IProcess[] processes;
 
@@ -30,6 +33,8 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private bool isFailed;
 
+        private float progress;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Setup Setup { get; private set; }
@@ -40,28 +45,24 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         public ProcessChain(Setup setup, ToolProvider toolProvider, Project project)
         {
+            VerifyAccess();
+
             Setup = setup;
             ToolProvider = toolProvider;
             Project = project;
 
-            var prepareProject = new PrepareProjectProcess();
-            var audioExtraction = new AudioExtractionProcess(prepareProject);
-            var finalizeProject = new FinalizeProjectProcess(audioExtraction);
-
-            processes = new IProcess[]
-            {
-                prepareProject, 
-                audioExtraction, 
-                finalizeProject
-            };
+            processes = CreateProcessChain();
+            //processes = CreateDummyProcessChain();
 
             foreach (var p in processes)
             {
-                p.Setup = setup;
-                p.ToolProvider = toolProvider;
-                p.Project = project;
+                p.Setup = Setup;
+                p.ToolProvider = ToolProvider;
+                p.Project = Project;
+                p.Dispatcher = Dispatcher;
                 p.Started += ProcessStartedHandler;
                 p.Ended += ProcessEndedHandler;
+                p.Progress += ProcessProgressHandler;
             }
 
             WaitingProcesses = new ObservableCollection<IProcess>(processes);
@@ -69,10 +70,47 @@ namespace de.fhb.oll.mediacategorizer.processing
             EndedProcesses = new ObservableCollection<IProcess>();
         }
 
+        private static IProcess[] CreateProcessChain()
+        {
+            var prepareProject = new PrepareProjectProcess();
+            var audioExtraction = new AudioExtractionProcess(prepareProject);
+            var finalizeProject = new FinalizeProjectProcess(audioExtraction);
+
+            return new IProcess[]
+            {
+                prepareProject, 
+                audioExtraction, 
+                finalizeProject
+            };
+        }
+
+        private static IProcess[] CreateDummyProcessChain()
+        {
+            var p1 = new DummyProcess("Dummy 1");
+            var p2 = new DummyProcess("Dummy 2");
+            var p2a = new DummyProcess("Dummy 2a", p2);
+            var p2b = new DummyProcess("Dummy 2b", p2);
+            var p3 = new DummyProcess("Dummy 3", p1, p2b);
+
+            return new IProcess[] { p1, p2, p2a, p2b, p3 };
+        }
+
+        protected void PostSynced(Delegate d, params object[] args)
+        {
+            if (d == null) return;
+            if (Dispatcher == null)
+            {
+                d.DynamicInvoke(args);
+            }
+            else
+            {
+                Dispatcher.InvokeAsync(() => d.DynamicInvoke(args));
+            }
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            PostSynced(PropertyChanged, this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void ProcessStartedHandler(object sender, EventArgs eventArgs)
@@ -88,6 +126,12 @@ namespace de.fhb.oll.mediacategorizer.processing
             EndedProcesses.Add((IProcess)sender);
             IsRunning = ComputeIsRunning();
             IsFailed = ComputeIsFailed();
+            Start();
+        }
+
+        private void ProcessProgressHandler(object sender, ProcessProgressEventArgs e)
+        {
+            Progress = processes.Sum(p => p.CurrentProgress) / processes.Length;
         }
 
         private bool ComputeIsRunning()
@@ -122,10 +166,22 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
         }
 
+        public float Progress
+        {
+            get { return progress; }
+            private set
+            {
+                if (Math.Abs(progress - value) <= float.Epsilon) return;
+                progress = value;
+                OnPropertyChanged();
+            }
+        }
+
         public IEnumerable<IProcess> CollectWaitingProcesses()
         {
             return from p in processes
-                   where p.GetDependencies().All(dp => dp.State == ProcessState.Finished)
+                   where p.State == ProcessState.Waiting
+                      && p.GetDependencies().All(dp => dp.State == ProcessState.Finished)
                    select p;
         }
 
