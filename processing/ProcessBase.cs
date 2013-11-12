@@ -191,7 +191,11 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void OnEnded(bool success, string errMsg = null)
         {
-            //OnProgress(1f, success ? "Prozess abgeschlossen" : "Prozess fehlgeschlagen");
+            if (success)
+            {
+                WorkItem = null;
+                OnProgress(1, "abgeschlossen");
+            }
             ErrorMessage = errMsg;
             State = success ? ProcessState.Finished : ProcessState.Failed;
             PostSynced(Ended, this, new ProcessResultEventArgs(success, errMsg));

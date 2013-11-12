@@ -35,11 +35,6 @@ namespace de.fhb.oll.mediacategorizer.processing
             OnProgress("Audiodaten als 16Bit PCM Wave Mono speichern...");
             var media = Project.Media.ToArray();
             RunTasks(media.Select(m => (ProcessTask)((pH, eH) => ProcessMedia(m, pH, eH))).ToArray());
-            if (ErrorMessage == null)
-            {
-                WorkItem = null;
-                OnProgress(1, "abgeschlossen");
-            }
         }
 
         private void ProcessMedia(Media m, Action<float> progressHandler, Action<string> errorHandler)
