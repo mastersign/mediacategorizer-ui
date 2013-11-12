@@ -19,6 +19,7 @@ namespace de.fhb.oll.mediacategorizer.settings
         {
             _parallelization = DEF_PARALLELIZATION;
             _parallelTasks = DEF_PARALLELTASKS;
+            _rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
             _cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
             _ffmpeg = DEF_FFMPEG;
             _waveViz = DEF_WAVEVIZ;
@@ -71,6 +72,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (this.GetType().FullName + @": " + (
                 (Environment.NewLine + @"    Parallelization = " + _parallelization.ToString().Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    ParallelTasks = " + _parallelTasks.ToString(formatProvider).Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    RejectExistingIntermediates = " + _rejectExistingIntermediates.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    CleanupOutputDir = " + _cleanupOutputDir.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Ffmpeg = " + (!ReferenceEquals(_ffmpeg, null) ? _ffmpeg.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    WaveViz = " + (!ReferenceEquals(_waveViz, null) ? _waveViz.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
@@ -91,6 +93,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (
                 (this._parallelization == o._parallelization) && 
                 (this._parallelTasks == o._parallelTasks) && 
+                this._rejectExistingIntermediates.Equals(o._rejectExistingIntermediates) && 
                 this._cleanupOutputDir.Equals(o._cleanupOutputDir) && 
                 object.Equals(this._ffmpeg, o._ffmpeg) && 
                 object.Equals(this._waveViz, o._waveViz) && 
@@ -116,6 +119,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (this.GetType().GetHashCode() ^ 
                 this._parallelization.GetHashCode() ^ 
                 this._parallelTasks.GetHashCode() ^ 
+                this._rejectExistingIntermediates.GetHashCode() ^ 
                 this._cleanupOutputDir.GetHashCode() ^ 
                 (!ReferenceEquals(this._ffmpeg, null) ? this._ffmpeg.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._waveViz, null) ? this._waveViz.GetHashCode() : 0) ^ 
@@ -198,6 +202,45 @@ namespace de.fhb.oll.mediacategorizer.settings
                 }
                 _parallelTasks = value;
                 this.OnParallelTasksChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property RejectExistingIntermediates
+        
+        private bool _rejectExistingIntermediates;
+        
+        public event EventHandler RejectExistingIntermediatesChanged;
+        
+        protected virtual void OnRejectExistingIntermediatesChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = RejectExistingIntermediatesChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"RejectExistingIntermediates");
+        }
+        
+        private const bool DEF_REJECTEXISTINGINTERMEDIATES = true;
+        
+        [DefaultValue(DEF_REJECTEXISTINGINTERMEDIATES)]
+        [Category(@"Verarbeitung")]
+        [DisplayName(@"Zwischenergebnisse verwerfen")]
+        [Description(@"Gibt an, ob existierende temporäre Ressourcen vor Start des Projektes verworfen werden sollen.")]
+        public virtual bool RejectExistingIntermediates
+        {
+            get { return _rejectExistingIntermediates; }
+            set
+            {
+                if ((value == _rejectExistingIntermediates))
+                {
+                    return;
+                }
+                _rejectExistingIntermediates = value;
+                this.OnRejectExistingIntermediatesChanged();
             }
         }
         

@@ -9,7 +9,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class PrepareProjectProcess : ProcessBase
     {
-        public PrepareProjectProcess(params IProcess[] dependencies) 
+        public PrepareProjectProcess(params IProcess[] dependencies)
             : base("Projekt initialisieren", dependencies)
         { }
 
@@ -21,15 +21,28 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void PrepareProjectDirectory()
         {
+            var workDir = Project.GetWorkingDirectory();
             if (!Directory.Exists(Project.OutputDir))
             {
                 WorkItem = "Ausgabeverzeichnis erstellen";
                 Directory.CreateDirectory(Project.OutputDir);
             }
-            if (!Directory.Exists(Project.GetWorkingDirectory()))
+            if (Setup.RejectExistingIntermediates && Directory.Exists(workDir))
+            {
+                OnProgress("Arbeitsverzeichnis aufräumen");
+                foreach (var dir in Directory.GetDirectories(workDir))
+                {
+                    Directory.Delete(dir, true);
+                }
+                foreach (var file in Directory.GetFiles(workDir))
+                {
+                    File.Delete(file);
+                }
+            }
+            if (!Directory.Exists(workDir))
             {
                 WorkItem = "Arbeitsverzeichnis erstellen";
-                Directory.CreateDirectory(Project.GetWorkingDirectory());
+                Directory.CreateDirectory(workDir);
             }
         }
 
