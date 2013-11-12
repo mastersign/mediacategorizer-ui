@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using de.fhb.oll.mediacategorizer.model;
@@ -148,6 +147,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 if (string.Equals(progressMessage, value)) return;
                 progressMessage = value;
                 OnPropertyChanged();
+                OnPropertyChanged("CurrentMessage");
             }
         }
 
@@ -159,7 +159,13 @@ namespace de.fhb.oll.mediacategorizer.processing
                 if (string.Equals(errorMessage, value)) return;
                 errorMessage = value;
                 OnPropertyChanged();
+                OnPropertyChanged("CurrentMessage");
             }
+        }
+
+        public string CurrentMessage
+        {
+            get { return ErrorMessage ?? ProgressMessage; }
         }
 
         private void OnStarted()

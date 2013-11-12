@@ -7,8 +7,24 @@
 	  d:DesignHeight="300" d:DesignWidth="400"
 	Title="Ausführung">
     <Page.Resources>
+        <Style x:Key="TaskGridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="#FFFFFEEA" />
+            <Setter Property="Margin" Value="8,0,0,0" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding State}" Value="Running">
+                    <Setter Property="Background" Value="#FFE6F6FF" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding State}" Value="Failed">
+                    <Setter Property="Background" Value="#FFFFE8EC" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding State}" Value="Finished">
+                    <Setter Property="Background" Value="#FFE8FFE8" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <DataTemplate x:Key="WaitingProcessTemplate">
-            <Grid Margin="0">
+            <Grid Style="{StaticResource TaskGridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -21,7 +37,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="RunningProcessTemplate">
-            <Grid Margin="0">
+            <Grid Style="{StaticResource TaskGridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -34,14 +50,14 @@
                 </Grid.ColumnDefinitions>
                 <Label x:Name="lblName" Grid.Row="0" Grid.Column="0" Content="{Binding Name, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
                 <Label x:Name="lblWorkItem" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalContentAlignment="Right"  Content="{Binding WorkItem, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
-                <Label x:Name="lblProgressMessage" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Content="{Binding ProgressMessage, Mode=OneWay}" Margin="0" Padding="5,1,5,2" Height="20" />
+                <Label x:Name="lblProgressMessage" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Content="{Binding Path=CurrentMessage, Mode=OneWay}" Margin="0" Padding="5,1,5,2" Height="20" />
                 <Label x:Name="lblProgress" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Right" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Content="{Binding Path=CurrentProgress, Mode=OneWay}" ContentStringFormat="P" Padding="5,1,5,2" VerticalAlignment="Top" Height="20" />
                 <ProgressBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Margin="0,2,0,4"
                              Minimum="0.0" Maximum="1.0" Value="{Binding CurrentProgress, Mode=OneWay}" Height="Auto" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="EndedProcessTemplate">
-            <Grid Margin="0">
+            <Grid Style="{StaticResource TaskGridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -53,7 +69,7 @@
                 </Grid.ColumnDefinitions>
                 <Label x:Name="lblName" Grid.Row="0" Grid.Column="0" Content="{Binding Name, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
                 <Label x:Name="lblWorkItem" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalContentAlignment="Right" Content="{Binding WorkItem, Mode=OneWay}" Padding="5,3,5,1" VerticalAlignment="Top" Height="20" />
-                <Label x:Name="lblProgressMessage" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Content="{Binding ProgressMessage, Mode=OneWay}" Margin="0" Padding="5,1,5,3" Height="20" />
+                <Label x:Name="lblProgressMessage" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Content="{Binding Path=CurrentMessage, Mode=OneWay}" Margin="0" Padding="5,1,5,3" Height="20" />
                 <Label x:Name="lblProgress" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Right"  Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Content="{Binding Path=CurrentProgress, Mode=OneWay}" ContentStringFormat="P" Padding="5,1,5,3" VerticalAlignment="Top" Height="20" />
             </Grid>
         </DataTemplate>

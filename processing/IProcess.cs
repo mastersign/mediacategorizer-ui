@@ -32,6 +32,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         
         string ErrorMessage { get; }
 
+        string CurrentMessage { get; }
+
         event EventHandler Started;
 
         event EventHandler<ProcessProgressEventArgs> Progress;
