@@ -68,6 +68,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.xml</DependentUpon>
     </Compile>
+    <Compile Include="model\WaveformParameter.cs" />
     <Compile Include="PageSetup.xaml.cs">
       <DependentUpon>PageSetup.xaml</DependentUpon>
     </Compile>
@@ -82,6 +83,7 @@
     <Compile Include="processing\ProcessChain.cs" />
     <Compile Include="processing\ProcessState.cs" />
     <Compile Include="processing\ProcessProgressEventArgs.cs" />
+    <Compile Include="processing\WaveformProcess.cs" />
     <Compile Include="settings\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

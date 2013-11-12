@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.settings;
@@ -72,15 +70,17 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private static IProcess[] CreateProcessChain()
         {
-            var prepareProject = new PrepareProjectProcess();
-            var audioExtraction = new AudioExtractionProcess(prepareProject);
-            var finalizeProject = new FinalizeProjectProcess(audioExtraction);
+            var projectPreparation = new PrepareProjectProcess();
+            var audioExtraction = new AudioExtractionProcess(projectPreparation);
+            var waveformVisualization = new WaveformProcess(projectPreparation, audioExtraction);
+            var projectFinalization = new FinalizeProjectProcess(projectPreparation, audioExtraction, waveformVisualization);
 
             return new IProcess[]
             {
-                prepareProject, 
+                projectPreparation, 
                 audioExtraction, 
-                finalizeProject
+                waveformVisualization,
+                projectFinalization
             };
         }
 

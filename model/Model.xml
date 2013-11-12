@@ -67,20 +67,27 @@
         <CustomAttribute>ExpandableObject</CustomAttribute>
       </Property>
 
+      <Property name="Waveform" type="WaveformParameter">
+        <Category>Visualisierung</Category>
+        <DisplayName>Wellenformvisualisierung</DisplayName>
+        <Description>Die Parameter für die Wellenformvisualisierung.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+
       <Property name="MainCloud" type="CloudParameter">
-        <Category>Wortwolken</Category>
+        <Category>Visualisierung</Category>
         <DisplayName>Globale Wolke</DisplayName>
         <Description>Die Parameter für die globale Wortwolke für das gesamte Projekt.</Description>
         <CustomAttribute>ExpandableObject</CustomAttribute>
       </Property>
       <Property name="MediaCloud" type="CloudParameter">
-        <Category>Wortwolken</Category>
+        <Category>Visualisierung</Category>
         <DisplayName>Medienwolke</DisplayName>
         <Description>Die Parameter für die Wortwolke eines Mediums.</Description>
         <CustomAttribute>ExpandableObject</CustomAttribute>
       </Property>
       <Property name="CategoryCloud" type="CloudParameter">
-        <Category>Wortwolken</Category>
+        <Category>Visualisierung</Category>
         <DisplayName>Kategoriewolke</DisplayName>
         <Description>Die Parameter für die Wortwolke einer Kategorie.</Description>
         <CustomAttribute>ExpandableObject</CustomAttribute>
@@ -154,6 +161,39 @@
         <Description>Es werden nur Worte brücksichtigt, die nicht auf der Blacklist stehen.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
+    </Class>
+
+    <Class name="WaveformParameter">
+      <CustomInitializer>Initialize</CustomInitializer>
+      
+      <Property name="Width" type="int">
+        <DisplayName>Breite (px)</DisplayName>
+        <Description>Die Breite der Wellenformvisualisierung in Pixel.</Description>
+        <DefaultValue>640</DefaultValue>
+      </Property>
+      <Property name="Height" type="int">
+        <DisplayName>Höhe (px)</DisplayName>
+        <Description>Die Höhe der Wellenformvisualisierung in Pixel.</Description>
+        <DefaultValue>80</DefaultValue>
+      </Property>
+      
+      <Property name="BackgroundColor" type="System.Windows.Media.Color">
+        <DisplayName>Hintergrund</DisplayName>
+        <Description>Die Farbe des Hintergrundes.</Description>
+      </Property>
+      <Property name="Foreground1Color" type="System.Windows.Media.Color">
+        <DisplayName>Wellenform 1</DisplayName>
+        <Description>Die erste Farbe der Wellenform.</Description>
+      </Property>
+      <Property name="Foreground2Color" type="System.Windows.Media.Color">
+        <DisplayName>Wellenform 2</DisplayName>
+        <Description>Die zweite Farbe der Wellenform.</Description>
+      </Property>
+      <Property name="LineColor" type="System.Windows.Media.Color">
+        <DisplayName>Horizontlinie</DisplayName>
+        <Description>Die Farbe der Horizontlinie.</Description>
+      </Property>
+      
     </Class>
 
     <Enum name="CloudPrecision">
@@ -254,8 +294,9 @@
       <Property name="Name" />
       <Property name="MediaFile" />
       <Property name="AudioFile" />
-      <Property name="ResultsFile" />
       <Property name="WaveformFile" />
+      <Property name="RecognitionProfile" />
+      <Property name="ResultsFile" />
       <EqualityMembers>
         <Property>Id</Property>
       </EqualityMembers>

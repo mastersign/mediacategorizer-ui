@@ -420,6 +420,7 @@ namespace de.fhb.oll.mediacategorizer.model
             _minRelativeAppearance = DEF_MINRELATIVEAPPEARANCE;
             _minMatchScore = DEF_MINMATCHSCORE;
             IndexFilter = new FilterParameter();
+            Waveform = new WaveformParameter();
             MainCloud = new CloudParameter();
             MediaCloud = new CloudParameter();
             CategoryCloud = new CloudParameter();
@@ -446,6 +447,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 (this._minRelativeAppearance == o._minRelativeAppearance) && 
                 (this._minMatchScore == o._minMatchScore) && 
                 object.Equals(this._indexFilter, o._indexFilter) && 
+                object.Equals(this._waveform, o._waveform) && 
                 object.Equals(this._mainCloud, o._mainCloud) && 
                 object.Equals(this._mediaCloud, o._mediaCloud) && 
                 object.Equals(this._categoryCloud, o._categoryCloud) && 
@@ -477,6 +479,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 this._minRelativeAppearance.GetHashCode() ^ 
                 this._minMatchScore.GetHashCode() ^ 
                 (!ReferenceEquals(this._indexFilter, null) ? this._indexFilter.GetHashCode() : 0) ^ 
+                (!ReferenceEquals(this._waveform, null) ? this._waveform.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._mainCloud, null) ? this._mainCloud.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._mediaCloud, null) ? this._mediaCloud.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._categoryCloud, null) ? this._categoryCloud.GetHashCode() : 0) ^ 
@@ -518,6 +521,10 @@ namespace de.fhb.oll.mediacategorizer.model
             if (!ReferenceEquals(_indexFilter, null))
             {
                 _indexFilter.AcceptChanges();
+            }
+            if (!ReferenceEquals(_waveform, null))
+            {
+                _waveform.AcceptChanges();
             }
             if (!ReferenceEquals(_mainCloud, null))
             {
@@ -739,6 +746,56 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #endregion
         
+        #region Property Waveform
+        
+        private WaveformParameter _waveform;
+        
+        public event EventHandler WaveformChanged;
+        
+        protected virtual void OnWaveformChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = WaveformChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Waveform");
+        }
+        
+        private void WaveformPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
+        {
+            this.OnWaveformChanged();
+        }
+        
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [Category(@"Visualisierung")]
+        [DisplayName(@"Wellenformvisualisierung")]
+        [Description(@"Die Parameter für die Wellenformvisualisierung.")]
+        public virtual WaveformParameter Waveform
+        {
+            get { return _waveform; }
+            set
+            {
+                if ((value == _waveform))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_waveform, null))
+                {
+                    _waveform.PropertyChanged -= this.WaveformPropertyChangedHandler;
+                }
+                _waveform = value;
+                if (!ReferenceEquals(_waveform, null))
+                {
+                    _waveform.PropertyChanged += this.WaveformPropertyChangedHandler;
+                }
+                this.OnWaveformChanged();
+            }
+        }
+        
+        #endregion
+        
         #region Property MainCloud
         
         private CloudParameter _mainCloud;
@@ -762,7 +819,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
-        [Category(@"Wortwolken")]
+        [Category(@"Visualisierung")]
         [DisplayName(@"Globale Wolke")]
         [Description(@"Die Parameter für die globale Wortwolke für das gesamte Projekt.")]
         public virtual CloudParameter MainCloud
@@ -812,7 +869,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
-        [Category(@"Wortwolken")]
+        [Category(@"Visualisierung")]
         [DisplayName(@"Medienwolke")]
         [Description(@"Die Parameter für die Wortwolke eines Mediums.")]
         public virtual CloudParameter MediaCloud
@@ -862,7 +919,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
-        [Category(@"Wortwolken")]
+        [Category(@"Visualisierung")]
         [DisplayName(@"Kategoriewolke")]
         [Description(@"Die Parameter für die Wortwolke einer Kategorie.")]
         public virtual CloudParameter CategoryCloud
@@ -1472,6 +1529,308 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _filterNotInBlacklist = value;
                 this.OnFilterNotInBlacklistChanged();
+            }
+        }
+        
+        #endregion
+    }
+    
+    public partial class WaveformParameter : IEquatable<WaveformParameter>, INotifyPropertyChanged, IChangeTracking
+    {
+        public WaveformParameter()
+        {
+            _width = DEF_WIDTH;
+            _height = DEF_HEIGHT;
+            this.Initialize();
+            
+            this.IsChanged = false;
+        }
+        
+        #region Equatability
+        
+        public bool Equals(WaveformParameter o)
+        {
+            if (ReferenceEquals(o, null))
+            {
+                return false;
+            }
+            return (
+                (this._width == o._width) && 
+                (this._height == o._height) && 
+                this._backgroundColor.Equals(o._backgroundColor) && 
+                this._foreground1Color.Equals(o._foreground1Color) && 
+                this._foreground2Color.Equals(o._foreground2Color) && 
+                this._lineColor.Equals(o._lineColor));
+        }
+        
+        public override bool Equals(object o)
+        {
+            if (ReferenceEquals(o, null))
+            {
+                return false;
+            }
+            if (!(o.GetType() == typeof(WaveformParameter)))
+            {
+                return false;
+            }
+            return this.Equals((WaveformParameter)o);
+        }
+        
+        public override int GetHashCode()
+        {
+            return (this.GetType().GetHashCode() ^ 
+                this._width.GetHashCode() ^ 
+                this._height.GetHashCode() ^ 
+                this._backgroundColor.GetHashCode() ^ 
+                this._foreground1Color.GetHashCode() ^ 
+                this._foreground2Color.GetHashCode() ^ 
+                this._lineColor.GetHashCode());
+        }
+        
+        #endregion
+        
+        #region Change Tracking
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
+        private bool _isChanged = false;
+        
+        [Browsable(false)]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute]
+        
+        public bool IsChanged
+        {
+            get { return this._isChanged; }
+            protected set { this._isChanged = value; }
+        }
+        
+        public void AcceptChanges()
+        {
+            this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property Width
+        
+        private int _width;
+        
+        public event EventHandler WidthChanged;
+        
+        protected virtual void OnWidthChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = WidthChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Width");
+        }
+        
+        private const int DEF_WIDTH = 640;
+        
+        [DefaultValue(DEF_WIDTH)]
+        [DisplayName(@"Breite (px)")]
+        [Description(@"Die Breite der Wellenformvisualisierung in Pixel.")]
+        public virtual int Width
+        {
+            get { return _width; }
+            set
+            {
+                if ((value == _width))
+                {
+                    return;
+                }
+                _width = value;
+                this.OnWidthChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property Height
+        
+        private int _height;
+        
+        public event EventHandler HeightChanged;
+        
+        protected virtual void OnHeightChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = HeightChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Height");
+        }
+        
+        private const int DEF_HEIGHT = 80;
+        
+        [DefaultValue(DEF_HEIGHT)]
+        [DisplayName(@"Höhe (px)")]
+        [Description(@"Die Höhe der Wellenformvisualisierung in Pixel.")]
+        public virtual int Height
+        {
+            get { return _height; }
+            set
+            {
+                if ((value == _height))
+                {
+                    return;
+                }
+                _height = value;
+                this.OnHeightChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property BackgroundColor
+        
+        private global::System.Windows.Media.Color _backgroundColor;
+        
+        public event EventHandler BackgroundColorChanged;
+        
+        protected virtual void OnBackgroundColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = BackgroundColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"BackgroundColor");
+        }
+        
+        [DisplayName(@"Hintergrund")]
+        [Description(@"Die Farbe des Hintergrundes.")]
+        public virtual global::System.Windows.Media.Color BackgroundColor
+        {
+            get { return _backgroundColor; }
+            set
+            {
+                if (value.Equals(_backgroundColor))
+                {
+                    return;
+                }
+                _backgroundColor = value;
+                this.OnBackgroundColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property Foreground1Color
+        
+        private global::System.Windows.Media.Color _foreground1Color;
+        
+        public event EventHandler Foreground1ColorChanged;
+        
+        protected virtual void OnForeground1ColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = Foreground1ColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Foreground1Color");
+        }
+        
+        [DisplayName(@"Wellenform 1")]
+        [Description(@"Die erste Farbe der Wellenform.")]
+        public virtual global::System.Windows.Media.Color Foreground1Color
+        {
+            get { return _foreground1Color; }
+            set
+            {
+                if (value.Equals(_foreground1Color))
+                {
+                    return;
+                }
+                _foreground1Color = value;
+                this.OnForeground1ColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property Foreground2Color
+        
+        private global::System.Windows.Media.Color _foreground2Color;
+        
+        public event EventHandler Foreground2ColorChanged;
+        
+        protected virtual void OnForeground2ColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = Foreground2ColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Foreground2Color");
+        }
+        
+        [DisplayName(@"Wellenform 2")]
+        [Description(@"Die zweite Farbe der Wellenform.")]
+        public virtual global::System.Windows.Media.Color Foreground2Color
+        {
+            get { return _foreground2Color; }
+            set
+            {
+                if (value.Equals(_foreground2Color))
+                {
+                    return;
+                }
+                _foreground2Color = value;
+                this.OnForeground2ColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property LineColor
+        
+        private global::System.Windows.Media.Color _lineColor;
+        
+        public event EventHandler LineColorChanged;
+        
+        protected virtual void OnLineColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = LineColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"LineColor");
+        }
+        
+        [DisplayName(@"Horizontlinie")]
+        [Description(@"Die Farbe der Horizontlinie.")]
+        public virtual global::System.Windows.Media.Color LineColor
+        {
+            get { return _lineColor; }
+            set
+            {
+                if (value.Equals(_lineColor))
+                {
+                    return;
+                }
+                _lineColor = value;
+                this.OnLineColorChanged();
             }
         }
         
@@ -2565,39 +2924,6 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #endregion
         
-        #region Property ResultsFile
-        
-        private string _resultsFile;
-        
-        public event EventHandler ResultsFileChanged;
-        
-        protected virtual void OnResultsFileChanged()
-        {
-            this.IsChanged = true;
-            EventHandler handler = ResultsFileChanged;
-            if (!ReferenceEquals(handler, null))
-            {
-                handler(this, EventArgs.Empty);
-            }
-            this.OnPropertyChanged(@"ResultsFile");
-        }
-        
-        public virtual string ResultsFile
-        {
-            get { return _resultsFile; }
-            set
-            {
-                if (string.Equals(value, _resultsFile))
-                {
-                    return;
-                }
-                _resultsFile = value;
-                this.OnResultsFileChanged();
-            }
-        }
-        
-        #endregion
-        
         #region Property WaveformFile
         
         private string _waveformFile;
@@ -2626,6 +2952,72 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _waveformFile = value;
                 this.OnWaveformFileChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property RecognitionProfile
+        
+        private string _recognitionProfile;
+        
+        public event EventHandler RecognitionProfileChanged;
+        
+        protected virtual void OnRecognitionProfileChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = RecognitionProfileChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"RecognitionProfile");
+        }
+        
+        public virtual string RecognitionProfile
+        {
+            get { return _recognitionProfile; }
+            set
+            {
+                if (string.Equals(value, _recognitionProfile))
+                {
+                    return;
+                }
+                _recognitionProfile = value;
+                this.OnRecognitionProfileChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property ResultsFile
+        
+        private string _resultsFile;
+        
+        public event EventHandler ResultsFileChanged;
+        
+        protected virtual void OnResultsFileChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ResultsFileChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ResultsFile");
+        }
+        
+        public virtual string ResultsFile
+        {
+            get { return _resultsFile; }
+            set
+            {
+                if (string.Equals(value, _resultsFile))
+                {
+                    return;
+                }
+                _resultsFile = value;
+                this.OnResultsFileChanged();
             }
         }
         
