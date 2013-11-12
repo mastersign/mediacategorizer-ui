@@ -10,31 +10,54 @@
   </ModelFeatures>
 
   <Types>
+    
     <Class name="Setup">
+
+      <Property name="Parallelization" type="ParallelizationMode">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Parallelisierung</DisplayName>
+        <Description>Gibt an, ob die Anzahl der parallelen Aufgaben je Prozess automatisch ermittelt werden soll, oder ob der Wert von 'Parallele Aufgaben' verwendet werden soll.</Description>
+        <DefaultValue>Auto</DefaultValue>
+      </Property>
+      <Property name="ParallelTasks" type="int">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Parallele Aufgaben</DisplayName>
+        <Description>Die manuelle Angabe für die maximale Anzahl von parallelen Aufgaben in einem Prozess.</Description>
+        <DefaultValue>2</DefaultValue>
+      </Property>
+
       <Property name="Ffmpeg">
-        <Category>Tools</Category>
+        <Category>Hilfsprogramme</Category>
         <DisplayName>ffmpeg</DisplayName>
         <Description>Der Pfad von ffmpeg.exe.</Description>
         <DefaultValue>tools/ffmpeg/bin/ffmpeg.exe</DefaultValue>
       </Property>
       <Property name="WaveViz">
-        <Category>Tools</Category>
+        <Category>Hilfsprogramme</Category>
         <DisplayName>WaveViz</DisplayName>
         <Description>Der Pfad von WaveViz.exe.</Description>
         <DefaultValue>tools/WaveViz/WaveViz.exe</DefaultValue>
       </Property>
       <Property name="Transcripter">
-        <Category>Tools</Category>
+        <Category>Hilfsprogramme</Category>
         <DisplayName>Transcripter</DisplayName>
         <Description>Der Pfad von Transcripter.exe.</Description>
         <DefaultValue>tools/Transcripter/Transcripter.exe</DefaultValue>
       </Property>
       <Property name="Distillery">
-        <Category>Tools</Category>
+        <Category>Hilfsprogramme</Category>
         <DisplayName>distillery</DisplayName>
         <Description>Der Pfad von distillery.jar.</Description>
         <DefaultValue>tools/distillery.jar</DefaultValue>
       </Property>
+
     </Class>
+
+    <Enum name="ParallelizationMode">
+      <Member name="None" />
+      <Member name="Auto" />
+      <Member name="Manual" />
+    </Enum>
+
   </Types>
 </Model>

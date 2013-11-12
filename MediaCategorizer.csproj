@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="processing\AudioExtractionProcess.cs" />
     <Compile Include="processing\DummyProcess.cs" />
+    <Compile Include="processing\MultiTaskProcessBase.cs" />
     <Compile Include="processing\ProcessResultEventArgs.cs" />
     <Compile Include="processing\IProcess.cs" />
     <Compile Include="processing\FinalizeProjectProcess.cs" />
