@@ -15,6 +15,9 @@ namespace de.fhb.oll.mediacategorizer.tools
         private TimeSpan duration;
         private static readonly Regex DURATION_REGEX = new Regex(@"Duration: (\d+):(\d\d):(\d\d).(\d+)");
         private static readonly Regex PROGRESS_REGEX = new Regex(@"size=.*time=(\d+):(\d\d):(\d\d).(\d+)");
+        private static readonly Regex ERROR_REGEX = new Regex(@"ERROR|No such file or directory", RegexOptions.IgnoreCase);
+
+        private List<string> errors; 
 
         public FfmpegTool(Setup setup)
             : base(setup.Ffmpeg)
@@ -29,6 +32,7 @@ namespace de.fhb.oll.mediacategorizer.tools
         public bool ExtractAudio(string sourcePath, string targetPath,
             Action<float> progressHandler)
         {
+            errors = new List<string>();
             duration = TimeSpan.Zero;
             var pi = new ProcessStartInfo(ToolPath, BuildArguments(sourcePath, targetPath));
             pi.RedirectStandardInput = false;
@@ -39,7 +43,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             var p = Process.Start(pi);
             Task.Run(() => RunErrorReader(p.StandardError, progressHandler));
             p.WaitForExit();
-            return p.ExitCode == 0;
+            return p.ExitCode == 0 && errors.Count == 0 && File.Exists(targetPath);
         }
 
         private void RunErrorReader(TextReader sr, Action<float> progressHandler)
@@ -47,8 +51,10 @@ namespace de.fhb.oll.mediacategorizer.tools
             string l;
             while ((l = sr.ReadLine()) != null)
             {
+                Debug.WriteLine("FFmpeg: " + l);
                 ProcessDuration(l);
                 ProcessProgress(progressHandler, l);
+                ProcessErrors(l);
             }
         }
 
@@ -68,6 +74,15 @@ namespace de.fhb.oll.mediacategorizer.tools
             {
                 var currentTime = GetTimeValue(progressMatch);
                 progressHandler(Math.Max(0f, Math.Min((float)(currentTime.TotalSeconds / duration.TotalSeconds), 1f)));
+            }
+        }
+
+        private void ProcessErrors(string l)
+        {
+            var errorMatch = ERROR_REGEX.Match(l);
+            if (errorMatch.Success)
+            {
+                errors.Add(l);
             }
         }
 
