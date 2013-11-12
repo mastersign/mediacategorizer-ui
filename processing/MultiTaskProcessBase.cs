@@ -26,6 +26,8 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private int maxParallelTasks;
 
+        protected bool AutoSetWorkItem { get; set; }
+
         protected bool CancelOnError { get; set; }
 
         private ConcurrentBag<string> errors;
@@ -63,6 +65,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             runningTasks = new HashSet<int>();
             errors = new ConcurrentBag<string>();
 
+            finishedEvent.Reset();
             Task.Run((Action)WorkQueue);
             finishedEvent.WaitOne();
             if (errors.Count > 0)
@@ -125,6 +128,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void UpdateWorkItem()
         {
+            if (!AutoSetWorkItem) return;
             WorkItem = string.Join(", ", runningTasks.Select(t => ++t));
         }
 

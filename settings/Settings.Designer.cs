@@ -25,6 +25,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             _waveViz = DEF_WAVEVIZ;
             _transcripter = DEF_TRANSCRIPTER;
             _distillery = DEF_DISTILLERY;
+            _confidenceTestDuration = DEF_CONFIDENCETESTDURATION;
             
             this.IsChanged = false;
         }
@@ -77,7 +78,8 @@ namespace de.fhb.oll.mediacategorizer.settings
                 (Environment.NewLine + @"    Ffmpeg = " + (!ReferenceEquals(_ffmpeg, null) ? _ffmpeg.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    WaveViz = " + (!ReferenceEquals(_waveViz, null) ? _waveViz.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Transcripter = " + (!ReferenceEquals(_transcripter, null) ? _transcripter.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    Distillery = " + (!ReferenceEquals(_distillery, null) ? _distillery.ToString(formatProvider) : @"null").Replace("\n", "\n    "))));
+                (Environment.NewLine + @"    Distillery = " + (!ReferenceEquals(_distillery, null) ? _distillery.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    ConfidenceTestDuration = " + _confidenceTestDuration.ToString(formatProvider).Replace("\n", "\n    "))));
         }
         
         #endregion
@@ -98,7 +100,8 @@ namespace de.fhb.oll.mediacategorizer.settings
                 object.Equals(this._ffmpeg, o._ffmpeg) && 
                 object.Equals(this._waveViz, o._waveViz) && 
                 object.Equals(this._transcripter, o._transcripter) && 
-                object.Equals(this._distillery, o._distillery));
+                object.Equals(this._distillery, o._distillery) && 
+                (this._confidenceTestDuration == o._confidenceTestDuration));
         }
         
         public override bool Equals(object o)
@@ -124,7 +127,8 @@ namespace de.fhb.oll.mediacategorizer.settings
                 (!ReferenceEquals(this._ffmpeg, null) ? this._ffmpeg.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._waveViz, null) ? this._waveViz.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._transcripter, null) ? this._transcripter.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._distillery, null) ? this._distillery.GetHashCode() : 0));
+                (!ReferenceEquals(this._distillery, null) ? this._distillery.GetHashCode() : 0) ^ 
+                this._confidenceTestDuration.GetHashCode());
         }
         
         #endregion
@@ -436,6 +440,45 @@ namespace de.fhb.oll.mediacategorizer.settings
                 }
                 _distillery = value;
                 this.OnDistilleryChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property ConfidenceTestDuration
+        
+        private float _confidenceTestDuration;
+        
+        public event EventHandler ConfidenceTestDurationChanged;
+        
+        protected virtual void OnConfidenceTestDurationChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ConfidenceTestDurationChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ConfidenceTestDuration");
+        }
+        
+        private const float DEF_CONFIDENCETESTDURATION = 180F;
+        
+        [DefaultValue(DEF_CONFIDENCETESTDURATION)]
+        [Category(@"Spracherkennung")]
+        [DisplayName(@"Dauer des Profiltests (sec)")]
+        [Description(@"Die Dauer des Auswahltests für Spracherkennungsprofile in Sekunden.")]
+        public virtual float ConfidenceTestDuration
+        {
+            get { return _confidenceTestDuration; }
+            set
+            {
+                if ((Math.Abs(value - _confidenceTestDuration) < float.Epsilon))
+                {
+                    return;
+                }
+                _confidenceTestDuration = value;
+                this.OnConfidenceTestDurationChanged();
             }
         }
         

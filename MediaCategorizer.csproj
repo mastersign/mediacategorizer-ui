@@ -83,6 +83,7 @@
     <Compile Include="processing\ProcessChain.cs" />
     <Compile Include="processing\ProcessState.cs" />
     <Compile Include="processing\ProcessProgressEventArgs.cs" />
+    <Compile Include="processing\ProfileSelectionProcess.cs" />
     <Compile Include="processing\WaveformProcess.cs" />
     <Compile Include="settings\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

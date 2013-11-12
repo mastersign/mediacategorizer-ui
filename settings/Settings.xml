@@ -63,6 +63,13 @@
         <DefaultValue>tools/distillery.jar</DefaultValue>
       </Property>
 
+      <Property name="ConfidenceTestDuration" type="float">
+        <Category>Spracherkennung</Category>
+        <DisplayName>Dauer des Profiltests (sec)</DisplayName>
+        <Description>Die Dauer des Auswahltests für Spracherkennungsprofile in Sekunden.</Description>
+        <DefaultValue>180</DefaultValue>
+      </Property>
+
     </Class>
 
     <Enum name="ParallelizationMode">
