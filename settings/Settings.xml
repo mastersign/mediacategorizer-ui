@@ -25,6 +25,12 @@
         <Description>Die manuelle Angabe für die maximale Anzahl von parallelen Aufgaben in einem Prozess.</Description>
         <DefaultValue>2</DefaultValue>
       </Property>
+      <Property name="CleanupOutputDir" type="bool">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Arbeitsverzeichnis aufräumen</DisplayName>
+        <Description>Gibt an, ob das temporäre Arbeitsverzeichnis nach Abschluss des Projektes gelöscht werden soll.</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
 
       <Property name="Ffmpeg">
         <Category>Hilfsprogramme</Category>

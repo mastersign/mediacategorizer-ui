@@ -19,6 +19,7 @@ namespace de.fhb.oll.mediacategorizer.settings
         {
             _parallelization = DEF_PARALLELIZATION;
             _parallelTasks = DEF_PARALLELTASKS;
+            _cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
             _ffmpeg = DEF_FFMPEG;
             _waveViz = DEF_WAVEVIZ;
             _transcripter = DEF_TRANSCRIPTER;
@@ -70,6 +71,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (this.GetType().FullName + @": " + (
                 (Environment.NewLine + @"    Parallelization = " + _parallelization.ToString().Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    ParallelTasks = " + _parallelTasks.ToString(formatProvider).Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    CleanupOutputDir = " + _cleanupOutputDir.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Ffmpeg = " + (!ReferenceEquals(_ffmpeg, null) ? _ffmpeg.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    WaveViz = " + (!ReferenceEquals(_waveViz, null) ? _waveViz.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Transcripter = " + (!ReferenceEquals(_transcripter, null) ? _transcripter.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
@@ -89,6 +91,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (
                 (this._parallelization == o._parallelization) && 
                 (this._parallelTasks == o._parallelTasks) && 
+                this._cleanupOutputDir.Equals(o._cleanupOutputDir) && 
                 object.Equals(this._ffmpeg, o._ffmpeg) && 
                 object.Equals(this._waveViz, o._waveViz) && 
                 object.Equals(this._transcripter, o._transcripter) && 
@@ -113,6 +116,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (this.GetType().GetHashCode() ^ 
                 this._parallelization.GetHashCode() ^ 
                 this._parallelTasks.GetHashCode() ^ 
+                this._cleanupOutputDir.GetHashCode() ^ 
                 (!ReferenceEquals(this._ffmpeg, null) ? this._ffmpeg.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._waveViz, null) ? this._waveViz.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._transcripter, null) ? this._transcripter.GetHashCode() : 0) ^ 
@@ -194,6 +198,45 @@ namespace de.fhb.oll.mediacategorizer.settings
                 }
                 _parallelTasks = value;
                 this.OnParallelTasksChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property CleanupOutputDir
+        
+        private bool _cleanupOutputDir;
+        
+        public event EventHandler CleanupOutputDirChanged;
+        
+        protected virtual void OnCleanupOutputDirChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = CleanupOutputDirChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"CleanupOutputDir");
+        }
+        
+        private const bool DEF_CLEANUPOUTPUTDIR = true;
+        
+        [DefaultValue(DEF_CLEANUPOUTPUTDIR)]
+        [Category(@"Verarbeitung")]
+        [DisplayName(@"Arbeitsverzeichnis aufräumen")]
+        [Description(@"Gibt an, ob das temporäre Arbeitsverzeichnis nach Abschluss des Projektes gelöscht werden soll.")]
+        public virtual bool CleanupOutputDir
+        {
+            get { return _cleanupOutputDir; }
+            set
+            {
+                if ((value == _cleanupOutputDir))
+                {
+                    return;
+                }
+                _cleanupOutputDir = value;
+                this.OnCleanupOutputDirChanged();
             }
         }
         
