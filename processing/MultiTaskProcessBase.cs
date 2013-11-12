@@ -16,7 +16,9 @@ namespace de.fhb.oll.mediacategorizer.processing
     {
         protected MultiTaskProcessBase(string name, IProcess[] dependencies)
             : base(name, dependencies)
-        { }
+        {
+            CancelOnError = true;
+        }
 
         private float[] progressList;
         private Queue<Tuple<ProcessTask, int>> taskList;
