@@ -82,7 +82,14 @@ namespace de.fhb.oll.mediacategorizer
         private void MenuOpenProjectHandler(object sender, RoutedEventArgs e)
         {
             if (!CheckProjectStateBeforeClosing("Projekt öffnen")) return;
+            // TODO Save Project
             MessageBox.Show(this, "OpenProject", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void MenuSaveProjectHandler(object sender, RoutedEventArgs e)
+        {
+            // TODO Save Project As
+            MessageBox.Show(this, "SaveProject", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void MenuSetupHandler(object sender, RoutedEventArgs e)
@@ -92,6 +99,12 @@ namespace de.fhb.oll.mediacategorizer
             {
                 exp.IsExpanded = false;
             }
+        }
+
+        private void MenuInfoHandler(object sender, RoutedEventArgs e)
+        {
+            // TODO Infobox
+            MessageBox.Show(this, "Info", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void ClosedHandler(object sender, EventArgs e)
