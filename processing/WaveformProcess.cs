@@ -18,7 +18,10 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void InitializeTool()
         {
-            waveviz = (WaveVizTool)ToolProvider.Create(typeof(WaveVizTool));
+            if (waveviz == null)
+            {
+                waveviz = (WaveVizTool)ToolProvider.Create(typeof(WaveVizTool));
+            }
         }
 
         protected override void Work()
