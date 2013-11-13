@@ -74,7 +74,6 @@ namespace de.fhb.oll.mediacategorizer.processing
             var mediaInspectionProcess = new MediaInspectionProcess();
             var audioExtraction = new AudioExtractionProcess(projectPreparation);
             var waveformVisualization = new WaveformProcess(projectPreparation, audioExtraction);
-            var profileSelection = new ProfileSelectionProcess(projectPreparation, audioExtraction);
             var profileSelection = new ProfileSelectionProcess(mediaInspectionProcess, projectPreparation, audioExtraction);
 
             var projectFinalization = new FinalizeProjectProcess(

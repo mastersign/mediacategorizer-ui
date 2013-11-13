@@ -38,6 +38,13 @@
     </Class>
 
     <Class name="Configuration">
+      <Property name="ProfileSelectionCriterion" type="ProfileSelectionCriterion">
+        <Category>Spracherkennung</Category>
+        <DisplayName>Profilauswahlkriterium</DisplayName>
+        <Description>Definiert das Auswahlkriterium anhand dessen das optimale Spracherkennungsprofil je Medium ausgewählt wird.</Description>
+        <DefaultValue>MeanPhraseConfidence</DefaultValue>
+      </Property>
+      
       <Property name="MinConfidence" type="float">
         <Category>Analyse</Category>
         <DisplayName>Minimale Erkennungssicherheit</DisplayName>
@@ -120,6 +127,19 @@
         <DefaultValue>false</DefaultValue>
       </Property>
     </Class>
+
+    <Enum name="ProfileSelectionCriterion">
+      <Member name="PhraseCount" />
+      <Member name="PhraseConfidenceSum" />
+      <Member name="MaxPhraseConfidence" />
+      <Member name="MeanPhraseConfidence" />
+      <Member name="MinPhraseConfidence" />
+      <Member name="WordCount" />
+      <Member name="WordConfidenceSum" />
+      <Member name="MaxWordConfidence" />
+      <Member name="MeanWordConfidence" />
+      <Member name="BestWordConfidence" />
+    </Enum>
 
     <Class name="FilterParameter">
       <Property name="BlacklistResource" type="string" browsable="false">
@@ -296,7 +316,7 @@
       <Property name="AudioFile" />
       <Property name="Duration" type="double" />
       <Property name="WaveformFile" />
-      <Property name="RecognitionProfile" />
+      <Property name="RecognitionProfile" type="System.Guid" />
       <Property name="ResultsFile" />
       <EqualityMembers>
         <Property>Id</Property>

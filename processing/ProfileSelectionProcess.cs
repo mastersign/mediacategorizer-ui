@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,36 +25,85 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void InitializeTool()
         {
-            transcripter = (TranscripterTool)ToolProvider.Create(typeof(TranscripterTool));
+            if (transcripter == null)
+            {
+                transcripter = (TranscripterTool) ToolProvider.Create(typeof (TranscripterTool));
+            }
+        }
+
+        private string BuildProfileSelectionFilePath(Media media, Guid profileId)
+        {
+            return Path.Combine(Project.GetWorkingDirectory(), string.Format("{0:D}_{1}.ctr", profileId, media.Id));
         }
 
         protected override void Work()
         {
             InitializeTool();
 
-            results = Project.Media.ToDictionary(
-                m => m, m => new Dictionary<Guid, TranscripterTool.ConfidenceTestResult>());
-
             OnProgress("Sprachprofile ermitteln");
             profiles = transcripter.GetSpeechRecognitionProfiles().ToDictionary(t => t.Item1, t => t.Item2);
-            var originalProfile = transcripter.GetCurrentSpeechRecognitionProfileId();
 
             OnProgress("Erkennungssicherheiten ermitteln");
+            RunTestsForAllProfiles();
+
+            OnProgress("Erkennungssicherheiten auswerten");
+            var criterion = GetCriterion();
+            foreach (var m in Project.Media)
+            {
+                WorkItem = m.Name;
+                m.RecognitionProfile = results[m].OrderBy(kvp => -criterion(kvp.Value)).First().Key;
+            }
+            WorkItem = null;
+        }
+
+        private Func<TranscripterTool.ConfidenceTestResult, float> GetCriterion()
+        {
+            switch (Project.Configuration.ProfileSelectionCriterion)
+            {
+                case ProfileSelectionCriterion.PhraseCount:
+                    return tr => tr.PhraseCount;
+                case ProfileSelectionCriterion.PhraseConfidenceSum:
+                    return tr => tr.PhraseConfidenceSum;
+                case ProfileSelectionCriterion.MaxPhraseConfidence:
+                    return tr => tr.MaxPhraseConfidence;
+                case ProfileSelectionCriterion.MeanPhraseConfidence:
+                    return tr => tr.MeanPhraseConfidence;
+                case ProfileSelectionCriterion.MinPhraseConfidence:
+                    return tr => tr.MinPhraseConfidence;
+                case ProfileSelectionCriterion.WordCount:
+                    return tr => tr.WordCount;
+                case ProfileSelectionCriterion.WordConfidenceSum:
+                    return tr => tr.WordConfidenceSum;
+                case ProfileSelectionCriterion.MaxWordConfidence:
+                    return tr => tr.MaxWordConfidence;
+                case ProfileSelectionCriterion.MeanWordConfidence:
+                    return tr => tr.MeanWordConfidence;
+                case ProfileSelectionCriterion.BestWordConfidence:
+                    return tr => tr.BestWordConfidence;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void RunTestsForAllProfiles()
+        {
+            results = Project.Media.ToDictionary(
+                m => m, m => new Dictionary<Guid, TranscripterTool.ConfidenceTestResult>());
+            PhaseCount = profiles.Count;
+            CurrentPhase = 0;
+
+            var originalProfile = transcripter.GetCurrentSpeechRecognitionProfileId();
             foreach (var profile in profiles)
             {
                 WorkItem = profile.Value;
-                RunTestsWithProfile(profile.Key);
+                RunTestsForProfile(profile.Key);
+                CurrentPhase = CurrentPhase + 1;
             }
-            WorkItem = null;
             transcripter.SetCurrentSpeechRecognitionProfile(originalProfile);
-
-            OnProgress("Erkennungssicherheiten auswerten");
-
-            OnProgress("Ergebnisse anzeigen");
-            System.Windows.MessageBox.Show(ResultsAsString());
+            WorkItem = null;
         }
 
-        private void RunTestsWithProfile(Guid profileId)
+        private void RunTestsForProfile(Guid profileId)
         {
             currentProfileId = profileId;
             transcripter.SetCurrentSpeechRecognitionProfile(profileId);
@@ -65,37 +115,23 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void RunTest(Media m, Action<float> progressHandler, Action<string> errorHandler)
         {
-            var result = transcripter.RunConfidenceTest(m.AudioFile, Setup.ConfidenceTestDuration);
-            lock (results)
+            var file = BuildProfileSelectionFilePath(m, currentProfileId);
+            if (!File.Exists(file))
             {
-                results[m][currentProfileId] = result;
-            }
-        }
-
-        private string ResultsAsString()
-        {
-            var sb = new StringBuilder();
-            foreach (var m in Project.Media)
-            {
-                sb.AppendLine(m.Name);
-                foreach (var p in profiles)
+                var result = transcripter.RunConfidenceTest(m.AudioFile, Setup.ConfidenceTestDuration, progressHandler);
+                using (var w = new StreamWriter(file, false, Encoding.UTF8))
                 {
-                    var r = results[m][p.Key];
-                    sb.AppendLine("  + " + p.Value + ": ");
-                    sb.AppendLine("     - PhrCnt " + r.PhraseCount);
-                    sb.AppendLine("     - PhrCnfSum " + r.PhraseConfidenceSum);
-                    sb.AppendLine("     - PhrCnfMax " + r.MaxPhraseConfidence);
-                    sb.AppendLine("     - PhrCnfMean " + r.MeanPhraseConfidence);
-                    sb.AppendLine("     - PhrCnfMin " + r.MinPhraseConfidence);
-                    sb.AppendLine("     - WrdCnt " + r.WordCount);
-                    sb.AppendLine("     - WrdCnfSum " + r.WordConfidenceSum);
-                    sb.AppendLine("     - WrdCnfMax " + r.MaxWordConfidence);
-                    sb.AppendLine("     - WrdCnfMean " + r.MeanWordConfidence);
-                    sb.AppendLine("     - WrdCnfMin " + r.MinWordConfidence);
-                    sb.AppendLine("     - BstPhrCnf " + r.BestPhraseConfidence);
+                    result.Write(w);
                 }
             }
-            return sb.ToString();
+            using (var r = new StreamReader(file, Encoding.UTF8))
+            {
+                var result = new TranscripterTool.ConfidenceTestResult(r);
+                lock (results)
+                {
+                    results[m][currentProfileId] = result;
+                }
+            }
         }
     }
 }

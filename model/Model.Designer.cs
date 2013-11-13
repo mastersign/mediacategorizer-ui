@@ -6,6 +6,20 @@ namespace de.fhb.oll.mediacategorizer.model
 {
     #region Scaleton Model Designer generated code
     
+    public enum ProfileSelectionCriterion
+    {
+        PhraseCount,
+        PhraseConfidenceSum,
+        MaxPhraseConfidence,
+        MeanPhraseConfidence,
+        MinPhraseConfidence,
+        WordCount,
+        WordConfidenceSum,
+        MaxWordConfidence,
+        MeanWordConfidence,
+        BestWordConfidence,
+    }
+    
     public enum CloudPrecision
     {
         Low,
@@ -415,6 +429,7 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public Configuration()
         {
+            _profileSelectionCriterion = DEF_PROFILESELECTIONCRITERION;
             _minConfidence = DEF_MINCONFIDENCE;
             _goodConfidence = DEF_GOODCONFIDENCE;
             _minRelativeAppearance = DEF_MINRELATIVEAPPEARANCE;
@@ -442,6 +457,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 return false;
             }
             return (
+                (this._profileSelectionCriterion == o._profileSelectionCriterion) && 
                 (this._minConfidence == o._minConfidence) && 
                 (this._goodConfidence == o._goodConfidence) && 
                 (this._minRelativeAppearance == o._minRelativeAppearance) && 
@@ -474,6 +490,7 @@ namespace de.fhb.oll.mediacategorizer.model
         public override int GetHashCode()
         {
             return (this.GetType().GetHashCode() ^ 
+                this._profileSelectionCriterion.GetHashCode() ^ 
                 this._minConfidence.GetHashCode() ^ 
                 this._goodConfidence.GetHashCode() ^ 
                 this._minRelativeAppearance.GetHashCode() ^ 
@@ -539,6 +556,45 @@ namespace de.fhb.oll.mediacategorizer.model
                 _categoryCloud.AcceptChanges();
             }
             this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property ProfileSelectionCriterion
+        
+        private ProfileSelectionCriterion _profileSelectionCriterion;
+        
+        public event EventHandler ProfileSelectionCriterionChanged;
+        
+        protected virtual void OnProfileSelectionCriterionChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ProfileSelectionCriterionChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ProfileSelectionCriterion");
+        }
+        
+        private const ProfileSelectionCriterion DEF_PROFILESELECTIONCRITERION = ProfileSelectionCriterion.MeanPhraseConfidence;
+        
+        [DefaultValue(DEF_PROFILESELECTIONCRITERION)]
+        [Category(@"Spracherkennung")]
+        [DisplayName(@"Profilauswahlkriterium")]
+        [Description(@"Definiert das Auswahlkriterium anhand dessen das optimale Spracherkennungsprofil je Medium ausgewählt wird.")]
+        public virtual ProfileSelectionCriterion ProfileSelectionCriterion
+        {
+            get { return _profileSelectionCriterion; }
+            set
+            {
+                if ((value == _profileSelectionCriterion))
+                {
+                    return;
+                }
+                _profileSelectionCriterion = value;
+                this.OnProfileSelectionCriterionChanged();
+            }
         }
         
         #endregion
@@ -2992,7 +3048,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property RecognitionProfile
         
-        private string _recognitionProfile;
+        private Guid _recognitionProfile;
         
         public event EventHandler RecognitionProfileChanged;
         
@@ -3007,12 +3063,12 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"RecognitionProfile");
         }
         
-        public virtual string RecognitionProfile
+        public virtual Guid RecognitionProfile
         {
             get { return _recognitionProfile; }
             set
             {
-                if (string.Equals(value, _recognitionProfile))
+                if (value.Equals(_recognitionProfile))
                 {
                     return;
                 }
