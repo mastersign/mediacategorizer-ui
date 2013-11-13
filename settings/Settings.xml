@@ -40,9 +40,15 @@
 
       <Property name="Ffmpeg">
         <Category>Hilfsprogramme</Category>
-        <DisplayName>ffmpeg</DisplayName>
+        <DisplayName>FFmpeg</DisplayName>
         <Description>Der Pfad von ffmpeg.exe.</Description>
         <DefaultValue>tools/ffmpeg/bin/ffmpeg.exe</DefaultValue>
+      </Property>
+      <Property name="Ffprobe">
+        <Category>Hilfsprogramme</Category>
+        <DisplayName>FFprobe</DisplayName>
+        <Description>Der Pfad von ffprobe.exe.</Description>
+        <DefaultValue>tools/ffmpeg/bin/ffprobe.exe</DefaultValue>
       </Property>
       <Property name="WaveViz">
         <Category>Hilfsprogramme</Category>

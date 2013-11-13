@@ -22,6 +22,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             _rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
             _cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
             _ffmpeg = DEF_FFMPEG;
+            _ffprobe = DEF_FFPROBE;
             _waveViz = DEF_WAVEVIZ;
             _transcripter = DEF_TRANSCRIPTER;
             _distillery = DEF_DISTILLERY;
@@ -76,6 +77,7 @@ namespace de.fhb.oll.mediacategorizer.settings
                 (Environment.NewLine + @"    RejectExistingIntermediates = " + _rejectExistingIntermediates.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    CleanupOutputDir = " + _cleanupOutputDir.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Ffmpeg = " + (!ReferenceEquals(_ffmpeg, null) ? _ffmpeg.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    Ffprobe = " + (!ReferenceEquals(_ffprobe, null) ? _ffprobe.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    WaveViz = " + (!ReferenceEquals(_waveViz, null) ? _waveViz.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Transcripter = " + (!ReferenceEquals(_transcripter, null) ? _transcripter.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Distillery = " + (!ReferenceEquals(_distillery, null) ? _distillery.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
@@ -98,6 +100,7 @@ namespace de.fhb.oll.mediacategorizer.settings
                 this._rejectExistingIntermediates.Equals(o._rejectExistingIntermediates) && 
                 this._cleanupOutputDir.Equals(o._cleanupOutputDir) && 
                 object.Equals(this._ffmpeg, o._ffmpeg) && 
+                object.Equals(this._ffprobe, o._ffprobe) && 
                 object.Equals(this._waveViz, o._waveViz) && 
                 object.Equals(this._transcripter, o._transcripter) && 
                 object.Equals(this._distillery, o._distillery) && 
@@ -125,6 +128,7 @@ namespace de.fhb.oll.mediacategorizer.settings
                 this._rejectExistingIntermediates.GetHashCode() ^ 
                 this._cleanupOutputDir.GetHashCode() ^ 
                 (!ReferenceEquals(this._ffmpeg, null) ? this._ffmpeg.GetHashCode() : 0) ^ 
+                (!ReferenceEquals(this._ffprobe, null) ? this._ffprobe.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._waveViz, null) ? this._waveViz.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._transcripter, null) ? this._transcripter.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._distillery, null) ? this._distillery.GetHashCode() : 0) ^ 
@@ -310,7 +314,7 @@ namespace de.fhb.oll.mediacategorizer.settings
         
         [DefaultValue(DEF_FFMPEG)]
         [Category(@"Hilfsprogramme")]
-        [DisplayName(@"ffmpeg")]
+        [DisplayName(@"FFmpeg")]
         [Description(@"Der Pfad von ffmpeg.exe.")]
         public virtual string Ffmpeg
         {
@@ -323,6 +327,45 @@ namespace de.fhb.oll.mediacategorizer.settings
                 }
                 _ffmpeg = value;
                 this.OnFfmpegChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property Ffprobe
+        
+        private string _ffprobe;
+        
+        public event EventHandler FfprobeChanged;
+        
+        protected virtual void OnFfprobeChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = FfprobeChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Ffprobe");
+        }
+        
+        private const string DEF_FFPROBE = @"tools/ffmpeg/bin/ffprobe.exe";
+        
+        [DefaultValue(DEF_FFPROBE)]
+        [Category(@"Hilfsprogramme")]
+        [DisplayName(@"FFprobe")]
+        [Description(@"Der Pfad von ffprobe.exe.")]
+        public virtual string Ffprobe
+        {
+            get { return _ffprobe; }
+            set
+            {
+                if (string.Equals(value, _ffprobe))
+                {
+                    return;
+                }
+                _ffprobe = value;
+                this.OnFfprobeChanged();
             }
         }
         

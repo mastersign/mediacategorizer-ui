@@ -17,6 +17,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             ToolTypes = new[]
             {
                 typeof (FfmpegTool),
+                typeof (FfprobeTool),
                 typeof (WaveVizTool),
                 typeof (TranscripterTool),
                 typeof (DistilleryTool),

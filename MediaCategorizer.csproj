@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="processing\AudioExtractionProcess.cs" />
     <Compile Include="processing\DummyProcess.cs" />
+    <Compile Include="processing\MediaInspectionProcess.cs" />
     <Compile Include="processing\MultiTaskProcessBase.cs" />
     <Compile Include="processing\ProcessResultEventArgs.cs" />
     <Compile Include="processing\IProcess.cs" />
@@ -92,6 +93,7 @@
     </Compile>
     <Compile Include="settings\SetupManager.cs" />
     <Compile Include="tools\DistilleryTool.cs" />
+    <Compile Include="tools\FfprobeTool.cs" />
     <Compile Include="tools\FfmpegTool.cs" />
     <Compile Include="tools\ToolBase.cs" />
     <Compile Include="tools\ToolProvider.cs" />

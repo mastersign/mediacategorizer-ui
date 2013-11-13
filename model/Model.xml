@@ -294,6 +294,7 @@
       <Property name="Name" />
       <Property name="MediaFile" />
       <Property name="AudioFile" />
+      <Property name="Duration" type="double" />
       <Property name="WaveformFile" />
       <Property name="RecognitionProfile" />
       <Property name="ResultsFile" />

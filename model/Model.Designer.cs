@@ -2924,6 +2924,39 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #endregion
         
+        #region Property Duration
+        
+        private double _duration;
+        
+        public event EventHandler DurationChanged;
+        
+        protected virtual void OnDurationChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = DurationChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Duration");
+        }
+        
+        public virtual double Duration
+        {
+            get { return _duration; }
+            set
+            {
+                if ((Math.Abs(value - _duration) < double.Epsilon))
+                {
+                    return;
+                }
+                _duration = value;
+                this.OnDurationChanged();
+            }
+        }
+        
+        #endregion
+        
         #region Property WaveformFile
         
         private string _waveformFile;
