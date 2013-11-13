@@ -13,7 +13,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         private WaveVizTool waveviz;
 
         public WaveformProcess(params IProcess[] dependencies)
-            : base("Audio-Visualisierung", dependencies)
+            : base("Wellenform visualisieren", dependencies)
         { }
 
         private void InitializeTool()

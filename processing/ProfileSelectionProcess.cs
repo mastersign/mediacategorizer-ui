@@ -17,7 +17,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         private IDictionary<Media, Dictionary<Guid, TranscripterTool.ConfidenceTestResult>> results;
 
         public ProfileSelectionProcess(params IProcess[] dependencies)
-            : base("Sprachprofilauswahl", dependencies)
+            : base("Sprachprofile auswählen", dependencies)
         {
             AutoSetWorkItem = false;
         }

@@ -13,7 +13,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         private FfmpegTool ffmpeg;
 
         public AudioExtractionProcess(params IProcess[] dependencies)
-            : base("Extraktion der Audiospur", dependencies)
+            : base("Audiospur extrahieren", dependencies)
         { }
 
         private void InitializeTool()
