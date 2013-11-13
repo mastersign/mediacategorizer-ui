@@ -37,6 +37,23 @@ namespace de.fhb.oll.mediacategorizer.tools
             return result;
         }
 
+        public void RunSpeechRecognition(string waveFile, string recognitionResultFile, float duration, Action<float> progressHandler)
+        {
+            var arguments = string.Format("--progress --target {1} \"{0}\"",
+                waveFile, recognitionResultFile);
+            var pi = new ProcessStartInfo(ToolPath, arguments);
+            pi.CreateNoWindow = true;
+            pi.RedirectStandardOutput = true;
+            pi.UseShellExecute = false;
+            var p = Process.Start(pi);
+            ObserveProgress(p.StandardOutput, duration, progressHandler);
+            p.WaitForExit();
+            if (p.ExitCode != 0)
+            {
+                throw new ApplicationException("transcripter.exe ended with errors.");
+            }
+        }
+
         private static void ObserveProgress(TextReader r, float duration, Action<float> progressHandler)
         {
             string progressLine;

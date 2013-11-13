@@ -75,13 +75,15 @@ namespace de.fhb.oll.mediacategorizer.processing
             var audioExtraction = new AudioExtractionProcess(projectPreparation);
             var waveformVisualization = new WaveformProcess(projectPreparation, audioExtraction);
             var profileSelection = new ProfileSelectionProcess(mediaInspectionProcess, projectPreparation, audioExtraction);
+            var speechRecognitionProcess = new SpeechRecognitionProcess(mediaInspectionProcess, audioExtraction, profileSelection);
 
             var projectFinalization = new FinalizeProjectProcess(
                 projectPreparation, 
                 mediaInspectionProcess,
                 audioExtraction, 
                 waveformVisualization, 
-                profileSelection);
+                profileSelection,
+                speechRecognitionProcess);
 
             return new IProcess[]
             {
@@ -90,6 +92,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 audioExtraction, 
                 waveformVisualization,
                 profileSelection,
+                speechRecognitionProcess,
                 projectFinalization
             };
         }
