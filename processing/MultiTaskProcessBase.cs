@@ -17,6 +17,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         protected MultiTaskProcessBase(string name, IProcess[] dependencies)
             : base(name, dependencies)
         {
+            PhaseCount = 1;
+            CurrentPhase = 0;
             CancelOnError = true;
         }
 
@@ -25,6 +27,10 @@ namespace de.fhb.oll.mediacategorizer.processing
         private HashSet<int> runningTasks;
 
         private int maxParallelTasks;
+
+        protected int PhaseCount { get; set; }
+
+        protected int CurrentPhase { get; set; }
 
         protected bool AutoSetWorkItem { get; set; }
 
@@ -107,7 +113,14 @@ namespace de.fhb.oll.mediacategorizer.processing
             UpdateWorkItem();
             Task.Run(() =>
             {
-                task(p => ProgressHandler(id, p), ErrorHandler);
+                try
+                {
+                    task(p => ProgressHandler(id, p), ErrorHandler);
+                }
+                catch (Exception exc)
+                {
+                    ErrorHandler(exc.Message);
+                }
                 TaskFinished(id);
             });
         }
@@ -135,7 +148,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         private void ProgressHandler(int task, float value)
         {
             progressList[task] = value;
-            OnProgress(progressList.Sum() / progressList.Length);
+            OnProgress((CurrentPhase + progressList.Sum() / progressList.Length) / PhaseCount);
         }
 
         private void ErrorHandler(string message)
