@@ -51,9 +51,6 @@ namespace de.fhb.oll.mediacategorizer.processing
             WorkItem = "Überprüfe Hilfsprogramme";
             foreach (var tt in ToolProvider.ToolTypes)
             {
-                // TODO build and provide distillery.jar
-                if (tt == typeof(DistilleryTool)) continue;
-
                 var tool = (ToolBase)ToolProvider.Create(tt);
                 OnProgress(string.Format("Überprüfe {0}", tool.Name));
                 if (!tool.CheckTool())

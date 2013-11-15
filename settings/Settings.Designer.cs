@@ -81,6 +81,7 @@ namespace de.fhb.oll.mediacategorizer.settings
                 (Environment.NewLine + @"    WaveViz = " + (!ReferenceEquals(_waveViz, null) ? _waveViz.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Transcripter = " + (!ReferenceEquals(_transcripter, null) ? _transcripter.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Distillery = " + (!ReferenceEquals(_distillery, null) ? _distillery.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    JavaRuntime = " + (!ReferenceEquals(_javaRuntime, null) ? _javaRuntime.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    ConfidenceTestDuration = " + _confidenceTestDuration.ToString(formatProvider).Replace("\n", "\n    "))));
         }
         
@@ -104,6 +105,7 @@ namespace de.fhb.oll.mediacategorizer.settings
                 object.Equals(this._waveViz, o._waveViz) && 
                 object.Equals(this._transcripter, o._transcripter) && 
                 object.Equals(this._distillery, o._distillery) && 
+                object.Equals(this._javaRuntime, o._javaRuntime) && 
                 (this._confidenceTestDuration == o._confidenceTestDuration));
         }
         
@@ -132,6 +134,7 @@ namespace de.fhb.oll.mediacategorizer.settings
                 (!ReferenceEquals(this._waveViz, null) ? this._waveViz.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._transcripter, null) ? this._transcripter.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._distillery, null) ? this._distillery.GetHashCode() : 0) ^ 
+                (!ReferenceEquals(this._javaRuntime, null) ? this._javaRuntime.GetHashCode() : 0) ^ 
                 this._confidenceTestDuration.GetHashCode());
         }
         
@@ -483,6 +486,42 @@ namespace de.fhb.oll.mediacategorizer.settings
                 }
                 _distillery = value;
                 this.OnDistilleryChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property JavaRuntime
+        
+        private string _javaRuntime;
+        
+        public event EventHandler JavaRuntimeChanged;
+        
+        protected virtual void OnJavaRuntimeChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = JavaRuntimeChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"JavaRuntime");
+        }
+        
+        [Category(@"Hilfsprogramme")]
+        [DisplayName(@"JRE")]
+        [Description(@"Der Pfad zu java.exe oder leer wenn die Java-Laufzeitumgebung automatisch ermittelt werden soll.")]
+        public virtual string JavaRuntime
+        {
+            get { return _javaRuntime; }
+            set
+            {
+                if (string.Equals(value, _javaRuntime))
+                {
+                    return;
+                }
+                _javaRuntime = value;
+                this.OnJavaRuntimeChanged();
             }
         }
         

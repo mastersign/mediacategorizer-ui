@@ -68,6 +68,11 @@
         <Description>Der Pfad von distillery.jar.</Description>
         <DefaultValue>tools/distillery.jar</DefaultValue>
       </Property>
+      <Property name="JavaRuntime">
+        <Category>Hilfsprogramme</Category>
+        <DisplayName>JRE</DisplayName>
+        <Description>Der Pfad zu java.exe oder leer wenn die Java-Laufzeitumgebung automatisch ermittelt werden soll.</Description>
+      </Property>
 
       <Property name="ConfidenceTestDuration" type="float">
         <Category>Spracherkennung</Category>
