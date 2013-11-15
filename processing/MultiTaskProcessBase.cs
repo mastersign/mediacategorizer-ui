@@ -109,7 +109,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             var task = t.Item1;
             var id = t.Item2;
             runningTasks.Add(id);
-            Debug.WriteLine("Added task " + id);
+            Debug.WriteLine("Process '{0}' in phase {1} started task {2} ", Name, CurrentPhase + 1, id + 1);
             UpdateWorkItem();
             Task.Run(() =>
             {
@@ -134,7 +134,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
 
             runningTasks.Remove(id);
-            Debug.WriteLine("Removed task " + id);
+            Debug.WriteLine("Process '{0}' in phase {1} finished task {2} ", Name, CurrentPhase + 1, id + 1);
             UpdateWorkItem();
             WorkQueue();
         }
