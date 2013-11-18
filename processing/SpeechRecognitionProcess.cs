@@ -11,21 +11,12 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class SpeechRecognitionProcess : MultiTaskProcessBase
     {
-        private TranscripterTool transcripter;
-
         private IDictionary<Guid, string> profiles;
         private IDictionary<Guid, Media[]> processGroups;
 
         public SpeechRecognitionProcess(params IProcess[] dependencies) 
             : base("Text aus Sprache erkennen", dependencies)
-        { }
-
-        private void InitializeTool()
-        {
-            if (transcripter == null)
             {
-                transcripter = (TranscripterTool) ToolProvider.Create(typeof (TranscripterTool));
-            }
         }
 
         private string BuildRecognitionResultsFilePath(Media media)
@@ -33,9 +24,14 @@ namespace de.fhb.oll.mediacategorizer.processing
             return Path.Combine(Project.GetWorkingDirectory(), string.Format("{0}.srr", media.Id));
         }
 
+        private TranscripterTool GetTranscripterTool()
+        {
+            return (TranscripterTool) ToolProvider.Create(typeof (TranscripterTool));
+        }
+
         protected override void Work()
         {
-            InitializeTool();
+            var transcripter = GetTranscripterTool();
 
             OnProgress("Verarbeitungsgruppen bilden");
 
@@ -64,6 +60,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         {
             m.ResultsFile = BuildRecognitionResultsFilePath(m);
             if (File.Exists(m.ResultsFile)) return;
+            var transcripter = GetTranscripterTool(); 
             transcripter.RunSpeechRecognition(m.AudioFile, m.ResultsFile, (float)m.Duration, progressHandler);
         }
     }

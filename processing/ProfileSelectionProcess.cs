@@ -11,8 +11,6 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class ProfileSelectionProcess : MultiTaskProcessBase
     {
-        private TranscripterTool transcripter;
-
         private IDictionary<Guid, string> profiles;
         private Guid currentProfileId;
         private IDictionary<Media, Dictionary<Guid, TranscripterTool.ConfidenceTestResult>> results;
@@ -23,12 +21,9 @@ namespace de.fhb.oll.mediacategorizer.processing
             AutoSetWorkItem = false;
         }
 
-        private void InitializeTool()
+        private TranscripterTool GetTranscripterTool()
         {
-            if (transcripter == null)
-            {
-                transcripter = (TranscripterTool) ToolProvider.Create(typeof (TranscripterTool));
-            }
+            return (TranscripterTool) ToolProvider.Create(typeof (TranscripterTool));
         }
 
         private string BuildProfileSelectionFilePath(Media media, Guid profileId)
@@ -38,13 +33,12 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected override void Work()
         {
-            InitializeTool();
-
+            var transcripter = GetTranscripterTool();
             OnProgress("Sprachprofile ermitteln");
             profiles = transcripter.GetSpeechRecognitionProfiles().ToDictionary(t => t.Item1, t => t.Item2);
 
             OnProgress("Erkennungssicherheiten ermitteln");
-            RunTestsForAllProfiles();
+            RunTestsForAllProfiles(transcripter);
 
             OnProgress("Erkennungssicherheiten auswerten");
             var criterion = GetCriterion();
@@ -85,7 +79,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
         }
 
-        private void RunTestsForAllProfiles()
+        private void RunTestsForAllProfiles(TranscripterTool transcripter)
         {
             results = Project.Media.ToDictionary(
                 m => m, m => new Dictionary<Guid, TranscripterTool.ConfidenceTestResult>());
@@ -96,14 +90,14 @@ namespace de.fhb.oll.mediacategorizer.processing
             foreach (var profile in profiles)
             {
                 WorkItem = profile.Value;
-                RunTestsForProfile(profile.Key);
+                RunTestsForProfile(transcripter, profile.Key);
                 CurrentPhase = CurrentPhase + 1;
             }
             transcripter.SetCurrentSpeechRecognitionProfile(originalProfile);
             WorkItem = null;
         }
 
-        private void RunTestsForProfile(Guid profileId)
+        private void RunTestsForProfile(TranscripterTool transcripter, Guid profileId)
         {
             currentProfileId = profileId;
             transcripter.SetCurrentSpeechRecognitionProfile(profileId);
@@ -118,6 +112,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             var file = BuildProfileSelectionFilePath(m, currentProfileId);
             if (!File.Exists(file))
             {
+                var transcripter = GetTranscripterTool();
                 var result = transcripter.RunConfidenceTest(m.AudioFile, Setup.ConfidenceTestDuration, progressHandler);
                 using (var w = new StreamWriter(file, false, Encoding.UTF8))
                 {

@@ -11,18 +11,14 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class AnalyzeResultsAndWriteOutputProcess : ProcessBase
     {
-        private DistilleryTool distillery;
-
         public AnalyzeResultsAndWriteOutputProcess(params IProcess[] dependencies)
             : base("Analysieren und Ergebnisse speichern", dependencies)
-        { }
-
-        private void InitializeTool()
         {
-            if (distillery == null)
-            {
-                distillery = (DistilleryTool)ToolProvider.Create(typeof(DistilleryTool));
             }
+
+        private DistilleryTool GetDistilleryTool()
+        {
+            return (DistilleryTool)ToolProvider.Create(typeof(DistilleryTool));
         }
 
         private string BuildJobFilePath()
@@ -32,8 +28,6 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected override void Work()
         {
-            InitializeTool();
-
             var jobFile = BuildJobFilePath();
             OnProgress("Projekt kodieren...");
             using (var w = new StreamWriter(jobFile))
@@ -43,8 +37,8 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
 
             OnProgress("Analyse starten...");
+            var distillery = GetDistilleryTool();
             distillery.RunDistillery(jobFile, wi => { WorkItem = wi; }, OnProgress, OnProgress, OnError);
-        }
 
     }
 }

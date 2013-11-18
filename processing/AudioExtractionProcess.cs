@@ -10,23 +10,18 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class AudioExtractionProcess : MultiTaskProcessBase
     {
-        private FfmpegTool ffmpeg;
-
         public AudioExtractionProcess(params IProcess[] dependencies)
             : base("Audiospur extrahieren", dependencies)
-        { }
-
-        private void InitializeTool()
-        {
-            if (ffmpeg == null)
             {
-                ffmpeg = (FfmpegTool)ToolProvider.Create(typeof(FfmpegTool));
             }
+
+        private FfmpegTool GetFfmpegTool()
+        {
+            return (FfmpegTool)ToolProvider.Create(typeof(FfmpegTool));
         }
 
         protected override void Work()
         {
-            InitializeTool();
             OnProgress("Audiodaten als 16Bit PCM Wave Mono speichern...");
             var media = Project.Media.ToArray();
             RunTasks(media.Select(m => (ProcessTask)((pH, eH) => ProcessMedia(m, pH, eH))).ToArray());
@@ -42,6 +37,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             m.AudioFile = BuildAudioPath(m);
             if (!File.Exists(m.AudioFile))
             {
+                var ffmpeg = GetFfmpegTool();
                 if (!ffmpeg.ExtractAudio(m.MediaFile, m.AudioFile, progressHandler))
                 {
                     errorHandler("FFmpeg wurde mit einem Fehler beendet");

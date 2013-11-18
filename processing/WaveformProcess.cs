@@ -10,23 +10,18 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class WaveformProcess : MultiTaskProcessBase
     {
-        private WaveVizTool waveviz;
-
         public WaveformProcess(params IProcess[] dependencies)
             : base("Wellenform visualisieren", dependencies)
-        { }
-
-        private void InitializeTool()
         {
-            if (waveviz == null)
-            {
-                waveviz = (WaveVizTool)ToolProvider.Create(typeof(WaveVizTool));
-            }
+        }
+
+        private WaveVizTool GetWaveVizTool()
+        {
+            return (WaveVizTool)ToolProvider.Create(typeof(WaveVizTool));
         }
 
         protected override void Work()
         {
-            InitializeTool();
             OnProgress("Wellenformen visualisieren...");
             var media = Project.Media.ToArray();
             RunTasks(media.Select(m => (ProcessTask)((pH, eH) => ProcessMedia(m, pH, eH))).ToArray());
@@ -43,6 +38,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             var parameter = Project.Configuration.Waveform;
             if (!File.Exists(m.WaveformFile))
             {
+                var waveviz = GetWaveVizTool();
                 if (!waveviz.GenerateWaveVisualization(m.AudioFile, m.WaveformFile,
                     parameter.Width, parameter.Height,
                     parameter.BackgroundColor, parameter.Foreground1Color,

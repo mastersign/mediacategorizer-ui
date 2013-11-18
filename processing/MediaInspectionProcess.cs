@@ -10,7 +10,6 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class MediaInspectionProcess : MultiTaskProcessBase
     {
-        private FfprobeTool ffprobe;
 
         public MediaInspectionProcess(params IProcess[] dependencies)
             : base("Medien untersuchen", dependencies)
@@ -18,17 +17,13 @@ namespace de.fhb.oll.mediacategorizer.processing
             AutoSetWorkItem = true;
         }
 
-        private void InitializeTool()
+        private FfprobeTool GetFfprobe()
         {
-            if (ffprobe == null)
-            {
-                ffprobe = (FfprobeTool)ToolProvider.Create(typeof(FfprobeTool));
-            }
+            return (FfprobeTool)ToolProvider.Create(typeof(FfprobeTool));
         }
 
         protected override void Work()
         {
-            InitializeTool();
             OnProgress("Video- und Audiodatenströme untersuchen");
             var media = Project.Media.ToArray();
             RunTasks(media.Select(m => (ProcessTask)((pH, eH) => ProcessMedia(m, pH, eH))).ToArray());
@@ -36,6 +31,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void ProcessMedia(Media m, Action<float> progressHandler, Action<string> errorHandler)
         {
+            var ffprobe = GetFfprobe();
             var info = ffprobe.GetMediaInfo(m.MediaFile);
             m.Duration = info.Duration.TotalSeconds;
         }
