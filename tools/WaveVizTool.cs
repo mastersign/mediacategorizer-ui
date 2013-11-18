@@ -34,6 +34,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.CreateNoWindow = true;
             pi.UseShellExecute = false;
             var p = Process.Start(pi);
+            p.PriorityClass = ProcessPriorityClass.BelowNormal;
             p.WaitForExit();
             return p.ExitCode == 0;
         }

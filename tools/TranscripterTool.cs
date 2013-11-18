@@ -27,6 +27,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.RedirectStandardOutput = true;
             pi.UseShellExecute = false;
             var p = Process.Start(pi);
+            p.PriorityClass = ProcessPriorityClass.BelowNormal;
             ObserveProgress(p.StandardOutput, duration, progressHandler);
             var result = new ConfidenceTestResult(p.StandardOutput);
             p.WaitForExit();
@@ -46,6 +47,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.RedirectStandardOutput = true;
             pi.UseShellExecute = false;
             var p = Process.Start(pi);
+            p.PriorityClass = ProcessPriorityClass.BelowNormal;
             ObserveProgress(p.StandardOutput, duration, progressHandler);
             p.WaitForExit();
             if (p.ExitCode != 0)

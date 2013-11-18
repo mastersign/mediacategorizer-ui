@@ -41,6 +41,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.UseShellExecute = false;
             pi.CreateNoWindow = true;
             var p = Process.Start(pi);
+            p.PriorityClass = ProcessPriorityClass.BelowNormal;
             Task.Run(() => RunErrorReader(p.StandardError, progressHandler));
             p.WaitForExit();
             return p.ExitCode == 0 && errors.Count == 0 && File.Exists(targetPath);
