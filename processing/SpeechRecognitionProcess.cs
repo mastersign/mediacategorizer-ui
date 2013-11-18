@@ -58,10 +58,14 @@ namespace de.fhb.oll.mediacategorizer.processing
             WorkItem = null;
         }
 
-        private void RunRecognition(Media m, Action<float> progressHandler, Action<string> messageHandler)
+        private void RunRecognition(Media m, Action<float> progressHandler, Action<string> errorHandler)
         {
             m.ResultsFile = BuildRecognitionResultsFilePath(m);
             if (File.Exists(m.ResultsFile)) return;
+            if (Math.Abs((float) m.Duration) < float.Epsilon)
+            {
+                Debug.WriteLine("WARNING: Duration of 0 for media " + m.Name);
+            }
             var transcripter = GetTranscripterTool(); 
             transcripter.RunSpeechRecognition(m.AudioFile, m.ResultsFile, (float)m.Duration, progressHandler);
         }

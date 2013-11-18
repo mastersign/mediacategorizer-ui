@@ -36,6 +36,10 @@ namespace de.fhb.oll.mediacategorizer.processing
             var ffprobe = GetFfprobe();
             var info = ffprobe.GetMediaInfo(m.MediaFile);
             m.Duration = info.Duration.TotalSeconds;
+            if (m.Duration <= 0.0)
+            {
+                Debug.WriteLine("The duration of media '" + m.Id + "' was determined as zero.", "WARNING");
+            }
         }
     }
 }

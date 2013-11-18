@@ -70,7 +70,10 @@ namespace de.fhb.oll.mediacategorizer.tools
                     var s = int.Parse(match.Groups[3].Value);
                     var ms = int.Parse(match.Groups[4].Value);
                     var ts = new TimeSpan(0, h, m, s, ms);
-                    progressHandler((float)(ts.TotalSeconds / duration));
+                    if (duration > 0)
+                    {
+                        progressHandler((float) (ts.TotalSeconds/duration));
+                    }
                 }
             }
         }

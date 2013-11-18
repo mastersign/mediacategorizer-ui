@@ -13,8 +13,8 @@ namespace de.fhb.oll.mediacategorizer.tools
     class FfmpegTool : ToolBase
     {
         private TimeSpan duration;
-        private static readonly Regex DURATION_REGEX = new Regex(@"Duration: (\d+):(\d\d):(\d\d).(\d+)");
-        private static readonly Regex PROGRESS_REGEX = new Regex(@"size=.*time=(\d+):(\d\d):(\d\d).(\d+)");
+        private static readonly Regex DURATION_REGEX = new Regex(@"Duration: (\d+):(\d\d):(\d\d)\.(\d+)");
+        private static readonly Regex PROGRESS_REGEX = new Regex(@"size=.*time=(\d+):(\d\d):(\d\d)\.(\d+)");
         private static readonly Regex ERROR_REGEX = new Regex(@"ERROR|No such file or directory", RegexOptions.IgnoreCase);
 
         private List<string> errors; 

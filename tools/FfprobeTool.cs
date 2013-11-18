@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using de.fhb.oll.mediacategorizer.settings;
 
@@ -13,7 +14,7 @@ namespace de.fhb.oll.mediacategorizer.tools
     class FfprobeTool : ToolBase
     {
         private TimeSpan duration;
-        private static readonly Regex DURATION_REGEX = new Regex(@"Duration: (\d+):(\d\d):(\d\d).(\d+)");
+        private static readonly Regex DURATION_REGEX = new Regex(@"Duration: (\d+):(\d\d):(\d\d)\.(\d+)");
         private static readonly Regex ERROR_REGEX = new Regex(@"ERROR|No such file or directory", RegexOptions.IgnoreCase);
 
         private List<string> errors;
@@ -32,9 +33,10 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.UseShellExecute = false;
             pi.CreateNoWindow = true;
             var p = Process.Start(pi);
-            Task.Run(() => RunErrorReader(p.StandardError));
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
+            var readTask = Task.Run(() => RunErrorReader(p.StandardError));
             p.WaitForExit();
+            readTask.Wait();
             if (p.ExitCode != 0 || errors.Count > 0)
             {
                 throw new ApplicationException("ffprobe.exe ended with errors.");
@@ -71,7 +73,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             }
         }
 
-        private TimeSpan GetTimeValue(Match match)
+        private static TimeSpan GetTimeValue(Match match)
         {
             var h = int.Parse(match.Groups[1].Value);
             var m = int.Parse(match.Groups[2].Value);

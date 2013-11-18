@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using de.fhb.oll.mediacategorizer.settings;
 using Microsoft.Win32;
@@ -15,7 +16,18 @@ namespace de.fhb.oll.mediacategorizer.tools
         private readonly Setup setup;
         private readonly string javaPath;
 
-        private List<string> workingTasks = new List<string>();
+        private const float PREPARATION_PART = 0.25f;
+
+        private readonly List<string> workingTasks = new List<string>();
+        private int totalPreperationSteps;
+        private int currentPreparationStep;
+        private readonly Dictionary<string, Tuple<int, int>> taskStates = new Dictionary<string, Tuple<int, int>>();
+
+        private static readonly Regex TASK_GROUP_REGEX = new Regex(@"TASKGROUP (.+) \[(\d+)\]");
+        private static readonly Regex TASK_END_REGEX = new Regex(@"TASK_END (.+)$");
+        private static readonly Regex TASK_GROUP_END_REGEX = new Regex(@"TASKGROUP_END (.+)$");
+        private static readonly Regex PIPELINE_REGEX = new Regex(@"PIPELINE (.+) \[(\d+)\]");
+        private static readonly Regex PIPELINE_STEP_REGEX = new Regex(@"PIPELINE_STEP (.+)\w(\d+)");
 
         public DistilleryTool(Setup setup)
             : base(setup.Distillery)
@@ -55,31 +67,131 @@ namespace de.fhb.oll.mediacategorizer.tools
                 }
                 if (l.StartsWith("# BEGIN ") && l.EndsWith("..."))
                 {
-                    var taskName = l.Substring(8, l.Length - 11);
-                    workingTasks.Add(taskName);
-                    messageHandler(workingTasks.Count > 0
-                        ? workingTasks[workingTasks.Count - 1]
-                        : null);
+                    ProcessBeginMessage(l, messageHandler);
                 }
                 else if (l.StartsWith("# END "))
                 {
-                    var pos = l.LastIndexOf(" after ");
-                    if (pos < 0) continue;
-                    var taskName = l.Substring(8, pos - 8);
-                    var taskId = workingTasks.LastIndexOf(taskName);
-                    if (taskId >= 0)
-                    {
-                        workingTasks.RemoveAt(taskId);
-                        messageHandler(workingTasks.Count > 0
-                            ? workingTasks[workingTasks.Count - 1]
-                            : null);
-                    }
+                    ProcessEndMessage(l, messageHandler);
+                }
+                else if (l.StartsWith("# TASKGROUP "))
+                {
+                    ProcessTaskGroupMessage(l, progressHandler);
+                }
+                else if (l.StartsWith("# TASK_END "))
+                {
+                    ProcessTaskEndMessage(l, progressHandler);
+                }
+                else if (l.StartsWith("# TASKGROUP_END "))
+                {
+                    ProcessTaskGroupEndMessage(l, progressHandler);
+                }
+                else if (l.StartsWith("# PIPELINE "))
+                {
+                    ProcessPipelinePreparationMessage(l, progressHandler);
+                }
+                else if (l.StartsWith("# PIPELINE_STEP "))
+                {
+                    ProcessPipelineStepMessage(l, progressHandler);
                 }
                 else
                 {
                     messageHandler(l.Substring(2));
                 }
             }
+        }
+
+        private void ProcessBeginMessage(string line, Action<string> messageHandler)
+        {
+            var taskName = line.Substring(8, line.Length - 11);
+            workingTasks.Add(taskName);
+            messageHandler(workingTasks.Count > 0
+                ? workingTasks[workingTasks.Count - 1]
+                : null);
+        }
+
+        private void ProcessEndMessage(string line, Action<string> messageHandler)
+        {
+            var pos = line.LastIndexOf(" after ");
+            if (pos < 0) return;
+            var taskName = line.Substring(8, pos - 8);
+            var taskId = workingTasks.LastIndexOf(taskName);
+            if (taskId >= 0)
+            {
+                workingTasks.RemoveAt(taskId);
+                messageHandler(workingTasks.Count > 0
+                    ? workingTasks[workingTasks.Count - 1]
+                    : null);
+            }
+        }
+
+        private void ProcessTaskGroupMessage(string line, Action<float> progressHandler)
+        {
+            var match = TASK_GROUP_REGEX.Match(line);
+            if (!match.Success) return;
+            var name = match.Groups[1].Value;
+            var taskCnt = int.Parse(match.Groups[2].Value);
+            taskStates[name] = Tuple.Create(taskCnt, 0);
+            UpdateTaskGroupProgress(progressHandler);
+        }
+
+        private void ProcessTaskEndMessage(string line, Action<float> progressHandler)
+        {
+            var match = TASK_END_REGEX.Match(line);
+            if (!match.Success) return;
+            var name = match.Groups[1].Value;
+            Tuple<int, int> taskState;
+            if (!taskStates.TryGetValue(name, out taskState)) return;
+            taskStates[name] = Tuple.Create(taskState.Item1, taskState.Item2 + 1);
+            UpdateTaskGroupProgress(progressHandler);
+        }
+
+        private void ProcessTaskGroupEndMessage(string line, Action<float> progressHandler)
+        {
+            var match = TASK_GROUP_END_REGEX.Match(line);
+            if (!match.Success) return;
+            var name = match.Groups[1].Value;
+            Tuple<int, int> taskState;
+            if (!taskStates.TryGetValue(name, out taskState)) return;
+            taskStates[name] = Tuple.Create(taskState.Item1, taskState.Item1);
+            UpdateTaskGroupProgress(progressHandler);
+        }
+
+        private void UpdateTaskGroupProgress(Action<float> progressHandler)
+        {
+            var taskCnt = taskStates.Sum(t => t.Value.Item1);
+            progressHandler(taskCnt > 0
+                ? PREPARATION_PART + (float)taskStates.Sum(t => t.Value.Item2) / taskCnt * (1 - PREPARATION_PART)
+                : PREPARATION_PART);
+        }
+
+        private void ProcessPipelinePreparationMessage(string line, Action<float> progressHandler)
+        {
+            var match = PIPELINE_REGEX.Match(line);
+            if (!match.Success) return;
+            var name = match.Groups[1].Value;
+            if (name == "Preparation")
+            {
+                totalPreperationSteps = int.Parse(match.Groups[2].Value);
+                currentPreparationStep = 0;
+            }
+            UpdatePreperationProgress(progressHandler);
+        }
+
+        private void ProcessPipelineStepMessage(string line, Action<float> progressHandler)
+        {
+            var match = PIPELINE_REGEX.Match(line);
+            if (!match.Success) return;
+            var name = match.Groups[1].Value;
+            if (name == "Preparation")
+            {
+                currentPreparationStep += 1;
+            }
+            UpdatePreperationProgress(progressHandler);
+        }
+
+        private void UpdatePreperationProgress(Action<float> progressHandler)
+        {
+            progressHandler(PREPARATION_PART * currentPreparationStep / totalPreperationSteps);
         }
 
         private void ProcessError(TextReader r, Action<string> workItemHandler,
