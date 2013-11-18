@@ -14,8 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.processing;
-using de.fhb.oll.mediacategorizer.settings;
-using de.fhb.oll.mediacategorizer.tools;
 
 namespace de.fhb.oll.mediacategorizer
 {
@@ -29,23 +27,14 @@ namespace de.fhb.oll.mediacategorizer
             InitializeComponent();
         }
 
-        public ProcessChain ProcessChain
+        private ProcessChain GetProcessChain()
         {
-            get { return (ProcessChain) gridProcessChain.DataContext; }
-            set { gridProcessChain.DataContext = value; }
-        }
-
-        private static SetupManager GetSetupManager()
-        {
-            return Application.Current.Resources["SetupManager"] as SetupManager;
+            return ((Project)DataContext).ProcessChain;
         }
 
         private void StartProcessHandler(object sender, RoutedEventArgs e)
         {
-            var sm = GetSetupManager();
-            var toolProvider = new ToolProvider(sm.Setup);
-            ProcessChain = new ProcessChain(sm.Setup, toolProvider, DataContext as Project);
-            ProcessChain.Start();
+            GetProcessChain().Start();
         }
     }
 }

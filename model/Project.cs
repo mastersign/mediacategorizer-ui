@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Xml.Serialization;
+using de.fhb.oll.mediacategorizer.processing;
 
 namespace de.fhb.oll.mediacategorizer.model
 {
@@ -19,6 +21,13 @@ namespace de.fhb.oll.mediacategorizer.model
         {
             LoadDemoData();
         }
+        public string GetWorkingDirectory()
+        {
+            return Path.Combine(OutputDir, WORKING_DIR_NAME);
+        }
+
+        [XmlIgnore]
+        public ProcessChain ProcessChain { get; set; }
 
         [Conditional("DEBUG")]
         private void LoadDemoData()

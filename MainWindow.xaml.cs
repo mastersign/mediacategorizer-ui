@@ -7,7 +7,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using de.fhb.oll.mediacategorizer.model;
+using de.fhb.oll.mediacategorizer.processing;
 using de.fhb.oll.mediacategorizer.settings;
+using de.fhb.oll.mediacategorizer.tools;
 
 namespace de.fhb.oll.mediacategorizer
 {
@@ -23,7 +25,24 @@ namespace de.fhb.oll.mediacategorizer
             GoToPage("Start");
         }
 
-        public Project Project { get { return DataContext as Project; } set { DataContext = value; } }
+        public Project Project
+        {
+            get
+            {
+                return DataContext as Project;
+            }
+            set
+            {
+                if (ReferenceEquals(DataContext, value)) return;
+                DataContext = value;
+                if (value.ProcessChain == null)
+                {
+                    var setup = ((SetupManager) Application.Current.Resources["SetupManager"]).Setup;
+                    var toolProv = ((ToolProvider) Application.Current.Resources["ToolProvider"]);
+                    value.ProcessChain = new ProcessChain(setup, toolProv, value);
+                }
+            }
+        }
 
         private void GoToPage(string page)
         {
