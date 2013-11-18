@@ -11,7 +11,9 @@ namespace de.fhb.oll.mediacategorizer.processing
     {
         public PrepareProjectProcess(params IProcess[] dependencies)
             : base("Projekt initialisieren", dependencies)
-        { }
+        {
+            ProgressWeight = 1;
+        }
 
         protected override void Work()
         {

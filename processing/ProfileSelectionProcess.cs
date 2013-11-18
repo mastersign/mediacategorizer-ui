@@ -18,6 +18,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         public ProfileSelectionProcess(params IProcess[] dependencies)
             : base("Sprachprofile auswählen", dependencies)
         {
+            ProgressWeight = 20;
             AutoSetWorkItem = false;
         }
 

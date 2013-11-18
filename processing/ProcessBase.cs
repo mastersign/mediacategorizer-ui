@@ -40,6 +40,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             Name = name;
             this.dependencies = dependencies;
 
+            ProgressWeight = 1f;
             State = ProcessState.Waiting;
         }
 
@@ -127,6 +128,8 @@ namespace de.fhb.oll.mediacategorizer.processing
                 OnPropertyChanged();
             }
         }
+
+        public float ProgressWeight { get; protected set; }
 
         public float CurrentProgress
         {

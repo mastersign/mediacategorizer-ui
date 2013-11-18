@@ -12,8 +12,9 @@ namespace de.fhb.oll.mediacategorizer.processing
     {
         public AudioExtractionProcess(params IProcess[] dependencies)
             : base("Audiospur extrahieren", dependencies)
-            {
-            }
+        {
+            ProgressWeight = 10;
+        }
 
         private FfmpegTool GetFfmpegTool()
         {

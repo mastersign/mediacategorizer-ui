@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         public MediaInspectionProcess(params IProcess[] dependencies)
             : base("Medien untersuchen", dependencies)
         {
+            ProgressWeight = 3;
             AutoSetWorkItem = true;
         }
 

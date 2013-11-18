@@ -10,7 +10,9 @@ namespace de.fhb.oll.mediacategorizer.processing
     {
         public FinalizeProjectProcess(params IProcess[] dependencies)
             : base("Projekt abschließen", dependencies)
-        { }
+        {
+            ProgressWeight = 1;
+        }
 
         protected override void Work()
         {

@@ -14,7 +14,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         public AnalyzeResultsAndWriteOutputProcess(params IProcess[] dependencies)
             : base("Analysieren und Ergebnisse speichern", dependencies)
         {
-            }
+            ProgressWeight = 20;
+        }
 
         private DistilleryTool GetDistilleryTool()
         {

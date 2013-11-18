@@ -13,6 +13,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         public WaveformProcess(params IProcess[] dependencies)
             : base("Wellenform visualisieren", dependencies)
         {
+            ProgressWeight = 4;
         }
 
         private WaveVizTool GetWaveVizTool()

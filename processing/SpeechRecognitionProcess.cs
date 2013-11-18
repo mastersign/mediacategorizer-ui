@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         public SpeechRecognitionProcess(params IProcess[] dependencies) 
             : base("Text aus Sprache erkennen", dependencies)
             {
+            ProgressWeight = 40;
         }
 
         private string BuildRecognitionResultsFilePath(Media media)

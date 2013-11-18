@@ -31,6 +31,8 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private bool isFailed;
 
+        private float totalProgressWeight;
+
         private float progress;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -61,6 +63,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 p.Started += ProcessStartedHandler;
                 p.Ended += ProcessEndedHandler;
                 p.Progress += ProcessProgressHandler;
+                totalProgressWeight += p.ProgressWeight;
             }
 
             WaitingProcesses = new ObservableCollection<IProcess>(processes);
@@ -139,7 +142,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void ProcessProgressHandler(object sender, ProcessProgressEventArgs e)
         {
-            Progress = processes.Sum(p => p.CurrentProgress) / processes.Length;
+            Progress = processes.Sum(p => p.CurrentProgress * p.ProgressWeight) / totalProgressWeight;
         }
 
         private bool ComputeIsRunning()

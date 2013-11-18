@@ -26,6 +26,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         
         ProcessState State { get; }
         
+        float ProgressWeight { get; }
+        
         float CurrentProgress { get; }
 
         string ProgressMessage { get; }
