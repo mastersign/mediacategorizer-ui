@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using de.fhb.oll.mediacategorizer.edn;
 using de.fhb.oll.mediacategorizer.tools;
 
@@ -41,5 +41,10 @@ namespace de.fhb.oll.mediacategorizer.processing
             var distillery = GetDistilleryTool();
             distillery.RunDistillery(jobFile, wi => { WorkItem = wi; }, OnProgress, OnProgress, OnError);
 
+            if (Project.Configuration.ShowResult)
+            {
+                Process.Start(Path.Combine(Project.OutputDir, "index.html"));
+            }
+        }
     }
 }

@@ -444,6 +444,7 @@ namespace de.fhb.oll.mediacategorizer.model
             _skipWordIncludes = DEF_SKIPWORDINCLUDES;
             _skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
             _skipMediaCopy = DEF_SKIPMEDIACOPY;
+            _showResult = DEF_SHOWRESULT;
             
             this.IsChanged = false;
         }
@@ -471,7 +472,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 this._skipWordClouds.Equals(o._skipWordClouds) && 
                 this._skipWordIncludes.Equals(o._skipWordIncludes) && 
                 this._skipMatchIncludes.Equals(o._skipMatchIncludes) && 
-                this._skipMediaCopy.Equals(o._skipMediaCopy));
+                this._skipMediaCopy.Equals(o._skipMediaCopy) && 
+                this._showResult.Equals(o._showResult));
         }
         
         public override bool Equals(object o)
@@ -504,7 +506,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 this._skipWordClouds.GetHashCode() ^ 
                 this._skipWordIncludes.GetHashCode() ^ 
                 this._skipMatchIncludes.GetHashCode() ^ 
-                this._skipMediaCopy.GetHashCode());
+                this._skipMediaCopy.GetHashCode() ^ 
+                this._showResult.GetHashCode());
         }
         
         #endregion
@@ -1187,6 +1190,45 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _skipMediaCopy = value;
                 this.OnSkipMediaCopyChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property ShowResult
+        
+        private bool _showResult;
+        
+        public event EventHandler ShowResultChanged;
+        
+        protected virtual void OnShowResultChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ShowResultChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ShowResult");
+        }
+        
+        private const bool DEF_SHOWRESULT = true;
+        
+        [DefaultValue(DEF_SHOWRESULT)]
+        [Category(@"Ausgabe")]
+        [DisplayName(@"Ergebnis anzeigen")]
+        [Description(@"Gibt an, ob das Ergebnis der Analyse nach Abschluss angezeigt werden soll.")]
+        public virtual bool ShowResult
+        {
+            get { return _showResult; }
+            set
+            {
+                if ((value == _showResult))
+                {
+                    return;
+                }
+                _showResult = value;
+                this.OnShowResultChanged();
             }
         }
         

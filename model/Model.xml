@@ -126,6 +126,13 @@
         <DisplayName>Mediendateien nicht kopieren</DisplayName>
         <DefaultValue>false</DefaultValue>
       </Property>
+
+      <Property name="ShowResult" type="bool">
+        <Category>Ausgabe</Category>
+        <DisplayName>Ergebnis anzeigen</DisplayName>
+        <Description>Gibt an, ob das Ergebnis der Analyse nach Abschluss angezeigt werden soll.</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
     </Class>
 
     <Enum name="ProfileSelectionCriterion">
