@@ -23,11 +23,11 @@ namespace de.fhb.oll.mediacategorizer.tools
         private int currentPreparationStep;
         private readonly Dictionary<string, Tuple<int, int>> taskStates = new Dictionary<string, Tuple<int, int>>();
 
-        private static readonly Regex TASK_GROUP_REGEX = new Regex(@"TASKGROUP (.+) \[(\d+)\]");
-        private static readonly Regex TASK_END_REGEX = new Regex(@"TASK_END (.+)$");
-        private static readonly Regex TASK_GROUP_END_REGEX = new Regex(@"TASKGROUP_END (.+)$");
-        private static readonly Regex PIPELINE_REGEX = new Regex(@"PIPELINE (.+) \[(\d+)\]");
-        private static readonly Regex PIPELINE_STEP_REGEX = new Regex(@"PIPELINE_STEP (.+)\w(\d+)");
+        private static readonly Regex TASK_GROUP_REGEX = new Regex(@"TASKGROUP\s+(.+)\s+\[(\d+)\]");
+        private static readonly Regex TASK_END_REGEX = new Regex(@"TASK_END\s+(.+)$");
+        private static readonly Regex TASK_GROUP_END_REGEX = new Regex(@"TASKGROUP_END\s+(.+)$");
+        private static readonly Regex PIPELINE_REGEX = new Regex(@"PIPELINE\s+(.+)\s+\[(\d+)\]");
+        private static readonly Regex PIPELINE_STEP_REGEX = new Regex(@"PIPELINE_STEP\s+(.+)\s+(\d+)");
 
         public DistilleryTool(Setup setup)
             : base(setup.Distillery)
@@ -174,22 +174,22 @@ namespace de.fhb.oll.mediacategorizer.tools
                 totalPreperationSteps = int.Parse(match.Groups[2].Value);
                 currentPreparationStep = 0;
             }
-            UpdatePreperationProgress(progressHandler);
+            UpdatePreparationProgress(progressHandler);
         }
 
         private void ProcessPipelineStepMessage(string line, Action<float> progressHandler)
         {
-            var match = PIPELINE_REGEX.Match(line);
+            var match = PIPELINE_STEP_REGEX.Match(line);
             if (!match.Success) return;
             var name = match.Groups[1].Value;
             if (name == "Preparation")
             {
                 currentPreparationStep += 1;
             }
-            UpdatePreperationProgress(progressHandler);
+            UpdatePreparationProgress(progressHandler);
         }
 
-        private void UpdatePreperationProgress(Action<float> progressHandler)
+        private void UpdatePreparationProgress(Action<float> progressHandler)
         {
             progressHandler(PREPARATION_PART * currentPreparationStep / totalPreperationSteps);
         }
