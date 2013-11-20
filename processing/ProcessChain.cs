@@ -74,12 +74,12 @@ namespace de.fhb.oll.mediacategorizer.processing
         private static IProcess[] CreateProcessChain()
         {
             var projectPreparation = new PrepareProjectProcess();
-            var mediaInspectionProcess = new MediaInspectionProcess();
+            var mediaInspectionProcess = new MediaInspectionProcess(projectPreparation);
             var audioExtraction = new AudioExtractionProcess(projectPreparation);
             var waveformVisualization = new WaveformProcess(projectPreparation, audioExtraction);
-            var profileSelection = new ProfileSelectionProcess(mediaInspectionProcess, projectPreparation, audioExtraction);
-            var speechRecognitionProcess = new SpeechRecognitionProcess(mediaInspectionProcess, audioExtraction, profileSelection);
-            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(waveformVisualization, speechRecognitionProcess);
+            var profileSelection = new ProfileSelectionProcess(projectPreparation, mediaInspectionProcess, audioExtraction);
+            var speechRecognitionProcess = new SpeechRecognitionProcess(projectPreparation, mediaInspectionProcess, audioExtraction, profileSelection);
+            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(projectPreparation, waveformVisualization, speechRecognitionProcess);
             var projectFinalization = new FinalizeProjectProcess(analyzeAndOutput);
 
             return new IProcess[]
