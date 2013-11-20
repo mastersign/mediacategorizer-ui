@@ -18,7 +18,7 @@
             <MenuItem Header="NEU" Click="MenuNewProjectHandler" />
             <MenuItem Header="ÖFFNEN" Click="MenuOpenProjectHandler" />
             <MenuItem Header="SPEICHERN" Click="MenuSaveProjectHandler" />
-            <MenuItem Header="SPEICHERN UNTER..." Click="MenuSaveProjectHandler" />
+            <MenuItem Header="SPEICHERN UNTER..." Click="MenuSaveProjectAsHandler" />
         </Menu>
         <Menu Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="1" Margin="0,2" FlowDirection="RightToLeft">
             <MenuItem Header="INFO" Click="MenuInfoHandler"/>

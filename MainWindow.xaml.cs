@@ -10,6 +10,7 @@ using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.processing;
 using de.fhb.oll.mediacategorizer.settings;
 using de.fhb.oll.mediacategorizer.tools;
+using Microsoft.Win32;
 
 namespace de.fhb.oll.mediacategorizer
 {
@@ -18,11 +19,15 @@ namespace de.fhb.oll.mediacategorizer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string baseWindowTitle;
+        private string projectFile;
+
         public MainWindow()
         {
-            Project = new Project();
             InitializeComponent();
+            baseWindowTitle = Title;
             GoToPage("Start");
+            NewProject();
         }
 
         public Project Project
@@ -33,15 +38,38 @@ namespace de.fhb.oll.mediacategorizer
             }
             set
             {
-                if (ReferenceEquals(DataContext, value)) return;
-                DataContext = value;
-                if (value.ProcessChain == null)
+                var oldProj = (Project)DataContext;
+                if (ReferenceEquals(oldProj, value)) return;
+                if (oldProj != null)
                 {
-                    var setup = ((SetupManager) Application.Current.Resources["SetupManager"]).Setup;
-                    var toolProv = ((ToolProvider) Application.Current.Resources["ToolProvider"]);
-                    value.ProcessChain = new ProcessChain(setup, toolProv, value);
+                    oldProj.PropertyChanged -= ProjectChangedHandler;
+                }
+                DataContext = value;
+                if (value != null)
+                {
+                    value.PropertyChanged += ProjectChangedHandler;
+                    if (value.ProcessChain == null)
+                    {
+                        var setup = ((SetupManager)Application.Current.Resources["SetupManager"]).Setup;
+                        var toolProv = ((ToolProvider)Application.Current.Resources["ToolProvider"]);
+                        value.ProcessChain = new ProcessChain(setup, toolProv, value);
+                    }
                 }
             }
+        }
+
+        private void ProjectChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            UpdateTitle();
+        }
+
+        private void UpdateTitle()
+        {
+            Title = Project != null
+                ? string.Format("{0} [{1}]{2}",
+                    baseWindowTitle, Path.GetFileName(projectFile) ?? "neu",
+                    Project.IsChanged ? "*" : "")
+                : baseWindowTitle;
         }
 
         private void GoToPage(string page)
@@ -87,7 +115,7 @@ namespace de.fhb.oll.mediacategorizer
             return Project == null || !Project.IsChanged ||
                    MessageBox.Show(this,
                        "Das aktuelle Projekt wurde nicht gespeichert.\nWollen Sie es dennoch schließen?",
-                       dialogCaption, 
+                       dialogCaption,
                        MessageBoxButton.YesNo, MessageBoxImage.Question)
                    == MessageBoxResult.Yes;
         }
@@ -95,20 +123,108 @@ namespace de.fhb.oll.mediacategorizer
         private void MenuNewProjectHandler(object sender, RoutedEventArgs e)
         {
             if (!CheckProjectStateBeforeClosing("Neues Projekt")) return;
-            DataContext = new Project();
+            NewProject();
         }
 
         private void MenuOpenProjectHandler(object sender, RoutedEventArgs e)
         {
             if (!CheckProjectStateBeforeClosing("Projekt öffnen")) return;
-            // TODO Save Project
-            MessageBox.Show(this, "OpenProject", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (!QueryProjectFileForOpening()) return;
+            OpenProject();
         }
 
         private void MenuSaveProjectHandler(object sender, RoutedEventArgs e)
         {
-            // TODO Save Project As
-            MessageBox.Show(this, "SaveProject", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (Project == null) return;
+            if (projectFile == null)
+            {
+                if (!QueryProjectFileForSaving(false)) return;
+            }
+            SaveProject();
+        }
+
+        private void MenuSaveProjectAsHandler(object sender, RoutedEventArgs e)
+        {
+            if (Project == null) return;
+            if (QueryProjectFileForSaving(true))
+            {
+                SaveProject();
+            }
+        }
+
+        private bool QueryProjectFileForOpening()
+        {
+            var dlg = new OpenFileDialog
+            {
+                Title = "Project öffnen...",
+                Filter = "Media-Categorizer-Projekt (*.mc.xml)|*.mc.xml",
+            };
+            if (dlg.ShowDialog(this) == true)
+            {
+                projectFile = dlg.FileName;
+                return true;
+            }
+            return false;
+        }
+
+        private bool QueryProjectFileForSaving(bool saveAs)
+        {
+            var dlg = new SaveFileDialog
+            {
+                OverwritePrompt = true,
+                Title = saveAs ? "Project speicher unter..." : "Project speichern...",
+                Filter = "Media-Categorizer-Projekt (*.mc.xml)|*.mc.xml",
+                AddExtension = true
+            };
+            if (dlg.ShowDialog(this) == true)
+            {
+                projectFile = dlg.FileName;
+                return true;
+            }
+            return false;
+        }
+
+        private void NewProject()
+        {
+            projectFile = null;
+            Project = new Project();
+            Project.LoadDemoData();
+            Project.AcceptChanges();
+            UpdateTitle();
+        }
+
+        private bool OpenProject()
+        {
+            try
+            {
+                Project = Project.LoadFromFile(projectFile);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this,
+                    "Während dem Öffnen des Projektes ist ein Fehler aufgetreten."
+                    + Environment.NewLine + Environment.NewLine + ex.Message);
+                return false;
+            }
+            UpdateTitle();
+            return true;
+        }
+
+        private bool SaveProject()
+        {
+            try
+            {
+                Project.SaveToFile(projectFile);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this,
+                    "Während dem Speichern des Projektes ist ein Fehler aufgetreten."
+                    + Environment.NewLine + Environment.NewLine + ex.Message);
+                return false;
+            }
+            UpdateTitle();
+            return true;
         }
 
         private void MenuSetupHandler(object sender, RoutedEventArgs e)
@@ -131,6 +247,5 @@ namespace de.fhb.oll.mediacategorizer
             var sm = (SetupManager)Application.Current.Resources["SetupManager"];
             sm.Save();
         }
-
     }
 }

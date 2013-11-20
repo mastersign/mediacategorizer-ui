@@ -33,7 +33,6 @@ namespace de.fhb.oll.mediacategorizer.model
 
         private void Initialize()
         {
-            LoadDemoData();
         }
 
         public void SaveToFile(string file)
@@ -66,7 +65,7 @@ namespace de.fhb.oll.mediacategorizer.model
         public ProcessChain ProcessChain { get; set; }
 
         [Conditional("DEBUG")]
-        private void LoadDemoData()
+        public void LoadDemoData()
         {
             var appDir = Path.GetDirectoryName(
                 new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)
