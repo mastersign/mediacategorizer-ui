@@ -254,7 +254,7 @@
         <DefaultValue>0.6</DefaultValue>
       </Property>
 
-      <Property name="FontFamily" type="System.Windows.Media.FontFamily">
+      <Property name="FontFamily" type="System.Windows.Media.FontFamily" persistent="false">
         <DisplayName>Schriftfamilie</DisplayName>
         <Description>Der Name der Schriftfamilie für die Worte in der Wolke.</Description>
       </Property>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace de.fhb.oll.mediacategorizer.model
 {
@@ -105,11 +106,11 @@ namespace de.fhb.oll.mediacategorizer.model
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -257,7 +258,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnConfigurationChanged();
         }
         
-        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
         public virtual Configuration Configuration
         {
             get { return _configuration; }
@@ -525,11 +526,11 @@ namespace de.fhb.oll.mediacategorizer.model
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -778,7 +779,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnIndexFilterChanged();
         }
         
-        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
         [Category(@"Analyse")]
         [DisplayName(@"Wortfilter")]
         public virtual FilterParameter IndexFilter
@@ -827,7 +828,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnWaveformChanged();
         }
         
-        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
         [Category(@"Visualisierung")]
         [DisplayName(@"Wellenformvisualisierung")]
         [Description(@"Die Parameter für die Wellenformvisualisierung.")]
@@ -877,7 +878,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnMainCloudChanged();
         }
         
-        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
         [Category(@"Visualisierung")]
         [DisplayName(@"Globale Wolke")]
         [Description(@"Die Parameter für die globale Wortwolke für das gesamte Projekt.")]
@@ -927,7 +928,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnMediaCloudChanged();
         }
         
-        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
         [Category(@"Visualisierung")]
         [DisplayName(@"Medienwolke")]
         [Description(@"Die Parameter für die Wortwolke eines Mediums.")]
@@ -977,7 +978,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnCategoryCloudChanged();
         }
         
-        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObjectAttribute]
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
         [Category(@"Visualisierung")]
         [DisplayName(@"Kategoriewolke")]
         [Description(@"Die Parameter für die Wortwolke einer Kategorie.")]
@@ -1311,11 +1312,11 @@ namespace de.fhb.oll.mediacategorizer.model
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -1700,11 +1701,11 @@ namespace de.fhb.oll.mediacategorizer.model
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -2019,11 +2020,11 @@ namespace de.fhb.oll.mediacategorizer.model
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -2191,6 +2192,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property FontFamily
         
+        [NonSerialized]
         private global::System.Windows.Media.FontFamily _fontFamily;
         
         public event EventHandler FontFamilyChanged;
@@ -2208,6 +2210,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         [DisplayName(@"Schriftfamilie")]
         [Description(@"Der Name der Schriftfamilie für die Worte in der Wolke.")]
+        [XmlIgnore]
         public virtual global::System.Windows.Media.FontFamily FontFamily
         {
             get { return _fontFamily; }
@@ -2505,11 +2508,11 @@ namespace de.fhb.oll.mediacategorizer.model
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -2657,11 +2660,11 @@ namespace de.fhb.oll.mediacategorizer.model
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -2872,11 +2875,11 @@ namespace de.fhb.oll.mediacategorizer.model
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }

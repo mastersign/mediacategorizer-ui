@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace de.fhb.oll.mediacategorizer.model
 {
@@ -13,6 +14,16 @@ namespace de.fhb.oll.mediacategorizer.model
         {
             Color = System.Windows.Media.Color.FromRgb(0, 76, 204);
             BackgroundColor = System.Windows.Media.Colors.Transparent;
+        }
+
+        /// <summary>
+        /// For XML serialization purposes only.
+        /// </summary>
+        [Browsable(false)]
+        public string FontFamilyName
+        {
+            get { return FontFamily != null ? FontFamily.Source : null; }
+            set { FontFamily = value == null ? null : new FontFamily(value); }
         }
 
         public override string ToString()
