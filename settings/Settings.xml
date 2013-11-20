@@ -25,6 +25,12 @@
         <Description>Die manuelle Angabe für die maximale Anzahl von parallelen Aufgaben in einem Prozess.</Description>
         <DefaultValue>2</DefaultValue>
       </Property>
+      <Property name="CompatibleMediaFileExtensions" type="string">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Mediendateiendungen</DisplayName>
+        <Description>Eine Liste mit Dateiendungen für unterstützte Mediendateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.</Description>
+        <DefaultValue>mp4</DefaultValue>
+      </Property>
       <Property name="RejectExistingIntermediates" type="bool">
         <Category>Verarbeitung</Category>
         <DisplayName>Zwischenergebnisse verwerfen</DisplayName>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace de.fhb.oll.mediacategorizer.settings
 {
@@ -19,6 +20,7 @@ namespace de.fhb.oll.mediacategorizer.settings
         {
             _parallelization = DEF_PARALLELIZATION;
             _parallelTasks = DEF_PARALLELTASKS;
+            _compatibleMediaFileExtensions = DEF_COMPATIBLEMEDIAFILEEXTENSIONS;
             _rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
             _cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
             _ffmpeg = DEF_FFMPEG;
@@ -44,11 +46,11 @@ namespace de.fhb.oll.mediacategorizer.settings
             }
         }
         
+        [NonSerialized]
         private bool _isChanged = false;
         
         [Browsable(false)]
-        [global::System.Xml.Serialization.XmlIgnoreAttribute]
-        
+        [XmlIgnore]
         public bool IsChanged
         {
             get { return this._isChanged; }
@@ -74,6 +76,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (this.GetType().FullName + @": " + (
                 (Environment.NewLine + @"    Parallelization = " + _parallelization.ToString().Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    ParallelTasks = " + _parallelTasks.ToString(formatProvider).Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    CompatibleMediaFileExtensions = " + (!ReferenceEquals(_compatibleMediaFileExtensions, null) ? _compatibleMediaFileExtensions.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    RejectExistingIntermediates = " + _rejectExistingIntermediates.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    CleanupOutputDir = " + _cleanupOutputDir.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Ffmpeg = " + (!ReferenceEquals(_ffmpeg, null) ? _ffmpeg.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
@@ -98,6 +101,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (
                 (this._parallelization == o._parallelization) && 
                 (this._parallelTasks == o._parallelTasks) && 
+                object.Equals(this._compatibleMediaFileExtensions, o._compatibleMediaFileExtensions) && 
                 this._rejectExistingIntermediates.Equals(o._rejectExistingIntermediates) && 
                 this._cleanupOutputDir.Equals(o._cleanupOutputDir) && 
                 object.Equals(this._ffmpeg, o._ffmpeg) && 
@@ -127,6 +131,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (this.GetType().GetHashCode() ^ 
                 this._parallelization.GetHashCode() ^ 
                 this._parallelTasks.GetHashCode() ^ 
+                (!ReferenceEquals(this._compatibleMediaFileExtensions, null) ? this._compatibleMediaFileExtensions.GetHashCode() : 0) ^ 
                 this._rejectExistingIntermediates.GetHashCode() ^ 
                 this._cleanupOutputDir.GetHashCode() ^ 
                 (!ReferenceEquals(this._ffmpeg, null) ? this._ffmpeg.GetHashCode() : 0) ^ 
@@ -213,6 +218,45 @@ namespace de.fhb.oll.mediacategorizer.settings
                 }
                 _parallelTasks = value;
                 this.OnParallelTasksChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property CompatibleMediaFileExtensions
+        
+        private string _compatibleMediaFileExtensions;
+        
+        public event EventHandler CompatibleMediaFileExtensionsChanged;
+        
+        protected virtual void OnCompatibleMediaFileExtensionsChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = CompatibleMediaFileExtensionsChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"CompatibleMediaFileExtensions");
+        }
+        
+        private const string DEF_COMPATIBLEMEDIAFILEEXTENSIONS = @"mp4";
+        
+        [DefaultValue(DEF_COMPATIBLEMEDIAFILEEXTENSIONS)]
+        [Category(@"Verarbeitung")]
+        [DisplayName(@"Mediendateiendungen")]
+        [Description(@"Eine Liste mit Dateiendungen für unterstützte Mediendateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.")]
+        public virtual string CompatibleMediaFileExtensions
+        {
+            get { return _compatibleMediaFileExtensions; }
+            set
+            {
+                if (string.Equals(value, _compatibleMediaFileExtensions))
+                {
+                    return;
+                }
+                _compatibleMediaFileExtensions = value;
+                this.OnCompatibleMediaFileExtensionsChanged();
             }
         }
         
