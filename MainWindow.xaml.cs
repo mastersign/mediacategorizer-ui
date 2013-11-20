@@ -19,6 +19,8 @@ namespace de.fhb.oll.mediacategorizer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Project project;
+        private volatile bool lastProjectChangedState = false;
         private string baseWindowTitle;
         private string projectFile;
 
@@ -32,18 +34,15 @@ namespace de.fhb.oll.mediacategorizer
 
         public Project Project
         {
-            get
-            {
-                return DataContext as Project;
-            }
+            get { return project; }
             set
             {
-                var oldProj = (Project)DataContext;
-                if (ReferenceEquals(oldProj, value)) return;
-                if (oldProj != null)
+                if (ReferenceEquals(project, value)) return;
+                if (project != null)
                 {
-                    oldProj.PropertyChanged -= ProjectChangedHandler;
+                    project.PropertyChanged -= ProjectChangedHandler;
                 }
+                project = value;
                 DataContext = value;
                 if (value != null)
                 {
@@ -60,11 +59,18 @@ namespace de.fhb.oll.mediacategorizer
 
         private void ProjectChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if (lastProjectChangedState == Project.IsChanged) return;
+            lastProjectChangedState = Project.IsChanged;
             UpdateTitle();
         }
 
         private void UpdateTitle()
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.BeginInvoke((Action)UpdateTitle);
+                return;
+            }
             Title = Project != null
                 ? string.Format("{0} [{1}]{2}",
                     baseWindowTitle, Path.GetFileName(projectFile) ?? "neu",
