@@ -17,10 +17,46 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         private const string WORKING_DIR_NAME = "_tmp_";
 
+        private static readonly XmlSerializer serializer;
+
+        static Project()
+        {
+            try
+            {
+                serializer = new XmlSerializer(typeof(Project));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
         private void Initialize()
         {
             LoadDemoData();
         }
+
+        public void SaveToFile(string file)
+        {
+            using (var s = File.Open(file, FileMode.Create, FileAccess.Write))
+            {
+                serializer.Serialize(s, this);
+            }
+            AcceptChanges();
+        }
+
+        public static Project LoadFromFile(string file)
+        {
+            Project result;
+            using (var s = File.Open(file, FileMode.Open, FileAccess.Read))
+            {
+
+                result = (Project)serializer.Deserialize(s);
+            }
+            result.AcceptChanges();
+            return result;
+        }
+
         public string GetWorkingDirectory()
         {
             return Path.Combine(OutputDir, WORKING_DIR_NAME);
