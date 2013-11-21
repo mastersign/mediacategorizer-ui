@@ -21,7 +21,7 @@ namespace de.fhb.oll.mediacategorizer
     {
         private Project project;
         private volatile bool lastProjectChangedState = false;
-        private string baseWindowTitle;
+        private readonly string baseWindowTitle;
         private string projectFile;
 
         public MainWindow()
@@ -120,7 +120,8 @@ namespace de.fhb.oll.mediacategorizer
         {
             return Project == null || !Project.IsChanged ||
                    MessageBox.Show(this,
-                       "Das aktuelle Projekt wurde nicht gespeichert.\nWollen Sie es dennoch schließen?",
+                       "Das aktuelle Projekt wurde nicht gespeichert." + Environment.NewLine + 
+                       "Wollen Sie es dennoch schließen?",
                        dialogCaption,
                        MessageBoxButton.YesNo, MessageBoxImage.Question)
                    == MessageBoxResult.Yes;
