@@ -253,5 +253,10 @@ namespace de.fhb.oll.mediacategorizer
             var sm = (SetupManager)Application.Current.Resources["SetupManager"];
             sm.Save();
         }
+
+        private void ClosingHandler(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!CheckProjectStateBeforeClosing("Programm beenden")) e.Cancel = true;
+        }
     }
 }
