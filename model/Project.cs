@@ -237,6 +237,5 @@ namespace de.fhb.oll.mediacategorizer.model
             Configuration.CategoryCloud.FontFamily = new FontFamily("Segoe UI");
             Configuration.MediaCloud.FontFamily = new FontFamily("Segoe UI");
         }
-
     }
 }
