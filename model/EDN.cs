@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
+using System.Xml.Serialization;
 using de.fhb.oll.mediacategorizer.edn;
+using de.fhb.oll.mediacategorizer.settings;
 
 namespace de.fhb.oll.mediacategorizer.model
 {
@@ -25,26 +28,45 @@ namespace de.fhb.oll.mediacategorizer.model
 
     partial class Configuration : IEdnWritable
     {
+        [NonSerialized]
+        private IDictionary<string, object> volatileProperties;
+
+        [Browsable(false)]
+        [XmlIgnore]
+        public IDictionary<string, object> VolatileProperties
+        {
+            get { return volatileProperties ?? (volatileProperties = new Dictionary<string, object>()); }
+        }
+
+        private IEnumerable<object> GetVolatilePropertyPairs()
+        {
+            foreach (var vp in VolatileProperties)
+            {
+                yield return new Keyword(vp.Key);
+                yield return vp.Value;
+            }
+        }
+
         public void WriteTo(EdnWriter w)
         {
-            w.WriteMap(new object[]
-            {
-                new Keyword("blacklist-resource"), IndexFilter.BlacklistResource,
-                new Keyword("blacklist-max-size"), IndexFilter.BlacklistMaxSize,
-                new Keyword("min-confidence"), MinConfidence,
-                new Keyword("good-confidence"), GoodConfidence,
-                new Keyword("min-relative-appearance"), MinRelativeAppearance,
-                new Keyword("min-match-score"), MinMatchScore,
-                new Keyword("index-filter"), IndexFilter,
-                new Keyword("parallel-proc"), ParallelProc,
-                new Keyword("skip-media-copy"), SkipMediaCopy,
-                new Keyword("skip-wordclouds"), SkipWordClouds,
-                new Keyword("skip-word-includes"), SkipWordIncludes,
-                new Keyword("skip-match-includes"), SkipMatchIncludes,
-                new Keyword("main-cloud"), MainCloud,
-                new Keyword("video-cloud"), MediaCloud,
-                new Keyword("category-cloud"), CategoryCloud,
-            });
+            w.WriteMap(GetVolatilePropertyPairs()
+                .Concat(new object[]
+                    {
+                        new Keyword("blacklist-resource"), IndexFilter.BlacklistResource,
+                        new Keyword("blacklist-max-size"), IndexFilter.BlacklistMaxSize,
+                        new Keyword("min-confidence"), MinConfidence,
+                        new Keyword("good-confidence"), GoodConfidence,
+                        new Keyword("min-relative-appearance"), MinRelativeAppearance,
+                        new Keyword("min-match-score"), MinMatchScore,
+                        new Keyword("index-filter"), IndexFilter,
+                        new Keyword("skip-media-copy"), SkipMediaCopy,
+                        new Keyword("skip-wordclouds"), SkipWordClouds,
+                        new Keyword("skip-word-includes"), SkipWordIncludes,
+                        new Keyword("skip-match-includes"), SkipMatchIncludes,
+                        new Keyword("main-cloud"), MainCloud,
+                        new Keyword("video-cloud"), MediaCloud,
+                        new Keyword("category-cloud"), CategoryCloud,
+                    }));
         }
     }
 
@@ -97,7 +119,7 @@ namespace de.fhb.oll.mediacategorizer.model
 
         private static EdnVector ColorToEdn(Color color)
         {
-            return new EdnVector(new []
+            return new EdnVector(new[]
             {
                 (color.R / 255f),
                 (color.G / 255f),

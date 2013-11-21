@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using de.fhb.oll.mediacategorizer.edn;
+using de.fhb.oll.mediacategorizer.settings;
 using de.fhb.oll.mediacategorizer.tools;
 
 namespace de.fhb.oll.mediacategorizer.processing
@@ -34,6 +35,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             using (var w = new StreamWriter(jobFile))
             {
                 var ednW = new EdnWriter(w);
+                Project.Configuration.VolatileProperties["parallel-proc"] = Setup.Parallelization != ParallelizationMode.None;
                 Project.WriteTo(ednW);
             }
 

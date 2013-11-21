@@ -38,6 +38,12 @@
     </Class>
 
     <Class name="Configuration">
+      <Property name="ConfidenceTestDuration" type="float">
+        <Category>Spracherkennung</Category>
+        <DisplayName>Dauer des Profiltests (sec)</DisplayName>
+        <Description>Die Dauer des Auswahltests für Spracherkennungsprofile in Sekunden.</Description>
+        <DefaultValue>120</DefaultValue>
+      </Property>
       <Property name="ProfileSelectionCriterion" type="ProfileSelectionCriterion">
         <Category>Spracherkennung</Category>
         <DisplayName>Profilauswahlkriterium</DisplayName>
@@ -100,12 +106,19 @@
         <CustomAttribute>ExpandableObject</CustomAttribute>
       </Property>
 
-      <Property name="ParallelProc" type="bool">
+      <Property name="RejectExistingIntermediates" type="bool">
         <Category>Verarbeitung</Category>
-        <DisplayName>Mehrprozessorunterstützung</DisplayName>
+        <DisplayName>Zwischenergebnisse verwerfen</DisplayName>
+        <Description>Gibt an, ob existierende temporäre Ressourcen vor Start des Projektes verworfen werden sollen.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
-      
+      <Property name="CleanupOutputDir" type="bool">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Arbeitsverzeichnis aufräumen</DisplayName>
+        <Description>Gibt an, ob das temporäre Arbeitsverzeichnis nach Abschluss des Projektes gelöscht werden soll.</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+
       <Property name="SkipWordClouds" type="bool">
         <Category>Ausgabe</Category>
         <DisplayName>Keine Wortwolken</DisplayName>
@@ -312,7 +325,6 @@
       <Property name="Name">
         <DefaultValue>No Name</DefaultValue>
       </Property>
-
       <Property name="Resources" type="CategoryResource" isCollection="true" />
     </Class>
 
@@ -320,11 +332,11 @@
       <Property name="Id" />
       <Property name="Name" />
       <Property name="MediaFile" />
-      <Property name="AudioFile" />
-      <Property name="Duration" type="double" />
-      <Property name="WaveformFile" />
-      <Property name="RecognitionProfile" type="System.Guid" />
-      <Property name="ResultsFile" />
+      <Property name="AudioFile" persistent="false" />
+      <Property name="Duration" type="double" persistent="false" />
+      <Property name="WaveformFile" persistent="false" />
+      <Property name="RecognitionProfile" type="System.Guid" persistent="false" />
+      <Property name="ResultsFile" persistent="false" />
       <EqualityMembers>
         <Property>Id</Property>
       </EqualityMembers>

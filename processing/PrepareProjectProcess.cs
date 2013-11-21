@@ -29,7 +29,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 WorkItem = "Ausgabeverzeichnis erstellen";
                 Directory.CreateDirectory(Project.OutputDir);
             }
-            if (Setup.RejectExistingIntermediates && Directory.Exists(workDir))
+            if (Project.Configuration.RejectExistingIntermediates && Directory.Exists(workDir))
             {
                 OnProgress("Arbeitsverzeichnis aufräumen");
                 foreach (var dir in Directory.GetDirectories(workDir))

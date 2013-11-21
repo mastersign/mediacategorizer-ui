@@ -18,7 +18,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         {
             if (Directory.Exists(Project.GetWorkingDirectory()))
             {
-                if (Setup.CleanupOutputDir)
+                if (Project.Configuration.CleanupOutputDir)
                 {
                     OnProgress("Arbeitsverzeichnis aufräumen");
                     Directory.Delete(Project.GetWorkingDirectory(), true);

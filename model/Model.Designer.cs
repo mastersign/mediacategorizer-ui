@@ -430,6 +430,7 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public Configuration()
         {
+            _confidenceTestDuration = DEF_CONFIDENCETESTDURATION;
             _profileSelectionCriterion = DEF_PROFILESELECTIONCRITERION;
             _minConfidence = DEF_MINCONFIDENCE;
             _goodConfidence = DEF_GOODCONFIDENCE;
@@ -440,7 +441,8 @@ namespace de.fhb.oll.mediacategorizer.model
             MainCloud = new CloudParameter();
             MediaCloud = new CloudParameter();
             CategoryCloud = new CloudParameter();
-            _parallelProc = DEF_PARALLELPROC;
+            _rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
+            _cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
             _skipWordClouds = DEF_SKIPWORDCLOUDS;
             _skipWordIncludes = DEF_SKIPWORDINCLUDES;
             _skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
@@ -459,6 +461,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 return false;
             }
             return (
+                (this._confidenceTestDuration == o._confidenceTestDuration) && 
                 (this._profileSelectionCriterion == o._profileSelectionCriterion) && 
                 (this._minConfidence == o._minConfidence) && 
                 (this._goodConfidence == o._goodConfidence) && 
@@ -469,7 +472,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 object.Equals(this._mainCloud, o._mainCloud) && 
                 object.Equals(this._mediaCloud, o._mediaCloud) && 
                 object.Equals(this._categoryCloud, o._categoryCloud) && 
-                this._parallelProc.Equals(o._parallelProc) && 
+                this._rejectExistingIntermediates.Equals(o._rejectExistingIntermediates) && 
+                this._cleanupOutputDir.Equals(o._cleanupOutputDir) && 
                 this._skipWordClouds.Equals(o._skipWordClouds) && 
                 this._skipWordIncludes.Equals(o._skipWordIncludes) && 
                 this._skipMatchIncludes.Equals(o._skipMatchIncludes) && 
@@ -493,6 +497,7 @@ namespace de.fhb.oll.mediacategorizer.model
         public override int GetHashCode()
         {
             return (this.GetType().GetHashCode() ^ 
+                this._confidenceTestDuration.GetHashCode() ^ 
                 this._profileSelectionCriterion.GetHashCode() ^ 
                 this._minConfidence.GetHashCode() ^ 
                 this._goodConfidence.GetHashCode() ^ 
@@ -503,7 +508,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 (!ReferenceEquals(this._mainCloud, null) ? this._mainCloud.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._mediaCloud, null) ? this._mediaCloud.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._categoryCloud, null) ? this._categoryCloud.GetHashCode() : 0) ^ 
-                this._parallelProc.GetHashCode() ^ 
+                this._rejectExistingIntermediates.GetHashCode() ^ 
+                this._cleanupOutputDir.GetHashCode() ^ 
                 this._skipWordClouds.GetHashCode() ^ 
                 this._skipWordIncludes.GetHashCode() ^ 
                 this._skipMatchIncludes.GetHashCode() ^ 
@@ -560,6 +566,45 @@ namespace de.fhb.oll.mediacategorizer.model
                 _categoryCloud.AcceptChanges();
             }
             this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property ConfidenceTestDuration
+        
+        private float _confidenceTestDuration;
+        
+        public event EventHandler ConfidenceTestDurationChanged;
+        
+        protected virtual void OnConfidenceTestDurationChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ConfidenceTestDurationChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ConfidenceTestDuration");
+        }
+        
+        private const float DEF_CONFIDENCETESTDURATION = 120F;
+        
+        [DefaultValue(DEF_CONFIDENCETESTDURATION)]
+        [Category(@"Spracherkennung")]
+        [DisplayName(@"Dauer des Profiltests (sec)")]
+        [Description(@"Die Dauer des Auswahltests für Spracherkennungsprofile in Sekunden.")]
+        public virtual float ConfidenceTestDuration
+        {
+            get { return _confidenceTestDuration; }
+            set
+            {
+                if ((Math.Abs(value - _confidenceTestDuration) < float.Epsilon))
+                {
+                    return;
+                }
+                _confidenceTestDuration = value;
+                this.OnConfidenceTestDurationChanged();
+            }
         }
         
         #endregion
@@ -1006,39 +1051,79 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #endregion
         
-        #region Property ParallelProc
+        #region Property RejectExistingIntermediates
         
-        private bool _parallelProc;
+        private bool _rejectExistingIntermediates;
         
-        public event EventHandler ParallelProcChanged;
+        public event EventHandler RejectExistingIntermediatesChanged;
         
-        protected virtual void OnParallelProcChanged()
+        protected virtual void OnRejectExistingIntermediatesChanged()
         {
             this.IsChanged = true;
-            EventHandler handler = ParallelProcChanged;
+            EventHandler handler = RejectExistingIntermediatesChanged;
             if (!ReferenceEquals(handler, null))
             {
                 handler(this, EventArgs.Empty);
             }
-            this.OnPropertyChanged(@"ParallelProc");
+            this.OnPropertyChanged(@"RejectExistingIntermediates");
         }
         
-        private const bool DEF_PARALLELPROC = true;
+        private const bool DEF_REJECTEXISTINGINTERMEDIATES = true;
         
-        [DefaultValue(DEF_PARALLELPROC)]
+        [DefaultValue(DEF_REJECTEXISTINGINTERMEDIATES)]
         [Category(@"Verarbeitung")]
-        [DisplayName(@"Mehrprozessorunterstützung")]
-        public virtual bool ParallelProc
+        [DisplayName(@"Zwischenergebnisse verwerfen")]
+        [Description(@"Gibt an, ob existierende temporäre Ressourcen vor Start des Projektes verworfen werden sollen.")]
+        public virtual bool RejectExistingIntermediates
         {
-            get { return _parallelProc; }
+            get { return _rejectExistingIntermediates; }
             set
             {
-                if ((value == _parallelProc))
+                if ((value == _rejectExistingIntermediates))
                 {
                     return;
                 }
-                _parallelProc = value;
-                this.OnParallelProcChanged();
+                _rejectExistingIntermediates = value;
+                this.OnRejectExistingIntermediatesChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property CleanupOutputDir
+        
+        private bool _cleanupOutputDir;
+        
+        public event EventHandler CleanupOutputDirChanged;
+        
+        protected virtual void OnCleanupOutputDirChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = CleanupOutputDirChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"CleanupOutputDir");
+        }
+        
+        private const bool DEF_CLEANUPOUTPUTDIR = true;
+        
+        [DefaultValue(DEF_CLEANUPOUTPUTDIR)]
+        [Category(@"Verarbeitung")]
+        [DisplayName(@"Arbeitsverzeichnis aufräumen")]
+        [Description(@"Gibt an, ob das temporäre Arbeitsverzeichnis nach Abschluss des Projektes gelöscht werden soll.")]
+        public virtual bool CleanupOutputDir
+        {
+            get { return _cleanupOutputDir; }
+            set
+            {
+                if ((value == _cleanupOutputDir))
+                {
+                    return;
+                }
+                _cleanupOutputDir = value;
+                this.OnCleanupOutputDirChanged();
             }
         }
         
@@ -2994,6 +3079,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property AudioFile
         
+        [NonSerialized]
         private string _audioFile;
         
         public event EventHandler AudioFileChanged;
@@ -3009,6 +3095,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"AudioFile");
         }
         
+        [XmlIgnore]
         public virtual string AudioFile
         {
             get { return _audioFile; }
@@ -3027,6 +3114,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property Duration
         
+        [NonSerialized]
         private double _duration;
         
         public event EventHandler DurationChanged;
@@ -3042,6 +3130,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Duration");
         }
         
+        [XmlIgnore]
         public virtual double Duration
         {
             get { return _duration; }
@@ -3060,6 +3149,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property WaveformFile
         
+        [NonSerialized]
         private string _waveformFile;
         
         public event EventHandler WaveformFileChanged;
@@ -3075,6 +3165,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"WaveformFile");
         }
         
+        [XmlIgnore]
         public virtual string WaveformFile
         {
             get { return _waveformFile; }
@@ -3093,6 +3184,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property RecognitionProfile
         
+        [NonSerialized]
         private Guid _recognitionProfile;
         
         public event EventHandler RecognitionProfileChanged;
@@ -3108,6 +3200,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"RecognitionProfile");
         }
         
+        [XmlIgnore]
         public virtual Guid RecognitionProfile
         {
             get { return _recognitionProfile; }
@@ -3126,6 +3219,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #region Property ResultsFile
         
+        [NonSerialized]
         private string _resultsFile;
         
         public event EventHandler ResultsFileChanged;
@@ -3141,6 +3235,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"ResultsFile");
         }
         
+        [XmlIgnore]
         public virtual string ResultsFile
         {
             get { return _resultsFile; }
