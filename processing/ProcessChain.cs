@@ -124,6 +124,18 @@ namespace de.fhb.oll.mediacategorizer.processing
             PostSynced(PropertyChanged, this, new PropertyChangedEventArgs(propertyName));
         }
 
+        protected virtual void OnChainStarted()
+        {
+            var handler = ChainStarted;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnChainEnded()
+        {
+            var handler = ChainEnded;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+
         private void ProcessStartedHandler(object sender, EventArgs eventArgs)
         {
             WaitingProcesses.Remove((IProcess)sender);
@@ -158,6 +170,8 @@ namespace de.fhb.oll.mediacategorizer.processing
                 if (isRunning == value) return;
                 isRunning = value;
                 OnPropertyChanged();
+                if (isRunning) OnChainStarted();
+                if (!isRunning) OnChainEnded();
             }
         }
 
