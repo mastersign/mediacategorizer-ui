@@ -52,9 +52,19 @@ namespace de.fhb.oll.mediacategorizer
                         var setup = ((SetupManager)Application.Current.Resources["SetupManager"]).Setup;
                         var toolProv = ((ToolProvider)Application.Current.Resources["ToolProvider"]);
                         value.ProcessChain = new ProcessChain(setup, toolProv, value);
+                        value.ProcessChain.ChainStarted += ProcessChainStartedHandler;
+                        value.ProcessChain.ChainEnded += ProcessChainEndedHandler;
                     }
                 }
             }
+        }
+
+        private void ProcessChainStartedHandler(object sender, EventArgs e)
+        {
+        }
+
+        private void ProcessChainEndedHandler(object sender, EventArgs e)
+        {
         }
 
         private void ProjectChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
