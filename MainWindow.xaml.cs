@@ -19,8 +19,9 @@ namespace de.fhb.oll.mediacategorizer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string lastPage;
         private Project project;
-        private volatile bool lastProjectChangedState = false;
+        private volatile bool lastProjectChangedState;
         private readonly string baseWindowTitle;
         private string projectFile;
 
@@ -28,7 +29,6 @@ namespace de.fhb.oll.mediacategorizer
         {
             InitializeComponent();
             baseWindowTitle = Title;
-            GoToPage("Start");
             NewProject();
         }
 
@@ -78,9 +78,27 @@ namespace de.fhb.oll.mediacategorizer
                 : baseWindowTitle;
         }
 
-        private void GoToPage(string page)
+        private void GoToPage(string page, bool adjustExpander = true)
         {
+            if (page == lastPage) return;
             frame.Navigate(new Uri("Page" + page + ".xaml", UriKind.Relative));
+            lastPage = page;
+
+            if (!adjustExpander) return;
+            var pageExpander = navigationPanel.Children
+                .OfType<Expander>()
+                .FirstOrDefault(exp => exp.Tag as string == page);
+            if (pageExpander != null)
+            {
+                pageExpander.IsExpanded = true;
+            }
+            else
+            {
+                foreach (var exp in navigationPanel.Children.OfType<Expander>())
+                {
+                    exp.IsExpanded = false;
+                }
+            }
         }
 
         private void FrameDataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
@@ -112,7 +130,7 @@ namespace de.fhb.oll.mediacategorizer
             var nextPage = expander.Tag as string;
             if (nextPage != null)
             {
-                GoToPage(nextPage);
+                GoToPage(nextPage, false);
             }
         }
 
@@ -198,6 +216,7 @@ namespace de.fhb.oll.mediacategorizer
             Project.LoadDemoData();
             Project.AcceptChanges();
             UpdateTitle();
+            GoToPage("Start");
         }
 
         private bool OpenProject()
@@ -214,6 +233,7 @@ namespace de.fhb.oll.mediacategorizer
                 return false;
             }
             UpdateTitle();
+            GoToPage("Start");
             return true;
         }
 
@@ -237,10 +257,6 @@ namespace de.fhb.oll.mediacategorizer
         private void MenuSetupHandler(object sender, RoutedEventArgs e)
         {
             GoToPage("Setup");
-            foreach (var exp in navigationPanel.Children.OfType<Expander>())
-            {
-                exp.IsExpanded = false;
-            }
         }
 
         private void MenuInfoHandler(object sender, RoutedEventArgs e)
