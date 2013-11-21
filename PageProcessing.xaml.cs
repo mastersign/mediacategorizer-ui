@@ -34,7 +34,33 @@ namespace de.fhb.oll.mediacategorizer
 
         private void StartProcessHandler(object sender, RoutedEventArgs e)
         {
-            GetProcessChain().Start();
+            var pc = GetProcessChain();
+            if (pc.IsEnded)
+            {
+                pc.Reset();
+            }
+            pc.Start();
+        }
+
+        private void DataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var pc = GetProcessChain();
+            if (pc == null) return;
+            pc.ChainStarted += ChainStartedHandler;
+            pc.ChainEnded += ChainEndedHandler;
+        }
+
+        private void ChainStartedHandler(object sender, EventArgs e)
+        {
+            lblStatus.Content = "Verarbeiten";
+            btnStartProcessing.IsEnabled = false;
+        }
+
+        private void ChainEndedHandler(object sender, EventArgs e)
+        {
+            var pc = (ProcessChain)sender;
+            lblStatus.Content = pc.IsFailed ? "Fehlgeschlagen" : "Beendet";
+            btnStartProcessing.IsEnabled = true;
         }
     }
 }

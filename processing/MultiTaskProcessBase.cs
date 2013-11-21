@@ -133,8 +133,8 @@ namespace de.fhb.oll.mediacategorizer.processing
                 return;
             }
 
-            runningTasks.Remove(id);
             Debug.WriteLine("Process '{0}' in phase {1} finished task {2} ", Name, CurrentPhase + 1, id + 1);
+            runningTasks.Remove(id);
             UpdateWorkItem();
             WorkQueue();
         }

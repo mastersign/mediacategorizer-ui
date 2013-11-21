@@ -15,7 +15,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     public class ProcessChain : DispatcherObject, INotifyPropertyChanged
     {
-        private readonly IProcess[] processes;
+        private IProcess[] processes;
 
         public ObservableCollection<IProcess> WaitingProcesses { get; private set; }
 
@@ -31,9 +31,13 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private bool isFailed;
 
+        private bool isEnded;
+
         private float totalProgressWeight;
 
         private float progress;
+
+        private readonly object lockObject = new object();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -51,6 +55,19 @@ namespace de.fhb.oll.mediacategorizer.processing
             ToolProvider = toolProvider;
             Project = project;
 
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            VerifyAccess();
+
+            Progress = 0f;
+            totalProgressWeight = 0f;
+            IsFailed = false;
+            IsRunning = false;
+            IsEnded = false;
+            
             processes = CreateProcessChain();
             //processes = CreateDummyProcessChain();
 
@@ -126,30 +143,35 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected virtual void OnChainStarted()
         {
-            var handler = ChainStarted;
-            if (handler != null) handler(this, EventArgs.Empty);
+            PostSynced(ChainStarted, this, EventArgs.Empty);
         }
 
         protected virtual void OnChainEnded()
         {
-            var handler = ChainEnded;
-            if (handler != null) handler(this, EventArgs.Empty);
+            PostSynced(ChainEnded, this, EventArgs.Empty);
         }
 
         private void ProcessStartedHandler(object sender, EventArgs eventArgs)
         {
-            WaitingProcesses.Remove((IProcess)sender);
-            RunningProcesses.Add((IProcess)sender);
-            IsRunning = ComputeIsRunning();
+            lock (lockObject)
+            {
+                WaitingProcesses.Remove((IProcess) sender);
+                RunningProcesses.Add((IProcess) sender);
+                IsRunning = ComputeIsRunning();
+            }
         }
 
         private void ProcessEndedHandler(object sender, ProcessResultEventArgs e)
         {
-            RunningProcesses.Remove((IProcess)sender);
-            EndedProcesses.Add((IProcess)sender);
-            IsRunning = ComputeIsRunning();
-            IsFailed = ComputeIsFailed();
-            Start();
+            lock (lockObject)
+            {
+                RunningProcesses.Remove((IProcess) sender);
+                EndedProcesses.Add((IProcess) sender);
+                IsFailed = ComputeIsFailed();
+                IsRunning = ComputeIsRunning();
+                IsEnded = !IsRunning;
+                GoAhead();
+            }
         }
 
         private void ProcessProgressHandler(object sender, ProcessProgressEventArgs e)
@@ -171,7 +193,6 @@ namespace de.fhb.oll.mediacategorizer.processing
                 isRunning = value;
                 OnPropertyChanged();
                 if (isRunning) OnChainStarted();
-                if (!isRunning) OnChainEnded();
             }
         }
 
@@ -188,6 +209,18 @@ namespace de.fhb.oll.mediacategorizer.processing
                 if (isFailed == value) return;
                 isFailed = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public bool IsEnded
+        {
+            get { return isEnded; }
+            private set
+            {
+                if (isEnded == value) return;
+                isEnded = value;
+                OnPropertyChanged();
+                if (isEnded) OnChainEnded();
             }
         }
 
@@ -210,13 +243,37 @@ namespace de.fhb.oll.mediacategorizer.processing
                    select p;
         }
 
-        public void Start()
+        private void GoAhead()
         {
             var waitingProcesses = CollectWaitingProcesses().ToArray();
             foreach (var p in waitingProcesses)
             {
                 p.Start();
             }
+        }
+
+        public void Reset()
+        {
+            foreach (var p in processes)
+            {
+                p.Started -= ProcessStartedHandler;
+                p.Ended -= ProcessEndedHandler;
+                p.Progress -= ProcessProgressHandler;
+            }
+            Initialize();
+        }
+
+        public void Start()
+        {
+            if (IsRunning)
+            {
+                throw new InvalidOperationException("A running chain can not be started.");
+            }
+            if (IsEnded)
+            {
+                throw new InvalidOperationException("An ended chain can not be started. Use the Reset method before restart the chain.");
+            }
+            GoAhead();
         }
     }
 }

@@ -5,7 +5,7 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  mc:Ignorable="d" 
 	  d:DesignHeight="300" d:DesignWidth="400"
-	Title="Ausführung">
+	Title="Ausführung" DataContextChanged="DataContextChangedHandler">
     <Page.Resources>
         <Style x:Key="TaskGridStyle" TargetType="Grid">
             <Setter Property="Background" Value="#FFFFFDCA" />
@@ -112,6 +112,6 @@
             </StackPanel>
         </Grid>
 
-        <Button Content="Ausführung starten" HorizontalAlignment="Right" Margin="0" Grid.Row="2" VerticalAlignment="Bottom" Click="StartProcessHandler" Padding="6,1"/>
+        <Button x:Name="btnStartProcessing" Content="Starten" HorizontalAlignment="Right" Margin="0" Grid.Row="2" VerticalAlignment="Bottom" Click="StartProcessHandler" Padding="8,2"/>
     </Grid>
 </Page>
