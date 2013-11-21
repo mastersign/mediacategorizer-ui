@@ -60,7 +60,6 @@ namespace de.fhb.oll.mediacategorizer
         private void ProjectChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (lastProjectChangedState == Project.IsChanged) return;
-            lastProjectChangedState = Project.IsChanged;
             UpdateTitle();
         }
 
@@ -71,6 +70,7 @@ namespace de.fhb.oll.mediacategorizer
                 Dispatcher.BeginInvoke((Action)UpdateTitle);
                 return;
             }
+            lastProjectChangedState = Project.IsChanged;
             Title = Project != null
                 ? string.Format("{0} [{1}]{2}",
                     baseWindowTitle, Path.GetFileName(projectFile) ?? "neu",
