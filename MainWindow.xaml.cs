@@ -237,9 +237,15 @@ namespace de.fhb.oll.mediacategorizer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this,
-                    "Während dem Öffnen des Projektes ist ein Fehler aufgetreten."
-                    + Environment.NewLine + Environment.NewLine + ex.Message);
+                var msg = "Während dem Öffnen des Projektes ist ein Fehler aufgetreten."
+                          + Environment.NewLine + Environment.NewLine;
+#if DEBUG
+                msg += ex.ToString();
+#else
+                msg += ex.Message;
+#endif
+                MessageBox.Show(this, msg, "Projekt öffnen",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             UpdateTitle();
@@ -255,9 +261,15 @@ namespace de.fhb.oll.mediacategorizer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this,
-                    "Während dem Speichern des Projektes ist ein Fehler aufgetreten."
-                    + Environment.NewLine + Environment.NewLine + ex.Message);
+                var msg = "Während dem Speichern des Projektes ist ein Fehler aufgetreten."
+                          + Environment.NewLine + Environment.NewLine;
+#if DEBUG
+                msg += ex.ToString();
+#else
+                msg += ex.Message;
+#endif
+                MessageBox.Show(this, msg, "Projekt speichern",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             UpdateTitle();
