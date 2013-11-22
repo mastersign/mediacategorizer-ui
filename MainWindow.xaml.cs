@@ -10,7 +10,8 @@ using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.processing;
 using de.fhb.oll.mediacategorizer.settings;
 using de.fhb.oll.mediacategorizer.tools;
-using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace de.fhb.oll.mediacategorizer
 {
@@ -19,6 +20,8 @@ namespace de.fhb.oll.mediacategorizer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string PROJECT_FILE_EXT = ".mcproj";
+
         private string lastPage;
         private Project project;
         private volatile bool lastProjectChangedState;
@@ -152,13 +155,39 @@ namespace de.fhb.oll.mediacategorizer
 
         private bool CheckProjectStateBeforeClosing(string dialogCaption)
         {
-            return Project == null || !Project.IsChanged ||
-                   MessageBox.Show(this,
-                       "Das aktuelle Projekt wurde nicht gespeichert." + Environment.NewLine + 
-                       "Wollen Sie es dennoch schließen?",
-                       dialogCaption,
-                       MessageBoxButton.YesNo, MessageBoxImage.Question)
-                   == MessageBoxResult.Yes;
+            if (Project == null || !Project.IsChanged) return true;
+            var dlg = new TaskDialog();
+            dlg.Cancelable = true;
+            dlg.Caption = dialogCaption;
+            dlg.InstructionText = "Das aktuelle Projekt wurde nicht gespeichert.";
+            dlg.StandardButtons = TaskDialogStandardButtons.None;
+            var tdbClose = new TaskDialogCommandLink("close", "Ohne Speichern fortfahren",
+                "Die Änderungen am aktuellen Projekt verwerfen und fortfahren ohne das Projekt zu speichern.");
+            tdbClose.Click += (sender, args) => dlg.Close(TaskDialogResult.Yes);
+            dlg.Controls.Add(tdbClose);
+            var tdbSave = new TaskDialogCommandLink("save", "Speichern und fortfahren",
+                "Die Änderungen am aktuellen Projekt speichern und anschließend fortfahren.");
+            tdbSave.Click += (sender, args) => dlg.Close(TaskDialogResult.No);
+            dlg.Controls.Add(tdbSave);
+            var tdbCancel = new TaskDialogCommandLink("cancel", "Abbrechen");
+            tdbCancel.Click += (sender, args) => dlg.Close(TaskDialogResult.Cancel);
+            dlg.Controls.Add(tdbCancel);
+            var result = dlg.Show();
+            switch (result)
+            {
+                case TaskDialogResult.Yes:
+                    return true;
+                case TaskDialogResult.No:
+                    if (projectFile == null)
+                    {
+                        if (!QueryProjectFileForSaving(false)) return false;
+                    }
+                    return SaveProject();
+                case TaskDialogResult.Cancel:
+                    return false;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void MenuNewProjectHandler(object sender, RoutedEventArgs e)
@@ -195,12 +224,12 @@ namespace de.fhb.oll.mediacategorizer
 
         private bool QueryProjectFileForOpening()
         {
-            var dlg = new OpenFileDialog
+            var dlg = new CommonOpenFileDialog
             {
-                Title = "Project öffnen...",
-                Filter = "Media-Categorizer-Projekt (*.mc.xml)|*.mc.xml",
+                Title = "Projekt öffnen...",
             };
-            if (dlg.ShowDialog(this) == true)
+            dlg.Filters.Add(new CommonFileDialogFilter("Media-Categorizer-Projekt", PROJECT_FILE_EXT) { ShowExtensions = true });
+            if (dlg.ShowDialog(this) == CommonFileDialogResult.Ok)
             {
                 projectFile = dlg.FileName;
                 return true;
@@ -210,14 +239,14 @@ namespace de.fhb.oll.mediacategorizer
 
         private bool QueryProjectFileForSaving(bool saveAs)
         {
-            var dlg = new SaveFileDialog
+            var dlg = new CommonSaveFileDialog
             {
                 OverwritePrompt = true,
-                Title = saveAs ? "Project speicher unter..." : "Project speichern...",
-                Filter = "Media-Categorizer-Projekt (*.mc.xml)|*.mc.xml",
-                AddExtension = true
+                Title = saveAs ? "Projekt speicher unter..." : "Projekt speichern...",
+                AlwaysAppendDefaultExtension = true,
             };
-            if (dlg.ShowDialog(this) == true)
+            dlg.Filters.Add(new CommonFileDialogFilter("Media-Categorizer-Projekt", PROJECT_FILE_EXT) { ShowExtensions = true });
+            if (dlg.ShowDialog(this) == CommonFileDialogResult.Ok)
             {
                 projectFile = dlg.FileName;
                 return true;
