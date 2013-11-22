@@ -181,7 +181,8 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private bool ComputeIsRunning()
         {
-            return processes.Any(p => p.State == ProcessState.Running);
+            return processes.Any(p => p.State == ProcessState.Running) ||
+                (CollectWaitingProcesses().Any() && !processes.Any(p => p.State == ProcessState.Failed));
         }
 
         public bool IsRunning
