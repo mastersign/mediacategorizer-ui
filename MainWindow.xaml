@@ -14,15 +14,15 @@
             <RowDefinition/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
-        <Menu Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="0" Margin="0,2">
+        <Menu x:Name="menuProject" Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="0" Margin="0,2">
             <MenuItem Header="NEU" Click="MenuNewProjectHandler" />
             <MenuItem Header="ÖFFNEN" Click="MenuOpenProjectHandler" />
             <MenuItem Header="SPEICHERN" Click="MenuSaveProjectHandler" />
             <MenuItem Header="SPEICHERN UNTER..." Click="MenuSaveProjectAsHandler" />
         </Menu>
-        <Menu Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="1" Margin="0,2" FlowDirection="RightToLeft">
-            <MenuItem Header="INFO" Click="MenuInfoHandler"/>
-            <MenuItem Header="EINSTELLUNGEN" Click="MenuSetupHandler"/>
+        <Menu x:Name="menuMain" Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="1" Margin="0,2" FlowDirection="RightToLeft">
+            <MenuItem Header="INFO" Click="MenuInfoHandler" />
+            <MenuItem Header="EINSTELLUNGEN" Click="MenuSetupHandler" />
         </Menu>
         <Frame x:Name="frame" Content="Frame" Grid.Row="1" Grid.Column="0" Margin="8" NavigationUIVisibility="Hidden"
                LoadCompleted="FrameLoadCompleteHandler" DataContextChanged="FrameDataContextChangedHandler"/>

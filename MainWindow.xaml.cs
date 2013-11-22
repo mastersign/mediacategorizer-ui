@@ -61,10 +61,16 @@ namespace de.fhb.oll.mediacategorizer
 
         private void ProcessChainStartedHandler(object sender, EventArgs e)
         {
+            menuMain.IsEnabled = false;
+            menuProject.IsEnabled = false;
+            navigationPanel.IsEnabled = false;
         }
 
         private void ProcessChainEndedHandler(object sender, EventArgs e)
         {
+            menuMain.IsEnabled = true;
+            menuProject.IsEnabled = true;
+            navigationPanel.IsEnabled = true;
         }
 
         private void ProjectChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
