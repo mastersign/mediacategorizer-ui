@@ -55,6 +55,10 @@ namespace de.fhb.oll.mediacategorizer.processing
             ToolProvider = toolProvider;
             Project = project;
 
+            WaitingProcesses = new ObservableCollection<IProcess>();
+            RunningProcesses = new ObservableCollection<IProcess>();
+            EndedProcesses = new ObservableCollection<IProcess>();
+
             Initialize();
         }
 
@@ -71,6 +75,9 @@ namespace de.fhb.oll.mediacategorizer.processing
             processes = CreateProcessChain();
             //processes = CreateDummyProcessChain();
 
+            WaitingProcesses.Clear();
+            RunningProcesses.Clear();
+            EndedProcesses.Clear();
             foreach (var p in processes)
             {
                 p.Setup = Setup;
@@ -81,11 +88,8 @@ namespace de.fhb.oll.mediacategorizer.processing
                 p.Ended += ProcessEndedHandler;
                 p.Progress += ProcessProgressHandler;
                 totalProgressWeight += p.ProgressWeight;
+                WaitingProcesses.Add(p);
             }
-
-            WaitingProcesses = new ObservableCollection<IProcess>(processes);
-            RunningProcesses = new ObservableCollection<IProcess>();
-            EndedProcesses = new ObservableCollection<IProcess>();
         }
 
         private static IProcess[] CreateProcessChain()
