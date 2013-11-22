@@ -71,9 +71,10 @@ namespace de.fhb.oll.mediacategorizer.processing
             IsFailed = false;
             IsRunning = false;
             IsEnded = false;
-            
+
             processes = CreateProcessChain();
             //processes = CreateDummyProcessChain();
+            //processes = CreateFailingDummyProcessChain();
 
             WaitingProcesses.Clear();
             RunningProcesses.Clear();
@@ -127,6 +128,17 @@ namespace de.fhb.oll.mediacategorizer.processing
             return new IProcess[] { p1, p2, p2a, p2b, p3 };
         }
 
+        private static IProcess[] CreateFailingDummyProcessChain()
+        {
+            var p1 = new DummyProcess("Dummy 1");
+            var p2 = new DummyProcess("Dummy 2");
+            var p2a = new DummyProcess("Dummy 2a", p2);
+            var p2b = new DummyProcess("Dummy 2b", p2) { Failing = true };
+            var p3 = new DummyProcess("Dummy 3", p1, p2b);
+
+            return new IProcess[] { p1, p2, p2a, p2b, p3 };
+        }
+
         protected void PostSynced(Delegate d, params object[] args)
         {
             if (d == null) return;
@@ -159,8 +171,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         {
             lock (lockObject)
             {
-                WaitingProcesses.Remove((IProcess) sender);
-                RunningProcesses.Add((IProcess) sender);
+                WaitingProcesses.Remove((IProcess)sender);
+                RunningProcesses.Add((IProcess)sender);
                 IsRunning = ComputeIsRunning();
             }
         }
@@ -169,8 +181,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         {
             lock (lockObject)
             {
-                RunningProcesses.Remove((IProcess) sender);
-                EndedProcesses.Add((IProcess) sender);
+                RunningProcesses.Remove((IProcess)sender);
+                EndedProcesses.Add((IProcess)sender);
                 IsFailed = ComputeIsFailed();
                 IsRunning = ComputeIsRunning();
                 IsEnded = !IsRunning;

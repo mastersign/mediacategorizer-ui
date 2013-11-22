@@ -12,6 +12,8 @@ namespace de.fhb.oll.mediacategorizer.processing
     {
         private Random rand = new Random();
 
+        public bool Failing { get; set; }
+
         public DummyProcess(string name, params IProcess[] dependencies)
             : base(name, dependencies)
         {
@@ -32,6 +34,11 @@ namespace de.fhb.oll.mediacategorizer.processing
                     Thread.Sleep((int)((float)time / steps));
                     OnProgress(CalculateProgress(workItems, i, (float)j / steps),
                         string.Format("Doing dummy stuff {0}, {1}", i, j));
+                    if (Failing && i == workItems / 2 && j == steps / 2)
+                    {
+                        OnError("Failed.");
+                        return;
+                    }
                 }
             }
             Thread.Sleep(rand.Next(200, 800));
