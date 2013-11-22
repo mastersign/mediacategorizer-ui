@@ -24,7 +24,7 @@
 		<Label Grid.Row="2" Grid.Column="0" Content="Beschreibung" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2" Padding="4"/>
 		<TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="8,4,0,4" Height="80" Text="{Binding Description}"></TextBox>
 		<Label Grid.Row="3" Grid.Column="0" Content="Ausgabepfad" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2" Padding="4"/>
-		<TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="8,4,34,4" Text="{Binding OutputDir}" ></TextBox>
-		<Button Grid.Row="3" Grid.Column="1" Content="..." HorizontalAlignment="Right" VerticalAlignment="Top" Padding="8,2" Margin="0,2"></Button>
+		<TextBox x:Name="txtOutputDirectory" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="8,4,34,4" Text="{Binding OutputDir}" ></TextBox>
+		<Button Grid.Row="3" Grid.Column="1" Content="..." HorizontalAlignment="Right" VerticalAlignment="Top" Padding="8,2" Margin="0,2" Click="ChooseOutputDirectoryHandler"></Button>
 	</Grid>
 </Page>
