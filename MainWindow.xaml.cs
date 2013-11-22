@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -57,8 +58,56 @@ namespace de.fhb.oll.mediacategorizer
                         value.ProcessChain = new ProcessChain(setup, toolProv, value);
                         value.ProcessChain.ChainStarted += ProcessChainStartedHandler;
                         value.ProcessChain.ChainEnded += ProcessChainEndedHandler;
+                        value.ProcessChain.PropertyChanged += ProcessChainPropertyChangedHandler;
                     }
                 }
+            }
+        }
+
+        void ProcessChainPropertyChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "IsRunning":
+                case "Progress":
+                case "IsEnded":
+                case "IsFailed":
+                    UpdateTaskBarState();
+                    break;
+            }
+        }
+
+        private void UpdateTaskBarState()
+        {
+            if (!TaskbarManager.IsPlatformSupported) return;
+            var tb = TaskbarManager.Instance;
+            if (Project == null || Project.ProcessChain == null)
+            {
+                tb.SetProgressState(TaskbarProgressBarState.NoProgress, this);
+                return;
+            }
+            var pc = Project.ProcessChain;
+            if (pc.IsFailed)
+            {
+                tb.SetProgressState(TaskbarProgressBarState.Error, this);
+                Debug.WriteLine("#### FAILED: " + (int)(pc.Progress * 1000f));
+            }
+            else if (pc.IsEnded)
+            {
+                tb.SetProgressState(TaskbarProgressBarState.Normal, this);
+                tb.SetProgressValue(1000, 1000, this);
+                Debug.WriteLine("#### ENDED: " + (int)(pc.Progress * 1000f));
+            }
+            else if (pc.IsRunning)
+            {
+                tb.SetProgressState(TaskbarProgressBarState.Normal, this);
+                tb.SetProgressValue((int)(pc.Progress * 1000f), 1000, this);
+                Debug.WriteLine("#### RUNNING: " + (int)(pc.Progress * 1000f));
+            }
+            else
+            {
+                tb.SetProgressState(TaskbarProgressBarState.NoProgress, this);
+                Debug.WriteLine("#### WAITING: " + (int)(pc.Progress * 1000f));
             }
         }
 
