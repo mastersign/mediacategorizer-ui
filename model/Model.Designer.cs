@@ -823,7 +823,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"MinMatchScore");
         }
         
-        private const float DEF_MINMATCHSCORE = 0.0F;
+        private const float DEF_MINMATCHSCORE = 0.02F;
         
         [DefaultValue(DEF_MINMATCHSCORE)]
         [Category(@"Analyse")]

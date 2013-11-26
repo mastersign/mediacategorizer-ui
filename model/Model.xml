@@ -75,7 +75,7 @@
       <Property name="MinMatchScore" type="float">
         <Category>Analyse</Category>
         <DisplayName>Minimale Übereinstimmung</DisplayName>
-        <DefaultValue>0.0</DefaultValue>
+        <DefaultValue>0.02</DefaultValue>
       </Property>
 
       <Property name="IndexFilter" type="FilterParameter">
