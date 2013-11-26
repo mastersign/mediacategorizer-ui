@@ -56,9 +56,16 @@ namespace de.fhb.oll.mediacategorizer.model
             return result;
         }
 
+        public string GetOutputDir()
+        {
+            return Path.IsPathRooted(OutputDir)
+                ? OutputDir
+                : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), OutputDir);
+        }
+
         public string GetWorkingDirectory()
         {
-            return Path.Combine(OutputDir, WORKING_DIR_NAME);
+            return Path.Combine(GetOutputDir(), WORKING_DIR_NAME);
         }
 
         [XmlIgnore]

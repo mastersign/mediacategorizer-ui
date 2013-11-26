@@ -20,7 +20,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("media-categorizer-version"), version.ToString(3),
                 new Keyword("job-name"), Name,
                 new Keyword("job-description"), Description,
-                new Keyword("output-dir"), OutputDir,
+                new Keyword("output-dir"), GetOutputDir(),
                 new Keyword("result-file"), ResultFile,
                 new Keyword("configuration"), Configuration,
                 new Keyword("videos"), new EdnVector(Media, true),

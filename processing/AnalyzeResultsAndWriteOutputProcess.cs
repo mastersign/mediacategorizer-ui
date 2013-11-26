@@ -45,10 +45,11 @@ namespace de.fhb.oll.mediacategorizer.processing
 
             if (Project.Configuration.ShowResult)
             {
-                Process.Start(Path.Combine(Project.OutputDir, 
-                    Project.Configuration.VisualizeResult 
-                        ? "index.html" 
-                        : Project.ResultFile));
+                var resultFileToShow = Path.Combine(Project.GetOutputDir(),
+                    Project.Configuration.VisualizeResult
+                        ? "index.html"
+                        : Project.ResultFile);
+                if (File.Exists(resultFileToShow)) Process.Start(resultFileToShow);
             }
         }
     }

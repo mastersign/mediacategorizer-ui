@@ -25,10 +25,10 @@ namespace de.fhb.oll.mediacategorizer.processing
         private void PrepareProjectDirectory()
         {
             var workDir = Project.GetWorkingDirectory();
-            if (!Directory.Exists(Project.OutputDir))
+            if (!Directory.Exists(Project.GetOutputDir()))
             {
                 WorkItem = "Ausgabeverzeichnis erstellen";
-                Directory.CreateDirectory(Project.OutputDir);
+                Directory.CreateDirectory(Project.GetOutputDir());
             }
             if (Project.Configuration.RejectExistingIntermediates && Directory.Exists(workDir))
             {
