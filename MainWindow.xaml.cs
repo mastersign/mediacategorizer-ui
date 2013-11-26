@@ -292,6 +292,7 @@ namespace de.fhb.oll.mediacategorizer
             {
                 OverwritePrompt = true,
                 Title = saveAs ? "Projekt speicher unter..." : "Projekt speichern...",
+                DefaultExtension = PROJECT_FILE_EXT,
                 AlwaysAppendDefaultExtension = true,
             };
             dlg.Filters.Add(new CommonFileDialogFilter("Media-Categorizer-Projekt", PROJECT_FILE_EXT) { ShowExtensions = true });

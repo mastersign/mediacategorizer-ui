@@ -52,7 +52,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         private void InitializeLogWriter()
         {
             var fileName = string.Format("{0:yyyy-MM-dd_HH-mm-ss}.log", DateTime.Now);
-            var filePath = Path.Combine(Project.GetWorkingDirectory(), fileName);
+            var filePath = Path.Combine(Project.GetOutputDir(), fileName);
             var s = File.Open(filePath, FileMode.Create, FileAccess.Write, FileShare.Read);
             var tw = new StreamWriter(s, Encoding.UTF8, 1024, false);
             Chain.InitializeLogWriter(new LogWriter(tw));
