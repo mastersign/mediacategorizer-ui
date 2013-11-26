@@ -41,7 +41,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             Action<string> messageHandler, Action<float> progressHandler,
             Action<string> errorHandler)
         {
-            var arguments = string.Format("-jar \"{0}\" \"{1}\"", ToolPath, jobFile);
+            var arguments = string.Format("-jar \"{0}\" \"{1}\"", GetAbsoluteToolPath(), jobFile);
             var pi = new ProcessStartInfo(javaPath, arguments);
             pi.CreateNoWindow = true;
             pi.RedirectStandardOutput = true;

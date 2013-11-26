@@ -22,7 +22,7 @@ namespace de.fhb.oll.mediacategorizer.tools
         {
             var arguments = string.Format("--confidence-test --progress --test-duration {0} \"{1}\"",
                 duration.ToString(CultureInfo.InvariantCulture), waveFile);
-            var pi = new ProcessStartInfo(ToolPath, arguments);
+            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), arguments);
             pi.CreateNoWindow = true;
             pi.RedirectStandardOutput = true;
             pi.UseShellExecute = false;
@@ -43,7 +43,7 @@ namespace de.fhb.oll.mediacategorizer.tools
         {
             var arguments = string.Format("--progress --target {1} \"{0}\"",
                 waveFile, recognitionResultFile);
-            var pi = new ProcessStartInfo(ToolPath, arguments);
+            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), arguments);
             pi.CreateNoWindow = true;
             pi.RedirectStandardOutput = true;
             pi.UseShellExecute = false;
