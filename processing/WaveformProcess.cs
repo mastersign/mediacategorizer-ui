@@ -10,15 +10,15 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class WaveformProcess : MultiTaskProcessBase
     {
-        public WaveformProcess(params IProcess[] dependencies)
-            : base("Wellenform visualisieren", dependencies)
+        public WaveformProcess(ProcessChain chain, params IProcess[] dependencies)
+            : base(chain, "Wellenform visualisieren", dependencies)
         {
             ProgressWeight = 4;
         }
 
         private WaveVizTool GetWaveVizTool()
         {
-            return (WaveVizTool)ToolProvider.Create(typeof(WaveVizTool));
+            return (WaveVizTool)ToolProvider.Create(Chain, typeof(WaveVizTool));
         }
 
         protected override void Work()

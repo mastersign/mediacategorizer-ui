@@ -19,8 +19,8 @@ namespace de.fhb.oll.mediacategorizer.tools
 
         private List<string> errors;
 
-        public FfprobeTool(Setup setup)
-            : base(setup.Ffprobe)
+        public FfprobeTool(ILogWriter logWriter, Setup setup)
+            : base(logWriter, setup.Ffprobe)
         { }
 
         public MediaInfo GetMediaInfo(string sourcePath)
@@ -32,6 +32,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.RedirectStandardError = true;
             pi.UseShellExecute = false;
             pi.CreateNoWindow = true;
+            LogProcessStart(pi);
             var p = Process.Start(pi);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             var readTask = Task.Run(() => RunErrorReader(p.StandardError));
@@ -49,7 +50,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             string l;
             while ((l = sr.ReadLine()) != null)
             {
-                Debug.WriteLine("FFprobe: " + l);
+                Log(l);
                 ProcessDuration(l);
                 ProcessErrors(l);
             }

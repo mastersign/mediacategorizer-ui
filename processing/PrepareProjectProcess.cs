@@ -9,8 +9,8 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class PrepareProjectProcess : ProcessBase
     {
-        public PrepareProjectProcess(params IProcess[] dependencies)
-            : base("Projekt initialisieren", dependencies)
+        public PrepareProjectProcess(ProcessChain chain, params IProcess[] dependencies)
+            : base(chain, "Projekt initialisieren", dependencies)
         {
             ProgressWeight = 1;
         }
@@ -18,6 +18,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         protected override void Work()
         {
             PrepareProjectDirectory();
+            InitializeLogWriter();
             CheckTools();
         }
 
@@ -48,12 +49,21 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
         }
 
+        private void InitializeLogWriter()
+        {
+            var fileName = string.Format("{0:yyyy-MM-dd_HH-mm-ss}.log", DateTime.Now);
+            var filePath = Path.Combine(Project.GetWorkingDirectory(), fileName);
+            var s = File.Open(filePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+            var tw = new StreamWriter(s, Encoding.UTF8, 1024, false);
+            Chain.InitializeLogWriter(new LogWriter(tw));
+        }
+
         private void CheckTools()
         {
             WorkItem = "Überprüfe Hilfsprogramme";
             foreach (var tt in ToolProvider.ToolTypes)
             {
-                var tool = (ToolBase)ToolProvider.Create(tt);
+                var tool = (ToolBase)ToolProvider.Create(Chain, tt);
                 OnProgress(string.Format("Überprüfe {0}", tool.Name));
                 if (!tool.CheckTool())
                 {

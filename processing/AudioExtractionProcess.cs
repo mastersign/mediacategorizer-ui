@@ -10,15 +10,15 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class AudioExtractionProcess : MultiTaskProcessBase
     {
-        public AudioExtractionProcess(params IProcess[] dependencies)
-            : base("Audiospur extrahieren", dependencies)
+        public AudioExtractionProcess(ProcessChain chain, params IProcess[] dependencies)
+            : base(chain, "Audiospur extrahieren", dependencies)
         {
             ProgressWeight = 10;
         }
 
         private FfmpegTool GetFfmpegTool()
         {
-            return (FfmpegTool)ToolProvider.Create(typeof(FfmpegTool));
+            return (FfmpegTool)ToolProvider.Create(Chain, typeof(FfmpegTool));
         }
 
         protected override void Work()

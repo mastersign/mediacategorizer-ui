@@ -15,8 +15,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         private Guid currentProfileId;
         private IDictionary<Media, Dictionary<Guid, TranscripterTool.ConfidenceTestResult>> results;
 
-        public ProfileSelectionProcess(params IProcess[] dependencies)
-            : base("Sprachprofile auswählen", dependencies)
+        public ProfileSelectionProcess(ProcessChain chain, params IProcess[] dependencies)
+            : base(chain, "Sprachprofile auswählen", dependencies)
         {
             ProgressWeight = 20;
             AutoSetWorkItem = false;
@@ -24,7 +24,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private TranscripterTool GetTranscripterTool()
         {
-            return (TranscripterTool) ToolProvider.Create(typeof (TranscripterTool));
+            return (TranscripterTool)ToolProvider.Create(Chain, typeof(TranscripterTool));
         }
 
         private string BuildProfileSelectionFilePath(Media media, Guid profileId)

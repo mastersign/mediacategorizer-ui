@@ -4,9 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Threading;
-using de.fhb.oll.mediacategorizer.model;
-using de.fhb.oll.mediacategorizer.settings;
-using de.fhb.oll.mediacategorizer.tools;
 
 namespace de.fhb.oll.mediacategorizer.processing
 {
@@ -16,12 +13,6 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         Dispatcher Dispatcher { get; set; }
 
-        Setup Setup { get; set; }
-        
-        ToolProvider ToolProvider { get; set; }
-        
-        Project Project { get; set; }
-        
         string WorkItem { get; }
         
         ProcessState State { get; }
@@ -35,6 +26,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         string ErrorMessage { get; }
 
         string CurrentMessage { get; }
+
+        string DetailedErrorMessage { get; }
 
         event EventHandler Started;
 

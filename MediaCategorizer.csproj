@@ -79,6 +79,8 @@
     <Compile Include="edn\EdnVector.cs" />
     <Compile Include="edn\IEdnWritable.cs" />
     <Compile Include="edn\Keyword.cs" />
+    <Compile Include="ILogWriter.cs" />
+    <Compile Include="LogWriter.cs" />
     <Compile Include="model\EDN.cs" />
     <Compile Include="edn\EdnWriter.cs" />
     <Compile Include="model\Model.Designer.cs">

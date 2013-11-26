@@ -14,18 +14,18 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     abstract class ProcessBase : IProcess
     {
+        protected ProcessChain Chain { get; private set; }
+
         public string Name { get; private set; }
 
         private readonly IProcess[] dependencies;
 
-        private Setup setup;
-        private ToolProvider toolProvider;
-        private Project project;
         private ProcessState state;
         private string workItem;
         private float currentProgress;
         private string progressMessage;
         private string errorMessage;
+        private string detailedErrorMessage;
 
         public event EventHandler Started;
 
@@ -35,8 +35,9 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         public Dispatcher Dispatcher { get; set; }
 
-        protected ProcessBase(string name, IProcess[] dependencies)
+        protected ProcessBase(ProcessChain chain, string name, IProcess[] dependencies)
         {
+            Chain = chain;
             Name = name;
             this.dependencies = dependencies;
 
@@ -62,50 +63,11 @@ namespace de.fhb.oll.mediacategorizer.processing
             PostSynced(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
 
-        public Setup Setup
-        {
-            get { return setup; }
-            set
-            {
-                if (State == ProcessState.Running)
-                {
-                    throw new InvalidOperationException("The application setup can not be changed while the process is running.");
-                }
-                if (ReferenceEquals(setup, value)) return;
-                setup = value;
-                OnPropertyChanged();
-            }
-        }
+        protected Project Project { get { return Chain.Project; } }
 
-        public ToolProvider ToolProvider
-        {
-            get { return toolProvider; }
-            set
-            {
-                if (State == ProcessState.Running)
-                {
-                    throw new InvalidOperationException("The tool provider can not be changed while the process is running.");
-                }
-                if (ReferenceEquals(toolProvider, value)) return;
-                toolProvider = value;
-                OnPropertyChanged();
-            }
-        }
+        protected Setup Setup { get { return Chain.Setup; } }
 
-        public Project Project
-        {
-            get { return project; }
-            set
-            {
-                if (State == ProcessState.Running)
-                {
-                    throw new InvalidOperationException("The target project can not be changed while the process is running.");
-                }
-                if (ReferenceEquals(project, value)) return;
-                project = value;
-                OnPropertyChanged();
-            }
-        }
+        protected ToolProvider ToolProvider { get { return Chain.ToolProvider; } }
 
         public ProcessState State
         {
@@ -114,6 +76,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             {
                 if (state == value) return;
                 state = value;
+                Log("State = " + state);
                 OnPropertyChanged();
             }
         }
@@ -125,6 +88,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             {
                 if (string.Equals(workItem, value)) return;
                 workItem = value;
+                Log("WorkItem = " + workItem);
                 OnPropertyChanged();
             }
         }
@@ -166,6 +130,17 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
         }
 
+        public string DetailedErrorMessage
+        {
+            get { return detailedErrorMessage; }
+            private set
+            {
+                if (string.Equals(detailedErrorMessage, value)) return;
+                detailedErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string CurrentMessage
         {
             get { return ErrorMessage ?? ProgressMessage; }
@@ -195,6 +170,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected void OnError(string message)
         {
+            DetailedErrorMessage = DetailedErrorMessage + message + Environment.NewLine;
             ErrorMessage = message;
         }
 
@@ -227,6 +203,10 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void WorkFinalizer(Task workTask)
         {
+            if (workTask.Exception != null)
+            {
+                DetailedErrorMessage = DetailedErrorMessage + workTask.Exception + Environment.NewLine;
+            }
             OnEnded(
                 ErrorMessage == null && !workTask.IsFaulted && !workTask.IsCanceled,
                 ErrorMessage ?? (workTask.Exception != null ? workTask.Exception.Message : null));
@@ -235,6 +215,11 @@ namespace de.fhb.oll.mediacategorizer.processing
         protected float CalculateProgress(int workItemCount, int workItemNo, float itemProgress)
         {
             return (workItemNo + itemProgress) / workItemCount;
+        }
+
+        protected void Log(string line)
+        {
+            Chain.Log(Name, line);
         }
 
         protected abstract void Work();

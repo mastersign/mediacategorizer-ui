@@ -13,7 +13,7 @@ using de.fhb.oll.mediacategorizer.tools;
 
 namespace de.fhb.oll.mediacategorizer.processing
 {
-    public class ProcessChain : DispatcherObject, INotifyPropertyChanged
+    public class ProcessChain : DispatcherObject, ILogWriter, INotifyPropertyChanged
     {
         private IProcess[] processes;
 
@@ -41,6 +41,9 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private readonly List<Tuple<string, string>> preInitializedLogBuffer = new List<Tuple<string, string>>();
+        private LogWriter logWriter;
+
         public Setup Setup { get; private set; }
 
         public ToolProvider ToolProvider { get; private set; }
@@ -66,6 +69,9 @@ namespace de.fhb.oll.mediacategorizer.processing
         {
             VerifyAccess();
 
+            DisposeLogWriter();
+            preInitializedLogBuffer.Clear();
+
             Progress = 0f;
             totalProgressWeight = 0f;
             IsFailed = false;
@@ -81,9 +87,6 @@ namespace de.fhb.oll.mediacategorizer.processing
             EndedProcesses.Clear();
             foreach (var p in processes)
             {
-                p.Setup = Setup;
-                p.ToolProvider = ToolProvider;
-                p.Project = Project;
                 p.Dispatcher = Dispatcher;
                 p.Started += ProcessStartedHandler;
                 p.Ended += ProcessEndedHandler;
@@ -93,16 +96,16 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
         }
 
-        private static IProcess[] CreateProcessChain()
+        private IProcess[] CreateProcessChain()
         {
-            var projectPreparation = new PrepareProjectProcess();
-            var mediaInspectionProcess = new MediaInspectionProcess(projectPreparation);
-            var audioExtraction = new AudioExtractionProcess(projectPreparation);
-            var waveformVisualization = new WaveformProcess(projectPreparation, audioExtraction);
-            var profileSelection = new ProfileSelectionProcess(projectPreparation, mediaInspectionProcess, audioExtraction);
-            var speechRecognitionProcess = new SpeechRecognitionProcess(projectPreparation, mediaInspectionProcess, audioExtraction, profileSelection);
-            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(projectPreparation, waveformVisualization, speechRecognitionProcess);
-            var projectFinalization = new FinalizeProjectProcess(analyzeAndOutput);
+            var projectPreparation = new PrepareProjectProcess(this);
+            var mediaInspectionProcess = new MediaInspectionProcess(this, projectPreparation);
+            var audioExtraction = new AudioExtractionProcess(this, projectPreparation);
+            var waveformVisualization = new WaveformProcess(this, projectPreparation, audioExtraction);
+            var profileSelection = new ProfileSelectionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction);
+            var speechRecognitionProcess = new SpeechRecognitionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction, profileSelection);
+            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognitionProcess);
+            var projectFinalization = new FinalizeProjectProcess(this, analyzeAndOutput);
 
             return new IProcess[]
             {
@@ -117,24 +120,24 @@ namespace de.fhb.oll.mediacategorizer.processing
             };
         }
 
-        private static IProcess[] CreateDummyProcessChain()
+        private IProcess[] CreateDummyProcessChain()
         {
-            var p1 = new DummyProcess("Dummy 1");
-            var p2 = new DummyProcess("Dummy 2");
-            var p2a = new DummyProcess("Dummy 2a", p2);
-            var p2b = new DummyProcess("Dummy 2b", p2);
-            var p3 = new DummyProcess("Dummy 3", p1, p2b);
+            var p1 = new DummyProcess(this, "Dummy 1");
+            var p2 = new DummyProcess(this, "Dummy 2");
+            var p2a = new DummyProcess(this, "Dummy 2a", p2);
+            var p2b = new DummyProcess(this, "Dummy 2b", p2);
+            var p3 = new DummyProcess(this, "Dummy 3", p1, p2b);
 
             return new IProcess[] { p1, p2, p2a, p2b, p3 };
         }
 
-        private static IProcess[] CreateFailingDummyProcessChain()
+        private IProcess[] CreateFailingDummyProcessChain()
         {
-            var p1 = new DummyProcess("Dummy 1");
-            var p2 = new DummyProcess("Dummy 2");
-            var p2a = new DummyProcess("Dummy 2a", p2);
-            var p2b = new DummyProcess("Dummy 2b", p2) { Failing = true };
-            var p3 = new DummyProcess("Dummy 3", p1, p2b);
+            var p1 = new DummyProcess(this, "Dummy 1");
+            var p2 = new DummyProcess(this, "Dummy 2");
+            var p2a = new DummyProcess(this, "Dummy 2a", p2);
+            var p2b = new DummyProcess(this, "Dummy 2b", p2) { Failing = true };
+            var p3 = new DummyProcess(this, "Dummy 3", p1, p2b);
 
             return new IProcess[] { p1, p2, p2a, p2b, p3 };
         }
@@ -159,11 +162,13 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected virtual void OnChainStarted()
         {
+            Log("Process Chain", "Started");
             PostSynced(ChainStarted, this, EventArgs.Empty);
         }
 
         protected virtual void OnChainEnded()
         {
+            Log("Process Chain", "Ended");
             PostSynced(ChainEnded, this, EventArgs.Empty);
         }
 
@@ -238,6 +243,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 isEnded = value;
                 OnPropertyChanged();
                 if (isEnded) OnChainEnded();
+                DisposeLogWriter();
             }
         }
 
@@ -291,6 +297,40 @@ namespace de.fhb.oll.mediacategorizer.processing
                 throw new InvalidOperationException("An ended chain can not be started. Use the Reset method before restart the chain.");
             }
             GoAhead();
+        }
+
+        public void InitializeLogWriter(LogWriter w)
+        {
+            if (logWriter != null)
+            {
+                throw new InvalidOperationException("The LogWriter is allready initialized.");
+            }
+            logWriter = w;
+            foreach (var logEntry in preInitializedLogBuffer)
+            {
+                logWriter.Log(logEntry.Item1, logEntry.Item2);
+            }
+            preInitializedLogBuffer.Clear();
+        }
+
+        public void Log(string tool, string line)
+        {
+            if (logWriter == null)
+            {
+                Debug.WriteLine("PRE-INIT: {0}: {1}", tool, line);
+                preInitializedLogBuffer.Add(Tuple.Create(tool, line));
+            }
+            else
+            {
+                logWriter.Log(tool, line);
+            }
+        }
+
+        public void DisposeLogWriter()
+        {
+            if (logWriter == null) return;
+            logWriter.Dispose();
+            logWriter = null;
         }
     }
 }

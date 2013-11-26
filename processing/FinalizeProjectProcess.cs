@@ -8,8 +8,8 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class FinalizeProjectProcess : ProcessBase
     {
-        public FinalizeProjectProcess(params IProcess[] dependencies)
-            : base("Projekt abschließen", dependencies)
+        public FinalizeProjectProcess(ProcessChain chain, params IProcess[] dependencies)
+            : base(chain, "Projekt abschließen", dependencies)
         {
             ProgressWeight = 1;
         }

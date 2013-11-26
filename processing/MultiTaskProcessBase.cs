@@ -14,8 +14,8 @@ namespace de.fhb.oll.mediacategorizer.processing
 
     internal abstract class MultiTaskProcessBase : ProcessBase
     {
-        protected MultiTaskProcessBase(string name, IProcess[] dependencies)
-            : base(name, dependencies)
+        protected MultiTaskProcessBase(ProcessChain chain, string name, IProcess[] dependencies)
+            : base(chain, name, dependencies)
         {
             PhaseCount = 1;
             CurrentPhase = 0;

@@ -17,10 +17,10 @@ namespace de.fhb.oll.mediacategorizer.tools
         private static readonly Regex PROGRESS_REGEX = new Regex(@"size=.*time=(\d+):(\d\d):(\d\d)\.(\d+)");
         private static readonly Regex ERROR_REGEX = new Regex(@"ERROR|No such file or directory", RegexOptions.IgnoreCase);
 
-        private List<string> errors; 
+        private List<string> errors;
 
-        public FfmpegTool(Setup setup)
-            : base(setup.Ffmpeg)
+        public FfmpegTool(ILogWriter logWriter, Setup setup)
+            : base(logWriter, setup.Ffmpeg)
         { }
 
         private static string BuildArguments(string source, string target)
@@ -40,6 +40,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.RedirectStandardError = true;
             pi.UseShellExecute = false;
             pi.CreateNoWindow = true;
+            LogProcessStart(pi);
             var p = Process.Start(pi);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             Task.Run(() => RunErrorReader(p.StandardError, progressHandler));
@@ -52,7 +53,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             string l;
             while ((l = sr.ReadLine()) != null)
             {
-                Debug.WriteLine("FFmpeg: " + l);
+                Log(l);
                 ProcessDuration(l);
                 ProcessProgress(progressHandler, l);
                 ProcessErrors(l);

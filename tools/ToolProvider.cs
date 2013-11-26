@@ -26,10 +26,10 @@ namespace de.fhb.oll.mediacategorizer.tools
 
         public Type[] ToolTypes { get; private set; }
 
-        public object Create(Type t)
+        public object Create(ILogWriter logWriter, Type t)
         {
             if (!ToolTypes.Contains(t)) throw new NotSupportedException();
-            return Activator.CreateInstance(t, applicationSetup);
+            return Activator.CreateInstance(t, logWriter, applicationSetup);
         }
     }
 }

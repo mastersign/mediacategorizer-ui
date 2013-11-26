@@ -12,15 +12,15 @@ namespace de.fhb.oll.mediacategorizer.processing
 {
     class AnalyzeResultsAndWriteOutputProcess : ProcessBase
     {
-        public AnalyzeResultsAndWriteOutputProcess(params IProcess[] dependencies)
-            : base("Analysieren und Ergebnisse speichern", dependencies)
+        public AnalyzeResultsAndWriteOutputProcess(ProcessChain chain, params IProcess[] dependencies)
+            : base(chain, "Analysieren und Ergebnisse speichern", dependencies)
         {
             ProgressWeight = 20;
         }
 
         private DistilleryTool GetDistilleryTool()
         {
-            return (DistilleryTool)ToolProvider.Create(typeof(DistilleryTool));
+            return (DistilleryTool)ToolProvider.Create(Chain, typeof(DistilleryTool));
         }
 
         private string BuildJobFilePath()

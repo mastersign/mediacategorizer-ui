@@ -12,8 +12,8 @@ namespace de.fhb.oll.mediacategorizer.processing
     class MediaInspectionProcess : MultiTaskProcessBase
     {
 
-        public MediaInspectionProcess(params IProcess[] dependencies)
-            : base("Medien untersuchen", dependencies)
+        public MediaInspectionProcess(ProcessChain chain, params IProcess[] dependencies)
+            : base(chain, "Medien untersuchen", dependencies)
         {
             ProgressWeight = 3;
             AutoSetWorkItem = true;
@@ -21,7 +21,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private FfprobeTool GetFfprobe()
         {
-            return (FfprobeTool)ToolProvider.Create(typeof(FfprobeTool));
+            return (FfprobeTool)ToolProvider.Create(Chain, typeof(FfprobeTool));
         }
 
         protected override void Work()

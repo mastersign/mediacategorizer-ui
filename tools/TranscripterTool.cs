@@ -14,8 +14,8 @@ namespace de.fhb.oll.mediacategorizer.tools
 {
     class TranscripterTool : ToolBase
     {
-        public TranscripterTool(Setup setup)
-            : base(setup.Transcripter)
+        public TranscripterTool(ILogWriter logWriter, Setup setup)
+            : base(logWriter, setup.Transcripter)
         { }
 
         public ConfidenceTestResult RunConfidenceTest(string waveFile, float duration, Action<float> progressHandler)
@@ -26,6 +26,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.CreateNoWindow = true;
             pi.RedirectStandardOutput = true;
             pi.UseShellExecute = false;
+            LogProcessStart(pi);
             var p = Process.Start(pi);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             ObserveProgress(p.StandardOutput, duration, progressHandler);
@@ -46,6 +47,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.CreateNoWindow = true;
             pi.RedirectStandardOutput = true;
             pi.UseShellExecute = false;
+            LogProcessStart(pi);
             var p = Process.Start(pi);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             ObserveProgress(p.StandardOutput, duration, progressHandler);

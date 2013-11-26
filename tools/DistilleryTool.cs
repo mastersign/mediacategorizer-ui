@@ -29,9 +29,10 @@ namespace de.fhb.oll.mediacategorizer.tools
         private static readonly Regex PIPELINE_REGEX = new Regex(@"PIPELINE\s+(.+)\s+\[(\d+)\]");
         private static readonly Regex PIPELINE_STEP_REGEX = new Regex(@"PIPELINE_STEP\s+(.+)\s+(\d+)");
 
-        public DistilleryTool(Setup setup)
-            : base(setup.Distillery)
+        public DistilleryTool(ILogWriter logWriter, Setup setup)
+            : base(logWriter, setup.Distillery)
         {
+            Name = "distillery";
             this.setup = setup;
             javaPath = FindJava();
         }
@@ -46,6 +47,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.RedirectStandardOutput = true;
             pi.RedirectStandardError = true;
             pi.UseShellExecute = false;
+            LogProcessStart(pi);
             var p = Process.Start(pi);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             Task.Run(() => ProcessOutput(p.StandardOutput, workItemHandler, messageHandler, progressHandler, errorHandler));
@@ -61,6 +63,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             string l;
             while ((l = r.ReadLine()) != null)
             {
+                Log(l);
                 if (!l.StartsWith("#"))
                 {
                     Debug.WriteLine("distillery out: " + l);

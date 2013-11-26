@@ -14,8 +14,8 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         public bool Failing { get; set; }
 
-        public DummyProcess(string name, params IProcess[] dependencies)
-            : base(name, dependencies)
+        public DummyProcess(ProcessChain chain, string name, params IProcess[] dependencies)
+            : base(chain, name, dependencies)
         {
             WorkItem = "Initial Work Item";
         }

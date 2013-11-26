@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,15 @@ namespace de.fhb.oll.mediacategorizer.tools
 {
     abstract class ToolBase
     {
+        private readonly ILogWriter logWriter;
+
         public string Name { get; protected set; }
 
         public string ToolPath { get; private set; }
 
-        protected ToolBase(string toolPath)
+        protected ToolBase(ILogWriter logWriter, string toolPath)
         {
+            this.logWriter = logWriter;
             ToolPath = toolPath;
             Name = Path.GetFileName(toolPath);
         }
@@ -22,6 +26,16 @@ namespace de.fhb.oll.mediacategorizer.tools
         public virtual bool CheckTool()
         {
             return File.Exists(ToolPath);
+        }
+
+        protected void Log(string line)
+        {
+            logWriter.Log(Name, line);
+        }
+
+        protected void LogProcessStart(ProcessStartInfo pi)
+        {
+            Log(string.Format("{0} {1}", pi.FileName, pi.Arguments));
         }
     }
 }

@@ -15,8 +15,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         private IDictionary<Guid, string> profiles;
         private IDictionary<Guid, Media[]> processGroups;
 
-        public SpeechRecognitionProcess(params IProcess[] dependencies) 
-            : base("Text aus Sprache erkennen", dependencies)
+        public SpeechRecognitionProcess(ProcessChain chain, params IProcess[] dependencies) 
+            : base(chain, "Text aus Sprache erkennen", dependencies)
             {
             ProgressWeight = 40;
         }
@@ -28,7 +28,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private TranscripterTool GetTranscripterTool()
         {
-            return (TranscripterTool) ToolProvider.Create(typeof (TranscripterTool));
+            return (TranscripterTool)ToolProvider.Create(Chain, typeof(TranscripterTool));
         }
 
         protected override void Work()

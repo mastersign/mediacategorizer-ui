@@ -11,8 +11,8 @@ namespace de.fhb.oll.mediacategorizer.tools
 {
     class WaveVizTool : ToolBase
     {
-        public WaveVizTool(Setup setup)
-            : base(setup.WaveViz)
+        public WaveVizTool(ILogWriter logWriter, Setup setup)
+            : base(logWriter, setup.WaveViz)
         { }
 
         private static string FormatColor(Color c)
@@ -33,6 +33,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             var pi = new ProcessStartInfo(ToolPath, arguments);
             pi.CreateNoWindow = true;
             pi.UseShellExecute = false;
+            LogProcessStart(pi);
             var p = Process.Start(pi);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             p.WaitForExit();
