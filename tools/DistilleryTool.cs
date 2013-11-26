@@ -204,6 +204,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             string l;
             while ((l = r.ReadLine()) != null)
             {
+                Log(l);
                 errorHandler(l);
                 Debug.WriteLine("distillery err: " + l);
             }
