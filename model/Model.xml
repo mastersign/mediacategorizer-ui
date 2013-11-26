@@ -29,6 +29,10 @@
       <Property name="OutputDir" type="string">
         <DefaultValue>output</DefaultValue>
       </Property>
+      
+      <Property name="ResultFile" type="string">
+        <DefaultValue>result.xml</DefaultValue>
+      </Property>
 
       <Property name="Configuration" type="Configuration">
         <CustomAttribute>ExpandableObject</CustomAttribute>
@@ -119,32 +123,42 @@
         <DefaultValue>true</DefaultValue>
       </Property>
 
+      <Property name="VisualizeResult" type="bool">
+        <Category>Ausgabe</Category>
+        <DisplayName>Ergebnis visualisieren</DisplayName>
+        <Description>Gibt an, ob eine interaktive Website zur Veranschaulichung des Analyseergebnisses erstellt werden soll.</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="ShowResult" type="bool">
+        <Category>Ausgabe</Category>
+        <DisplayName>Ergebnis anzeigen</DisplayName>
+        <Description>Gibt an, ob das Ergebnis nach Abschluss der Analyse angezeigt werden soll.</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+
       <Property name="SkipWordClouds" type="bool">
         <Category>Ausgabe</Category>
         <DisplayName>Keine Wortwolken</DisplayName>
+        <Description>Gibt an, ob die zeitaufwändige Erstellung von Wortwolken übersprungen werden soll.</Description>
         <DefaultValue>false</DefaultValue>
       </Property>
       <Property name="SkipWordIncludes" type="bool">
         <Category>Ausgabe</Category>
         <DisplayName>Keine Wortseiten</DisplayName>
+        <Description>Gibt an, ob die Erstellung von Detailseiten für jedes erkannte Wort übersprungen werden soll.</Description>
         <DefaultValue>false</DefaultValue>
       </Property>
       <Property name="SkipMatchIncludes" type="bool">
         <Category>Ausgabe</Category>
         <DisplayName>Keine Übereinstimmungsdetails</DisplayName>
+        <Description>Gibt an, ob die Erstellung von Detailseiten für jede Übereinstimmung zwischen einem Medium und einer Kategorie übersprungen werden soll.</Description>
         <DefaultValue>false</DefaultValue>
       </Property>
       <Property name="SkipMediaCopy" type="bool">
         <Category>Ausgabe</Category>
         <DisplayName>Mediendateien nicht kopieren</DisplayName>
+        <Description>Gibt an, ob das Kopieren der Medien in die Ausgabe übersprungen werden soll.</Description>
         <DefaultValue>false</DefaultValue>
-      </Property>
-
-      <Property name="ShowResult" type="bool">
-        <Category>Ausgabe</Category>
-        <DisplayName>Ergebnis anzeigen</DisplayName>
-        <Description>Gibt an, ob das Ergebnis der Analyse nach Abschluss angezeigt werden soll.</Description>
-        <DefaultValue>true</DefaultValue>
       </Property>
     </Class>
 

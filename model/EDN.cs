@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Media;
 using System.Xml.Serialization;
 using de.fhb.oll.mediacategorizer.edn;
-using de.fhb.oll.mediacategorizer.settings;
 
 namespace de.fhb.oll.mediacategorizer.model
 {
@@ -14,11 +14,14 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public void WriteTo(EdnWriter w)
         {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
             w.WriteMap(new object[]
             {
+                new Keyword("media-categorizer-version"), version.ToString(3),
                 new Keyword("job-name"), Name,
                 new Keyword("job-description"), Description,
                 new Keyword("output-dir"), OutputDir,
+                new Keyword("result-file"), ResultFile,
                 new Keyword("configuration"), Configuration,
                 new Keyword("videos"), new EdnVector(Media, true),
                 new Keyword("categories"), new EdnVector(Categories, true),
@@ -59,6 +62,8 @@ namespace de.fhb.oll.mediacategorizer.model
                         new Keyword("min-relative-appearance"), MinRelativeAppearance,
                         new Keyword("min-match-score"), MinMatchScore,
                         new Keyword("index-filter"), IndexFilter,
+                        new Keyword("visualize-result"), VisualizeResult,
+                        new Keyword("show-result"), ShowResult,
                         new Keyword("skip-media-copy"), SkipMediaCopy,
                         new Keyword("skip-wordclouds"), SkipWordClouds,
                         new Keyword("skip-word-includes"), SkipWordIncludes,

@@ -42,6 +42,7 @@ namespace de.fhb.oll.mediacategorizer.model
             _name = DEF_NAME;
             _description = DEF_DESCRIPTION;
             _outputDir = DEF_OUTPUTDIR;
+            _resultFile = DEF_RESULTFILE;
             Configuration = new Configuration();
             Categories = new global::System.Collections.ObjectModel.ObservableCollection<Category>();
             Media = new global::System.Collections.ObjectModel.ObservableCollection<Media>();
@@ -62,6 +63,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 object.Equals(this._name, o._name) && 
                 object.Equals(this._description, o._description) && 
                 object.Equals(this._outputDir, o._outputDir) && 
+                object.Equals(this._resultFile, o._resultFile) && 
                 object.Equals(this._configuration, o._configuration) && 
                 object.Equals(this._categories, o._categories) && 
                 object.Equals(this._media, o._media));
@@ -86,6 +88,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 (!ReferenceEquals(this._name, null) ? this._name.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._description, null) ? this._description.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._outputDir, null) ? this._outputDir.GetHashCode() : 0) ^ 
+                (!ReferenceEquals(this._resultFile, null) ? this._resultFile.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._configuration, null) ? this._configuration.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._categories, null) ? this._categories.GetHashCode() : 0) ^ 
                 (!ReferenceEquals(this._media, null) ? this._media.GetHashCode() : 0));
@@ -231,6 +234,42 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _outputDir = value;
                 this.OnOutputDirChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property ResultFile
+        
+        private string _resultFile;
+        
+        public event EventHandler ResultFileChanged;
+        
+        protected virtual void OnResultFileChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ResultFileChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ResultFile");
+        }
+        
+        private const string DEF_RESULTFILE = @"result.xml";
+        
+        [DefaultValue(DEF_RESULTFILE)]
+        public virtual string ResultFile
+        {
+            get { return _resultFile; }
+            set
+            {
+                if (string.Equals(value, _resultFile))
+                {
+                    return;
+                }
+                _resultFile = value;
+                this.OnResultFileChanged();
             }
         }
         
@@ -443,11 +482,12 @@ namespace de.fhb.oll.mediacategorizer.model
             CategoryCloud = new CloudParameter();
             _rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
             _cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
+            _visualizeResult = DEF_VISUALIZERESULT;
+            _showResult = DEF_SHOWRESULT;
             _skipWordClouds = DEF_SKIPWORDCLOUDS;
             _skipWordIncludes = DEF_SKIPWORDINCLUDES;
             _skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
             _skipMediaCopy = DEF_SKIPMEDIACOPY;
-            _showResult = DEF_SHOWRESULT;
             
             this.IsChanged = false;
         }
@@ -474,11 +514,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 object.Equals(this._categoryCloud, o._categoryCloud) && 
                 this._rejectExistingIntermediates.Equals(o._rejectExistingIntermediates) && 
                 this._cleanupOutputDir.Equals(o._cleanupOutputDir) && 
+                this._visualizeResult.Equals(o._visualizeResult) && 
+                this._showResult.Equals(o._showResult) && 
                 this._skipWordClouds.Equals(o._skipWordClouds) && 
                 this._skipWordIncludes.Equals(o._skipWordIncludes) && 
                 this._skipMatchIncludes.Equals(o._skipMatchIncludes) && 
-                this._skipMediaCopy.Equals(o._skipMediaCopy) && 
-                this._showResult.Equals(o._showResult));
+                this._skipMediaCopy.Equals(o._skipMediaCopy));
         }
         
         public override bool Equals(object o)
@@ -510,11 +551,12 @@ namespace de.fhb.oll.mediacategorizer.model
                 (!ReferenceEquals(this._categoryCloud, null) ? this._categoryCloud.GetHashCode() : 0) ^ 
                 this._rejectExistingIntermediates.GetHashCode() ^ 
                 this._cleanupOutputDir.GetHashCode() ^ 
+                this._visualizeResult.GetHashCode() ^ 
+                this._showResult.GetHashCode() ^ 
                 this._skipWordClouds.GetHashCode() ^ 
                 this._skipWordIncludes.GetHashCode() ^ 
                 this._skipMatchIncludes.GetHashCode() ^ 
-                this._skipMediaCopy.GetHashCode() ^ 
-                this._showResult.GetHashCode());
+                this._skipMediaCopy.GetHashCode());
         }
         
         #endregion
@@ -1129,6 +1171,84 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #endregion
         
+        #region Property VisualizeResult
+        
+        private bool _visualizeResult;
+        
+        public event EventHandler VisualizeResultChanged;
+        
+        protected virtual void OnVisualizeResultChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VisualizeResultChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VisualizeResult");
+        }
+        
+        private const bool DEF_VISUALIZERESULT = true;
+        
+        [DefaultValue(DEF_VISUALIZERESULT)]
+        [Category(@"Ausgabe")]
+        [DisplayName(@"Ergebnis visualisieren")]
+        [Description(@"Gibt an, ob eine interaktive Website zur Veranschaulichung des Analyseergebnisses erstellt werden soll.")]
+        public virtual bool VisualizeResult
+        {
+            get { return _visualizeResult; }
+            set
+            {
+                if ((value == _visualizeResult))
+                {
+                    return;
+                }
+                _visualizeResult = value;
+                this.OnVisualizeResultChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property ShowResult
+        
+        private bool _showResult;
+        
+        public event EventHandler ShowResultChanged;
+        
+        protected virtual void OnShowResultChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ShowResultChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ShowResult");
+        }
+        
+        private const bool DEF_SHOWRESULT = true;
+        
+        [DefaultValue(DEF_SHOWRESULT)]
+        [Category(@"Ausgabe")]
+        [DisplayName(@"Ergebnis anzeigen")]
+        [Description(@"Gibt an, ob das Ergebnis nach Abschluss der Analyse angezeigt werden soll.")]
+        public virtual bool ShowResult
+        {
+            get { return _showResult; }
+            set
+            {
+                if ((value == _showResult))
+                {
+                    return;
+                }
+                _showResult = value;
+                this.OnShowResultChanged();
+            }
+        }
+        
+        #endregion
+        
         #region Property SkipWordClouds
         
         private bool _skipWordClouds;
@@ -1151,6 +1271,7 @@ namespace de.fhb.oll.mediacategorizer.model
         [DefaultValue(DEF_SKIPWORDCLOUDS)]
         [Category(@"Ausgabe")]
         [DisplayName(@"Keine Wortwolken")]
+        [Description(@"Gibt an, ob die zeitaufwändige Erstellung von Wortwolken übersprungen werden soll.")]
         public virtual bool SkipWordClouds
         {
             get { return _skipWordClouds; }
@@ -1189,6 +1310,7 @@ namespace de.fhb.oll.mediacategorizer.model
         [DefaultValue(DEF_SKIPWORDINCLUDES)]
         [Category(@"Ausgabe")]
         [DisplayName(@"Keine Wortseiten")]
+        [Description(@"Gibt an, ob die Erstellung von Detailseiten für jedes erkannte Wort übersprungen werden soll.")]
         public virtual bool SkipWordIncludes
         {
             get { return _skipWordIncludes; }
@@ -1227,6 +1349,7 @@ namespace de.fhb.oll.mediacategorizer.model
         [DefaultValue(DEF_SKIPMATCHINCLUDES)]
         [Category(@"Ausgabe")]
         [DisplayName(@"Keine Übereinstimmungsdetails")]
+        [Description(@"Gibt an, ob die Erstellung von Detailseiten für jede Übereinstimmung zwischen einem Medium und einer Kategorie übersprungen werden soll.")]
         public virtual bool SkipMatchIncludes
         {
             get { return _skipMatchIncludes; }
@@ -1265,6 +1388,7 @@ namespace de.fhb.oll.mediacategorizer.model
         [DefaultValue(DEF_SKIPMEDIACOPY)]
         [Category(@"Ausgabe")]
         [DisplayName(@"Mediendateien nicht kopieren")]
+        [Description(@"Gibt an, ob das Kopieren der Medien in die Ausgabe übersprungen werden soll.")]
         public virtual bool SkipMediaCopy
         {
             get { return _skipMediaCopy; }
@@ -1276,45 +1400,6 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _skipMediaCopy = value;
                 this.OnSkipMediaCopyChanged();
-            }
-        }
-        
-        #endregion
-        
-        #region Property ShowResult
-        
-        private bool _showResult;
-        
-        public event EventHandler ShowResultChanged;
-        
-        protected virtual void OnShowResultChanged()
-        {
-            this.IsChanged = true;
-            EventHandler handler = ShowResultChanged;
-            if (!ReferenceEquals(handler, null))
-            {
-                handler(this, EventArgs.Empty);
-            }
-            this.OnPropertyChanged(@"ShowResult");
-        }
-        
-        private const bool DEF_SHOWRESULT = true;
-        
-        [DefaultValue(DEF_SHOWRESULT)]
-        [Category(@"Ausgabe")]
-        [DisplayName(@"Ergebnis anzeigen")]
-        [Description(@"Gibt an, ob das Ergebnis der Analyse nach Abschluss angezeigt werden soll.")]
-        public virtual bool ShowResult
-        {
-            get { return _showResult; }
-            set
-            {
-                if ((value == _showResult))
-                {
-                    return;
-                }
-                _showResult = value;
-                this.OnShowResultChanged();
             }
         }
         
