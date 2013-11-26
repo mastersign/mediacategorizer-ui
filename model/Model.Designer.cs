@@ -35,7 +35,7 @@ namespace de.fhb.oll.mediacategorizer.model
         Wikipedia,
     }
     
-    public partial class Project : IEquatable<Project>, INotifyPropertyChanged, IChangeTracking
+    public partial class Project : INotifyPropertyChanged, IChangeTracking
     {
         public Project()
         {
@@ -50,51 +50,6 @@ namespace de.fhb.oll.mediacategorizer.model
             
             this.IsChanged = false;
         }
-        
-        #region Equatability
-        
-        public bool Equals(Project o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                object.Equals(this._name, o._name) && 
-                object.Equals(this._description, o._description) && 
-                object.Equals(this._outputDir, o._outputDir) && 
-                object.Equals(this._resultFile, o._resultFile) && 
-                object.Equals(this._configuration, o._configuration) && 
-                object.Equals(this._categories, o._categories) && 
-                object.Equals(this._media, o._media));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(Project)))
-            {
-                return false;
-            }
-            return this.Equals((Project)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                (!ReferenceEquals(this._name, null) ? this._name.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._description, null) ? this._description.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._outputDir, null) ? this._outputDir.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._resultFile, null) ? this._resultFile.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._configuration, null) ? this._configuration.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._categories, null) ? this._categories.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._media, null) ? this._media.GetHashCode() : 0));
-        }
-        
-        #endregion
         
         #region Change Tracking
         
@@ -465,7 +420,7 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
-    public partial class Configuration : IEquatable<Configuration>, INotifyPropertyChanged, IChangeTracking
+    public partial class Configuration : INotifyPropertyChanged, IChangeTracking
     {
         public Configuration()
         {
@@ -491,75 +446,6 @@ namespace de.fhb.oll.mediacategorizer.model
             
             this.IsChanged = false;
         }
-        
-        #region Equatability
-        
-        public bool Equals(Configuration o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                (this._confidenceTestDuration == o._confidenceTestDuration) && 
-                (this._profileSelectionCriterion == o._profileSelectionCriterion) && 
-                (this._minConfidence == o._minConfidence) && 
-                (this._goodConfidence == o._goodConfidence) && 
-                (this._minRelativeAppearance == o._minRelativeAppearance) && 
-                (this._minMatchScore == o._minMatchScore) && 
-                object.Equals(this._indexFilter, o._indexFilter) && 
-                object.Equals(this._waveform, o._waveform) && 
-                object.Equals(this._mainCloud, o._mainCloud) && 
-                object.Equals(this._mediaCloud, o._mediaCloud) && 
-                object.Equals(this._categoryCloud, o._categoryCloud) && 
-                this._rejectExistingIntermediates.Equals(o._rejectExistingIntermediates) && 
-                this._cleanupOutputDir.Equals(o._cleanupOutputDir) && 
-                this._visualizeResult.Equals(o._visualizeResult) && 
-                this._showResult.Equals(o._showResult) && 
-                this._skipWordClouds.Equals(o._skipWordClouds) && 
-                this._skipWordIncludes.Equals(o._skipWordIncludes) && 
-                this._skipMatchIncludes.Equals(o._skipMatchIncludes) && 
-                this._skipMediaCopy.Equals(o._skipMediaCopy));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(Configuration)))
-            {
-                return false;
-            }
-            return this.Equals((Configuration)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                this._confidenceTestDuration.GetHashCode() ^ 
-                this._profileSelectionCriterion.GetHashCode() ^ 
-                this._minConfidence.GetHashCode() ^ 
-                this._goodConfidence.GetHashCode() ^ 
-                this._minRelativeAppearance.GetHashCode() ^ 
-                this._minMatchScore.GetHashCode() ^ 
-                (!ReferenceEquals(this._indexFilter, null) ? this._indexFilter.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._waveform, null) ? this._waveform.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._mainCloud, null) ? this._mainCloud.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._mediaCloud, null) ? this._mediaCloud.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._categoryCloud, null) ? this._categoryCloud.GetHashCode() : 0) ^ 
-                this._rejectExistingIntermediates.GetHashCode() ^ 
-                this._cleanupOutputDir.GetHashCode() ^ 
-                this._visualizeResult.GetHashCode() ^ 
-                this._showResult.GetHashCode() ^ 
-                this._skipWordClouds.GetHashCode() ^ 
-                this._skipWordIncludes.GetHashCode() ^ 
-                this._skipMatchIncludes.GetHashCode() ^ 
-                this._skipMediaCopy.GetHashCode());
-        }
-        
-        #endregion
         
         #region Change Tracking
         
@@ -1406,7 +1292,7 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
-    public partial class FilterParameter : IEquatable<FilterParameter>, INotifyPropertyChanged, IChangeTracking
+    public partial class FilterParameter : INotifyPropertyChanged, IChangeTracking
     {
         public FilterParameter()
         {
@@ -1421,53 +1307,6 @@ namespace de.fhb.oll.mediacategorizer.model
             
             this.IsChanged = false;
         }
-        
-        #region Equatability
-        
-        public bool Equals(FilterParameter o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                object.Equals(this._blacklistResource, o._blacklistResource) && 
-                (this._blacklistMaxSize == o._blacklistMaxSize) && 
-                this._filterNotShort.Equals(o._filterNotShort) && 
-                this._filterNoun.Equals(o._filterNoun) && 
-                this._filterMinConfidence.Equals(o._filterMinConfidence) && 
-                this._filterGoodConfidence.Equals(o._filterGoodConfidence) && 
-                this._filterNoPunctuation.Equals(o._filterNoPunctuation) && 
-                this._filterNotInBlacklist.Equals(o._filterNotInBlacklist));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(FilterParameter)))
-            {
-                return false;
-            }
-            return this.Equals((FilterParameter)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                (!ReferenceEquals(this._blacklistResource, null) ? this._blacklistResource.GetHashCode() : 0) ^ 
-                this._blacklistMaxSize.GetHashCode() ^ 
-                this._filterNotShort.GetHashCode() ^ 
-                this._filterNoun.GetHashCode() ^ 
-                this._filterMinConfidence.GetHashCode() ^ 
-                this._filterGoodConfidence.GetHashCode() ^ 
-                this._filterNoPunctuation.GetHashCode() ^ 
-                this._filterNotInBlacklist.GetHashCode());
-        }
-        
-        #endregion
         
         #region Change Tracking
         
@@ -1804,7 +1643,7 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
-    public partial class WaveformParameter : IEquatable<WaveformParameter>, INotifyPropertyChanged, IChangeTracking
+    public partial class WaveformParameter : INotifyPropertyChanged, IChangeTracking
     {
         public WaveformParameter()
         {
@@ -1814,49 +1653,6 @@ namespace de.fhb.oll.mediacategorizer.model
             
             this.IsChanged = false;
         }
-        
-        #region Equatability
-        
-        public bool Equals(WaveformParameter o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                (this._width == o._width) && 
-                (this._height == o._height) && 
-                this._backgroundColor.Equals(o._backgroundColor) && 
-                this._foreground1Color.Equals(o._foreground1Color) && 
-                this._foreground2Color.Equals(o._foreground2Color) && 
-                this._lineColor.Equals(o._lineColor));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(WaveformParameter)))
-            {
-                return false;
-            }
-            return this.Equals((WaveformParameter)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                this._width.GetHashCode() ^ 
-                this._height.GetHashCode() ^ 
-                this._backgroundColor.GetHashCode() ^ 
-                this._foreground1Color.GetHashCode() ^ 
-                this._foreground2Color.GetHashCode() ^ 
-                this._lineColor.GetHashCode());
-        }
-        
-        #endregion
         
         #region Change Tracking
         
@@ -2106,7 +1902,7 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
-    public partial class CloudParameter : IEquatable<CloudParameter>, INotifyPropertyChanged, IChangeTracking
+    public partial class CloudParameter : INotifyPropertyChanged, IChangeTracking
     {
         public CloudParameter()
         {
@@ -2123,59 +1919,6 @@ namespace de.fhb.oll.mediacategorizer.model
             
             this.IsChanged = false;
         }
-        
-        #region Equatability
-        
-        public bool Equals(CloudParameter o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                (this._width == o._width) && 
-                (this._height == o._height) && 
-                (this._precision == o._precision) && 
-                (this._orderPriority == o._orderPriority) && 
-                object.Equals(this._fontFamily, o._fontFamily) && 
-                this._fontBold.Equals(o._fontBold) && 
-                this._fontItalic.Equals(o._fontItalic) && 
-                (this._minFontSize == o._minFontSize) && 
-                (this._maxFontSize == o._maxFontSize) && 
-                this._color.Equals(o._color) && 
-                this._backgroundColor.Equals(o._backgroundColor));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(CloudParameter)))
-            {
-                return false;
-            }
-            return this.Equals((CloudParameter)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                this._width.GetHashCode() ^ 
-                this._height.GetHashCode() ^ 
-                this._precision.GetHashCode() ^ 
-                this._orderPriority.GetHashCode() ^ 
-                (!ReferenceEquals(this._fontFamily, null) ? this._fontFamily.GetHashCode() : 0) ^ 
-                this._fontBold.GetHashCode() ^ 
-                this._fontItalic.GetHashCode() ^ 
-                this._minFontSize.GetHashCode() ^ 
-                this._maxFontSize.GetHashCode() ^ 
-                this._color.GetHashCode() ^ 
-                this._backgroundColor.GetHashCode());
-        }
-        
-        #endregion
         
         #region Change Tracking
         
@@ -2620,7 +2363,7 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
-    public partial class CategoryResource : IEquatable<CategoryResource>, INotifyPropertyChanged, IChangeTracking
+    public partial class CategoryResource : INotifyPropertyChanged, IChangeTracking
     {
         public CategoryResource()
         {
@@ -2629,41 +2372,6 @@ namespace de.fhb.oll.mediacategorizer.model
             
             this.IsChanged = false;
         }
-        
-        #region Equatability
-        
-        public bool Equals(CategoryResource o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                (this._type == o._type) && 
-                object.Equals(this._url, o._url));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(CategoryResource)))
-            {
-                return false;
-            }
-            return this.Equals((CategoryResource)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                this._type.GetHashCode() ^ 
-                (!ReferenceEquals(this._url, null) ? this._url.GetHashCode() : 0));
-        }
-        
-        #endregion
         
         #region Change Tracking
         
@@ -2769,7 +2477,7 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
-    public partial class Category : IEquatable<Category>, INotifyPropertyChanged, IChangeTracking
+    public partial class Category : INotifyPropertyChanged, IChangeTracking
     {
         public Category()
         {
@@ -2779,43 +2487,6 @@ namespace de.fhb.oll.mediacategorizer.model
             
             this.IsChanged = false;
         }
-        
-        #region Equatability
-        
-        public bool Equals(Category o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                object.Equals(this._id, o._id) && 
-                object.Equals(this._name, o._name) && 
-                object.Equals(this._resources, o._resources));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(Category)))
-            {
-                return false;
-            }
-            return this.Equals((Category)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                (!ReferenceEquals(this._id, null) ? this._id.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._name, null) ? this._name.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._resources, null) ? this._resources.GetHashCode() : 0));
-        }
-        
-        #endregion
         
         #region Change Tracking
         
@@ -2992,45 +2663,12 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
-    public partial class Media : IEquatable<Media>, INotifyPropertyChanged, IChangeTracking
+    public partial class Media : INotifyPropertyChanged, IChangeTracking
     {
         public Media()
         {
             this.IsChanged = false;
         }
-        
-        #region Equatability
-        
-        public bool Equals(Media o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return 
-                object.Equals(this._id, o._id);
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(Media)))
-            {
-                return false;
-            }
-            return this.Equals((Media)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                (!ReferenceEquals(this._id, null) ? this._id.GetHashCode() : 0));
-        }
-        
-        #endregion
         
         #region Change Tracking
         

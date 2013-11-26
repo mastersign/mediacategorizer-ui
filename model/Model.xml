@@ -12,7 +12,6 @@
   </ReferencedTypes>
 
   <ModelFeatures>
-    <Equatable />
     <ChangeTracking level="Tracking" escalateChangeState="true" propagateTransaction="true" />
   </ModelFeatures>
 
@@ -340,6 +339,9 @@
         <DefaultValue>No Name</DefaultValue>
       </Property>
       <Property name="Resources" type="CategoryResource" isCollection="true" />
+      <EqualityMembers>
+        <Property>Id</Property>
+      </EqualityMembers>
     </Class>
 
     <Class name="Media">
