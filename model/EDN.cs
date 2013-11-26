@@ -143,6 +143,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("id"), Id,
                 new Keyword("name"), Name,
                 new Keyword("video-file"), MediaFile,
+                new Keyword("recognition-profile"), RecognitionProfile.ToString("D"),
+                new Keyword("recognition-profile-name"), RecognitionProfileName,
                 new Keyword("audio-file"), AudioFile,
                 new Keyword("waveform-file"), WaveformFile,
                 new Keyword("results-file"), ResultsFile,

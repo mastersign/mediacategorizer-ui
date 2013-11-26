@@ -350,6 +350,7 @@
       <Property name="Duration" type="double" persistent="false" />
       <Property name="WaveformFile" persistent="false" />
       <Property name="RecognitionProfile" type="System.Guid" persistent="false" />
+      <Property name="RecognitionProfileName" type="string" persistent="false" />
       <Property name="ResultsFile" persistent="false" />
       <EqualityMembers>
         <Property>Id</Property>

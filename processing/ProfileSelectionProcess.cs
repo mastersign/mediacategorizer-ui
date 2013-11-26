@@ -47,6 +47,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             {
                 WorkItem = m.Name;
                 m.RecognitionProfile = results[m].OrderBy(kvp => -criterion(kvp.Value)).First().Key;
+                m.RecognitionProfileName = profiles[m.RecognitionProfile];
             }
             WorkItem = null;
         }

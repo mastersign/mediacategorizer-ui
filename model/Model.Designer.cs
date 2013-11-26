@@ -3302,6 +3302,41 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #endregion
         
+        #region Property RecognitionProfileName
+        
+        [NonSerialized]
+        private string _recognitionProfileName;
+        
+        public event EventHandler RecognitionProfileNameChanged;
+        
+        protected virtual void OnRecognitionProfileNameChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = RecognitionProfileNameChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"RecognitionProfileName");
+        }
+        
+        [XmlIgnore]
+        public virtual string RecognitionProfileName
+        {
+            get { return _recognitionProfileName; }
+            set
+            {
+                if (string.Equals(value, _recognitionProfileName))
+                {
+                    return;
+                }
+                _recognitionProfileName = value;
+                this.OnRecognitionProfileNameChanged();
+            }
+        }
+        
+        #endregion
+        
         #region Property ResultsFile
         
         [NonSerialized]
