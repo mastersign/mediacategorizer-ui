@@ -89,6 +89,9 @@
       <DependentUpon>Model.xml</DependentUpon>
     </Compile>
     <Compile Include="model\WaveformParameter.cs" />
+    <Compile Include="PageAbout.xaml.cs">
+      <DependentUpon>PageAbout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageSetup.xaml.cs">
       <DependentUpon>PageSetup.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,10 @@
     <Compile Include="tools\ToolProvider.cs" />
     <Compile Include="tools\TranscripterTool.cs" />
     <Compile Include="tools\WaveVizTool.cs" />
+    <Page Include="PageAbout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PageSetup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -207,6 +214,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="logo\logo_256.png" />
     <Resource Include="model\Model.xml">
       <SubType>Designer</SubType>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>

@@ -369,8 +369,7 @@ namespace de.fhb.oll.mediacategorizer
 
         private void MenuInfoHandler(object sender, RoutedEventArgs e)
         {
-            // TODO Infobox
-            MessageBox.Show(this, "Info", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
+            GoToPage("About");
         }
 
         private void ClosedHandler(object sender, EventArgs e)

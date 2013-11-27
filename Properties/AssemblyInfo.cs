@@ -7,12 +7,12 @@ using System.Windows;
 // Allgemeine Informationen über eine Assembly werden über die folgenden 
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
-[assembly: AssemblyTitle("MediaCategorizer")]
+[assembly: AssemblyTitle("Media Categorizer")]
 [assembly: AssemblyDescription("Benutzeroberfläche zur Erstellung und Verwaltung von Projekten zur Kategorisierung von Videos.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Brandenburg University of Applied Sciences")]
 [assembly: AssemblyProduct("MediaCategorizer")]
-[assembly: AssemblyCopyright("Copyright © Tobias Kiertscher 2013")]
+[assembly: AssemblyCopyright("Copyright © by Tobias Kiertscher 2013. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
