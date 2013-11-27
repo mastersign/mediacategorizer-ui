@@ -49,6 +49,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         public ToolProvider ToolProvider { get; private set; }
 
         public Project Project { get; private set; }
+        private bool changedStateOfProject;
 
         public ProcessChain(Setup setup, ToolProvider toolProvider, Project project)
         {
@@ -168,6 +169,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected virtual void OnChainEnded()
         {
+            if (changedStateOfProject == false) Project.AcceptChanges();
             Log("Process Chain", "Ended");
             PostSynced(ChainEnded, this, EventArgs.Empty);
         }
@@ -296,6 +298,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             {
                 throw new InvalidOperationException("An ended chain can not be started. Use the Reset method before restart the chain.");
             }
+            changedStateOfProject = Project.IsChanged;
             GoAhead();
         }
 

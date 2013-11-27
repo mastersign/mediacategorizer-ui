@@ -123,6 +123,7 @@ namespace de.fhb.oll.mediacategorizer
             menuMain.IsEnabled = true;
             menuProject.IsEnabled = true;
             navigationPanel.IsEnabled = true;
+            UpdateTitle();
         }
 
         private void ProjectChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
