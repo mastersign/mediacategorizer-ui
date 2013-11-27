@@ -92,24 +92,36 @@
             </Grid.RowDefinitions>
             <Label Content="Gesamt" Grid.Row="0" Style="{StaticResource ListHeaderStyle}"/>
             <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Label x:Name="lblStatus" Grid.Column="0" Content="Wartend"/>
-                <Label x:Name="lblFortschritt" Grid.Column="1" Content="{Binding Progress, Mode=OneWay}" ContentStringFormat="P" HorizontalContentAlignment="Right"/>
+                <Label x:Name="lblStatus" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Wartend"/>
+                <Label x:Name="lblFortschritt" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Content="{Binding Progress, Mode=OneWay}" ContentStringFormat="P" HorizontalContentAlignment="Right"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Start: "/>
+                <Label x:Name="lblStartTime" Grid.Row="1" Grid.Column="1" Content="{Binding StartTime, Mode=OneWay}" ContentStringFormat="{}{0:dd.MM.yyyy HH:mm:ss}"/>
+                <Label Grid.Row="1" Grid.Column="2" Content="Dauer: " HorizontalContentAlignment="Right"/>
+                <Label x:Name="lblDurationTime" Grid.Row="1" Grid.Column="3" />
             </Grid>
             <ProgressBar x:Name="pbProgress" Grid.Row="2" Minimum="0" Maximum="1" Value="{Binding Progress, Mode=OneWay}" Height="14" Margin="0"/>
-            <StackPanel Grid.Row="3" CanVerticallyScroll="True" >
-                <Label Content="Wartende Prozesse" Style="{StaticResource ListHeaderStyle}" Height="21"/>
-                <ItemsControl x:Name="listWaiting" Margin="0,0,0,8" BorderThickness="0" ItemsSource="{Binding WaitingProcesses}" ItemTemplate="{StaticResource WaitingProcessTemplate}" HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-                <Label Content="Laufende Prozesse" Style="{StaticResource ListHeaderStyle}" Height="21" Margin="0"/>
-                <ItemsControl x:Name="listRunning" Margin="0,0,0,8" BorderThickness="0" ItemsSource="{Binding RunningProcesses}"
+            <ScrollViewer Grid.Row="3" CanContentScroll="False" Margin="0,8,0,0">
+                <StackPanel>
+                    <Label Content="Wartende Prozesse" Style="{StaticResource ListHeaderStyle}" Height="21" Margin="0"/>
+                    <ItemsControl x:Name="listWaiting" Margin="0,0,0,8" BorderThickness="0" ItemsSource="{Binding WaitingProcesses}" ItemTemplate="{StaticResource WaitingProcessTemplate}" HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                    <Label Content="Laufende Prozesse" Style="{StaticResource ListHeaderStyle}" Height="21" Margin="0"/>
+                    <ItemsControl x:Name="listRunning" Margin="0,0,0,8" BorderThickness="0" ItemsSource="{Binding RunningProcesses}"
             		ItemTemplate="{StaticResource RunningProcessTemplate}" HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                <Label Content="Abgeschlossene Prozesse" Style="{StaticResource ListHeaderStyle}" Height="21" Margin="0"/>
-                <ItemsControl x:Name="listEnded" Margin="0,0,0,8" BorderThickness="0" ItemsSource="{Binding EndedProcesses}"
+                    <Label Content="Abgeschlossene Prozesse" Style="{StaticResource ListHeaderStyle}" Height="21" Margin="0"/>
+                    <ItemsControl x:Name="listEnded" Margin="0,0,0,8" BorderThickness="0" ItemsSource="{Binding EndedProcesses}"
             		ItemTemplate="{StaticResource EndedProcessTemplate}" HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-            </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
 
         <Button x:Name="btnStartProcessing" Content="Starten" HorizontalAlignment="Right" Margin="0" Grid.Row="2" VerticalAlignment="Bottom" Click="StartProcessHandler" Padding="8,2"/>
