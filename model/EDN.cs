@@ -23,8 +23,8 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("output-dir"), GetOutputDir(),
                 new Keyword("result-file"), ResultFile,
                 new Keyword("configuration"), Configuration,
-                new Keyword("videos"), new EdnVector(Media, true),
                 new Keyword("categories"), new EdnVector(Categories, true),
+                new Keyword("videos"), new EdnVector(Media, true),
             });
         }
     }
@@ -146,6 +146,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("recognition-profile"), RecognitionProfile.ToString("D"),
                 new Keyword("recognition-profile-name"), RecognitionProfileName,
                 new Keyword("audio-file"), AudioFile,
+                new Keyword("duration"), Duration,
                 new Keyword("waveform-file"), WaveformFile,
                 new Keyword("results-file"), ResultsFile,
             });
