@@ -16,11 +16,11 @@ namespace de.fhb.oll.mediacategorizer.tools
         private readonly Setup setup;
         private readonly string javaPath;
 
-        private const float PREPARATION_PART = 0.25f;
+        private const float ANALYSIS_PART = 0.33f;
 
         private readonly List<string> workingTasks = new List<string>();
-        private int totalPreperationSteps;
-        private int currentPreparationStep;
+        private int totalAnalysisSteps;
+        private int currentAnalysisStep;
         private readonly Dictionary<string, Tuple<int, int>> taskStates = new Dictionary<string, Tuple<int, int>>();
 
         private static readonly Regex TASK_GROUP_REGEX = new Regex(@"TASKGROUP\s+(.+)\s+\[(\d+)\]");
@@ -90,7 +90,7 @@ namespace de.fhb.oll.mediacategorizer.tools
                 }
                 else if (l.StartsWith("# PIPELINE "))
                 {
-                    ProcessPipelinePreparationMessage(l, progressHandler);
+                    ProcessPipelineAnalysisMessage(l, progressHandler);
                 }
                 else if (l.StartsWith("# PIPELINE_STEP "))
                 {
@@ -163,21 +163,21 @@ namespace de.fhb.oll.mediacategorizer.tools
         {
             var taskCnt = taskStates.Sum(t => t.Value.Item1);
             progressHandler(taskCnt > 0
-                ? PREPARATION_PART + (float)taskStates.Sum(t => t.Value.Item2) / taskCnt * (1 - PREPARATION_PART)
-                : PREPARATION_PART);
+                ? ANALYSIS_PART + (float)taskStates.Sum(t => t.Value.Item2) / taskCnt * (1 - ANALYSIS_PART)
+                : ANALYSIS_PART);
         }
 
-        private void ProcessPipelinePreparationMessage(string line, Action<float> progressHandler)
+        private void ProcessPipelineAnalysisMessage(string line, Action<float> progressHandler)
         {
             var match = PIPELINE_REGEX.Match(line);
             if (!match.Success) return;
             var name = match.Groups[1].Value;
-            if (name == "Preparation")
+            if (name == "Analysis")
             {
-                totalPreperationSteps = int.Parse(match.Groups[2].Value);
-                currentPreparationStep = 0;
+                totalAnalysisSteps = int.Parse(match.Groups[2].Value);
+                currentAnalysisStep = 0;
             }
-            UpdatePreparationProgress(progressHandler);
+            UpdateAnalysisProgress(progressHandler);
         }
 
         private void ProcessPipelineStepMessage(string line, Action<float> progressHandler)
@@ -185,16 +185,16 @@ namespace de.fhb.oll.mediacategorizer.tools
             var match = PIPELINE_STEP_REGEX.Match(line);
             if (!match.Success) return;
             var name = match.Groups[1].Value;
-            if (name == "Preparation")
+            if (name == "Analysis")
             {
-                currentPreparationStep += 1;
+                currentAnalysisStep += 1;
             }
-            UpdatePreparationProgress(progressHandler);
+            UpdateAnalysisProgress(progressHandler);
         }
 
-        private void UpdatePreparationProgress(Action<float> progressHandler)
+        private void UpdateAnalysisProgress(Action<float> progressHandler)
         {
-            progressHandler(PREPARATION_PART * currentPreparationStep / totalPreperationSteps);
+            progressHandler(ANALYSIS_PART * currentAnalysisStep / totalAnalysisSteps);
         }
 
         private void ProcessError(TextReader r, Action<string> workItemHandler,
