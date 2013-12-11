@@ -1910,6 +1910,7 @@ namespace de.fhb.oll.mediacategorizer.model
             _height = DEF_HEIGHT;
             _precision = DEF_PRECISION;
             _orderPriority = DEF_ORDERPRIORITY;
+            _minOccurence = DEF_MINOCCURENCE;
             FontFamily = new global::System.Windows.Media.FontFamily();
             _fontBold = DEF_FONTBOLD;
             _fontItalic = DEF_FONTITALIC;
@@ -2098,6 +2099,44 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _orderPriority = value;
                 this.OnOrderPriorityChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property MinOccurence
+        
+        private int _minOccurence;
+        
+        public event EventHandler MinOccurenceChanged;
+        
+        protected virtual void OnMinOccurenceChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = MinOccurenceChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"MinOccurence");
+        }
+        
+        private const int DEF_MINOCCURENCE = 1;
+        
+        [DefaultValue(DEF_MINOCCURENCE)]
+        [DisplayName(@"Minimales Vorkommen")]
+        [Description(@"Die Mindestanzahl für das Auftreten eines Wortes, damit es in der Wortwolke angezeigt wird.")]
+        public virtual int MinOccurence
+        {
+            get { return _minOccurence; }
+            set
+            {
+                if ((value == _minOccurence))
+                {
+                    return;
+                }
+                _minOccurence = value;
+                this.OnMinOccurenceChanged();
             }
         }
         

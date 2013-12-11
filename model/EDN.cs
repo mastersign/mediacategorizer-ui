@@ -100,6 +100,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("height"), Height,
                 new Keyword("precision"), CloudPrecisionAsEdn(),
                 new Keyword("order-priority"), OrderPriority,
+                new Keyword("min-occurrence"), MinOccurence,
                 new Keyword("font-family"), FontFamily.Source,
                 new Keyword("font-style"), FontStyleAsEdn(),
                 new Keyword("min-font-size"), MinFontSize,
