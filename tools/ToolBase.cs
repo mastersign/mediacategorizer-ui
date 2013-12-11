@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -11,6 +12,37 @@ namespace de.fhb.oll.mediacategorizer.tools
 {
     abstract class ToolBase
     {
+        private static readonly List<Process> PROCESSES = new List<Process>();
+
+        protected void RegisterProcess(Process p)
+        {
+            if (p.HasExited) return;
+            lock (PROCESSES)
+            {
+                p.Exited += ProcessExitedHandler;
+                PROCESSES.Add(p);
+            }
+        }
+
+        private static void ProcessExitedHandler(object sender, EventArgs e)
+        {
+            var p = (Process) sender;
+            lock (PROCESSES)
+            {
+                PROCESSES.Remove(p);
+            }
+        }
+
+        public static void KillRunningToolProcesses()
+        {
+            Process[] processes;
+            lock (PROCESSES)
+            {
+                processes = PROCESSES.ToArray();
+            }
+            foreach (var p in processes) p.Kill();
+        }
+
         private readonly ILogWriter logWriter;
 
         public string Name { get; protected set; }

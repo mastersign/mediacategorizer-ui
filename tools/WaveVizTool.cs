@@ -35,6 +35,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.UseShellExecute = false;
             LogProcessStart(pi);
             var p = Process.Start(pi);
+            RegisterProcess(p);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             p.WaitForExit();
             return p.ExitCode == 0;

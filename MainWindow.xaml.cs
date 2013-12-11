@@ -372,15 +372,17 @@ namespace de.fhb.oll.mediacategorizer
             GoToPage("About");
         }
 
+        private void ClosingHandler(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!CheckProjectStateBeforeClosing("Programm beenden")) e.Cancel = true;
+        }
+
         private void ClosedHandler(object sender, EventArgs e)
         {
             var sm = (SetupManager)Application.Current.Resources["SetupManager"];
             sm.Save();
-        }
-
-        private void ClosingHandler(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (!CheckProjectStateBeforeClosing("Programm beenden")) e.Cancel = true;
+            ToolBase.KillRunningToolProcesses();
+            Environment.Exit(0);
         }
     }
 }
