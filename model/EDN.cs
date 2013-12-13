@@ -24,7 +24,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("result-file"), ResultFile,
                 new Keyword("configuration"), Configuration,
                 new Keyword("categories"), new EdnVector(Categories, true),
-                new Keyword("videos"), new EdnVector(Media, true),
+                new Keyword("videos"), new EdnVector(GetMedia(), true),
             });
         }
     }

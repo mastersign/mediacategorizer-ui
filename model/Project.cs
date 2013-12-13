@@ -68,6 +68,11 @@ namespace de.fhb.oll.mediacategorizer.model
             return Path.Combine(GetOutputDir(), WORKING_DIR_NAME);
         }
 
+        public IEnumerable<Media> GetMedia()
+        {
+            return Media.Where(m => m != null);
+        }
+            
         [XmlIgnore]
         public ProcessChain ProcessChain { get; set; }
 

@@ -43,7 +43,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
             OnProgress("Erkennungssicherheiten auswerten");
             var criterion = GetCriterion();
-            foreach (var m in Project.Media)
+            foreach (var m in Project.GetMedia())
             {
                 WorkItem = m.Name;
                 m.RecognitionProfile = results[m].OrderBy(kvp => -criterion(kvp.Value)).First().Key;
@@ -83,7 +83,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void RunTestsForAllProfiles(TranscripterTool transcripter)
         {
-            results = Project.Media.ToDictionary(
+            results = Project.GetMedia().ToDictionary(
                 m => m, m => new Dictionary<Guid, TranscripterTool.ConfidenceTestResult>());
             PhaseCount = profiles.Count;
             CurrentPhase = 0;
@@ -106,7 +106,7 @@ namespace de.fhb.oll.mediacategorizer.processing
 
             WorkItem = profiles[profileId];
 
-            RunTasks(Project.Media.Select(m => (ProcessTask)((pH, eH) => RunTest(m, pH, eH))).ToArray());
+            RunTasks(Project.GetMedia().Select(m => (ProcessTask)((pH, eH) => RunTest(m, pH, eH))).ToArray());
         }
 
         private void RunTest(Media m, Action<float> progressHandler, Action<string> errorHandler)

@@ -44,7 +44,7 @@ namespace de.fhb.oll.mediacategorizer
 
         private bool IsExisting(string file)
         {
-            return Project.Media
+            return Project.GetMedia()
                 .Select(m => m.MediaFile)
                 .Contains(file);
         }
@@ -108,7 +108,7 @@ namespace de.fhb.oll.mediacategorizer
 
         private IEnumerable<int> ExistingMediaIds()
         {
-            foreach (var m in Project.Media)
+            foreach (var m in Project.GetMedia())
             {
                 int idNo;
                 if (int.TryParse(m.Id, out idNo)) yield return idNo;

@@ -40,7 +40,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             profiles = transcripter.GetSpeechRecognitionProfiles().ToDictionary(
                 t => t.Item1, t => t.Item2);
             processGroups = profiles.Keys
-                .Select(pId => Tuple.Create(pId, Project.Media.Where(m => m.RecognitionProfile == pId).ToArray()))
+                .Select(pId => Tuple.Create(pId, Project.GetMedia().Where(m => m.RecognitionProfile == pId).ToArray()))
                 .Where(t => t.Item2.Length > 0)
                 .ToDictionary(t => t.Item1, t => t.Item2);
 
