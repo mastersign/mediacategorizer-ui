@@ -67,7 +67,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 OnProgress(string.Format("Überprüfe {0}", tool.Name));
                 if (!tool.CheckTool())
                 {
-                    throw new ApplicationException(string.Format("Das Hilfsprogramm {0} ist nicht verfügbar.", tool.Name));
+                    OnError(string.Format("Das Hilfsprogramm {0} ist nicht verfügbar.", tool.Name));
                 }
             }
         }
