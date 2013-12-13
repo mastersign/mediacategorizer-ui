@@ -20,6 +20,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             PrepareProjectDirectory();
             InitializeLogWriter();
             CheckTools();
+            CheckMediaFiles();
         }
 
         private void PrepareProjectDirectory()
@@ -68,6 +69,25 @@ namespace de.fhb.oll.mediacategorizer.processing
                 if (!tool.CheckTool())
                 {
                     OnError(string.Format("Das Hilfsprogramm {0} ist nicht verfügbar.", tool.Name));
+                }
+            }
+        }
+
+        private void CheckMediaFiles()
+        {
+            WorkItem = "Medien überprüfen";
+            var media = Project.GetMedia().ToArray();
+            if (media.Length == 0)
+            {
+                OnError("Das Projekt muss mindestens eine Mediendatei enthalten.");
+                return;
+            }
+            foreach (var m in media)
+            {
+                if (!File.Exists(m.MediaFile))
+                {
+                    OnError(string.Format("Eine Mediendatei wurde nicht gefunden: {0}", 
+                        m.MediaFile));
                 }
             }
         }
