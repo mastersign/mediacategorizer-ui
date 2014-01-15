@@ -428,7 +428,6 @@ namespace de.fhb.oll.mediacategorizer.model
             _profileSelectionCriterion = DEF_PROFILESELECTIONCRITERION;
             _minConfidence = DEF_MINCONFIDENCE;
             _goodConfidence = DEF_GOODCONFIDENCE;
-            _minRelativeAppearance = DEF_MINRELATIVEAPPEARANCE;
             _minMatchScore = DEF_MINMATCHSCORE;
             IndexFilter = new FilterParameter();
             Waveform = new WaveformParameter();
@@ -598,7 +597,7 @@ namespace de.fhb.oll.mediacategorizer.model
         [DefaultValue(DEF_MINCONFIDENCE)]
         [Category(@"Analyse")]
         [DisplayName(@"Minimale Erkennungssicherheit")]
-        [Description(@"Die minimale Erkennungssicherheit für Worte die in die Analyse berücksichtigt werden sollen.")]
+        [Description(@"Die minimale Erkennungssicherheit für Worte die in der Analyse berücksichtigt werden sollen.")]
         public virtual float MinConfidence
         {
             get { return _minConfidence; }
@@ -637,7 +636,7 @@ namespace de.fhb.oll.mediacategorizer.model
         [DefaultValue(DEF_GOODCONFIDENCE)]
         [Category(@"Analyse")]
         [DisplayName(@"Gute Erkennungssicherheit")]
-        [Description(@"Die Erkennungssicherheit für Worte die in der Ausgabe erscheinen dürfen.")]
+        [Description(@"Die minimale Erkennungssicherheit für Worte die in der Ausgabe verwendet werden dürfen.")]
         public virtual float GoodConfidence
         {
             get { return _goodConfidence; }
@@ -649,44 +648,6 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _goodConfidence = value;
                 this.OnGoodConfidenceChanged();
-            }
-        }
-        
-        #endregion
-        
-        #region Property MinRelativeAppearance
-        
-        private float _minRelativeAppearance;
-        
-        public event EventHandler MinRelativeAppearanceChanged;
-        
-        protected virtual void OnMinRelativeAppearanceChanged()
-        {
-            this.IsChanged = true;
-            EventHandler handler = MinRelativeAppearanceChanged;
-            if (!ReferenceEquals(handler, null))
-            {
-                handler(this, EventArgs.Empty);
-            }
-            this.OnPropertyChanged(@"MinRelativeAppearance");
-        }
-        
-        private const float DEF_MINRELATIVEAPPEARANCE = 0.25F;
-        
-        [DefaultValue(DEF_MINRELATIVEAPPEARANCE)]
-        [Category(@"Analyse")]
-        [DisplayName(@"Minimales Erscheinen")]
-        public virtual float MinRelativeAppearance
-        {
-            get { return _minRelativeAppearance; }
-            set
-            {
-                if ((Math.Abs(value - _minRelativeAppearance) < float.Epsilon))
-                {
-                    return;
-                }
-                _minRelativeAppearance = value;
-                this.OnMinRelativeAppearanceChanged();
             }
         }
         
@@ -714,6 +675,7 @@ namespace de.fhb.oll.mediacategorizer.model
         [DefaultValue(DEF_MINMATCHSCORE)]
         [Category(@"Analyse")]
         [DisplayName(@"Minimale Übereinstimmung")]
+        [Description(@"Die minimale Übereinstimmung für eine Zuordnung zwischen einem Video und einer Kategorie.")]
         public virtual float MinMatchScore
         {
             get { return _minMatchScore; }
@@ -1397,7 +1359,7 @@ namespace de.fhb.oll.mediacategorizer.model
         
         [DefaultValue(DEF_BLACKLISTMAXSIZE)]
         [DisplayName(@"Blacklist-Worte")]
-        [Description(@"Gibt die Anzahl der Worte an, die vom Anfang der Blacklist für das Filtern verwendet werden. Es wird eine nach Relevanz sortierte Blacklist vorausgesetzt.")]
+        [Description(@"Die obere Grenze für die Anzahl der Worte, die vom Anfang der Blacklist für das Filtern verwendet werden. Es wird eine nach Relevanz sortierte Blacklist vorausgesetzt.")]
         public virtual int BlacklistMaxSize
         {
             get { return _blacklistMaxSize; }

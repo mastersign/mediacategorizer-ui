@@ -59,7 +59,7 @@ namespace de.fhb.oll.mediacategorizer.model
                         new Keyword("blacklist-max-size"), IndexFilter.BlacklistMaxSize,
                         new Keyword("min-confidence"), MinConfidence,
                         new Keyword("good-confidence"), GoodConfidence,
-                        new Keyword("min-relative-appearance"), MinRelativeAppearance,
+                        //new Keyword("min-relative-appearance"), MinRelativeAppearance,
                         new Keyword("min-match-score"), MinMatchScore,
                         new Keyword("index-filter"), IndexFilter,
                         new Keyword("visualize-result"), VisualizeResult,
