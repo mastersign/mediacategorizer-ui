@@ -20,10 +20,11 @@
             <MenuItem Header="SPEICHERN" Click="MenuSaveProjectHandler" />
             <MenuItem Header="SPEICHERN UNTER..." Click="MenuSaveProjectAsHandler" />
         </Menu>
-        <Menu x:Name="menuMain" Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="1" Margin="0,2" FlowDirection="RightToLeft">
+        <Menu x:Name="menuMain" Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="1" Margin="0,2,24,2" FlowDirection="RightToLeft">
             <MenuItem Header="INFO" Click="MenuInfoHandler" />
             <MenuItem Header="EINSTELLUNGEN" Click="MenuSetupHandler" />
         </Menu>
+        <Image Grid.Row="0" Grid.Column="1" Source="/help.png" Width="16" Height="16" MouseLeftButtonUp="MenuHelpHandler" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,2"/>
         <Frame x:Name="frame" Content="Frame" Grid.Row="1" Grid.Column="0" Margin="8" NavigationUIVisibility="Hidden"
                LoadCompleted="FrameLoadCompleteHandler" DataContextChanged="FrameDataContextChangedHandler"/>
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,8,8,8" x:Name="navigationPanel">

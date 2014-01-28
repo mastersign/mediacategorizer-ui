@@ -372,6 +372,16 @@ namespace de.fhb.oll.mediacategorizer
             GoToPage("About");
         }
 
+        private void MenuHelpHandler(object sender, RoutedEventArgs e)
+        {
+            var url = "http://mastersign.github.io/mediacategorizer/Benutzerhandbuch.html";
+            if (lastPage != null)
+            {
+                url += "#Page" + lastPage;
+            }
+            Process.Start(url);
+        }
+
         private void ClosingHandler(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!CheckProjectStateBeforeClosing("Programm beenden")) e.Cancel = true;
