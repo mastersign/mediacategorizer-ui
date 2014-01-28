@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Media Categorizer")]
 [assembly: AssemblyDescription("Benutzeroberfläche zur Erstellung und Verwaltung von Projekten zur Kategorisierung von Videos.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Brandenburg University of Applied Sciences")]
+[assembly: AssemblyCompany("Fachhochschule Brandenburg")]
 [assembly: AssemblyProduct("MediaCategorizer")]
-[assembly: AssemblyCopyright("Copyright © by Tobias Kiertscher 2013. All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2014 Tobias Kiertscher, Fachhochschule Brandenburg.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -53,3 +53,4 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.3.0.0")]
 [assembly: AssemblyFileVersion("0.3.0.0")]
+[assembly: NeutralResourcesLanguageAttribute("de-DE")]
