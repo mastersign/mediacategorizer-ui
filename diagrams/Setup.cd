@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="de.fhb.oll.mediacategorizer.settings.SetupManager">
+    <Position X="0.5" Y="0.75" Width="2.25" />
+    <Members>
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Field Name="setup" Hidden="true" />
+      <Method Name="SetupManager" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAgIAACAAAAAgAAAAAAAgAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>settings\SetupManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Setup" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.settings.Setup">
+    <Position X="3.75" Y="0.75" Width="2.75" />
+    <Members>
+      <Field Name="_compatibleMediaFileExtensions" Hidden="true" />
+      <Field Name="_distillery" Hidden="true" />
+      <Field Name="_ffmpeg" Hidden="true" />
+      <Field Name="_ffprobe" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_javaRuntime" Hidden="true" />
+      <Field Name="_parallelization" Hidden="true" />
+      <Field Name="_parallelTasks" Hidden="true" />
+      <Field Name="_transcripter" Hidden="true" />
+      <Field Name="_waveViz" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="CompatibleMediaFileExtensionsChanged" Hidden="true" />
+      <Field Name="DEF_COMPATIBLEMEDIAFILEEXTENSIONS" Hidden="true" />
+      <Field Name="DEF_DISTILLERY" Hidden="true" />
+      <Field Name="DEF_FFMPEG" Hidden="true" />
+      <Field Name="DEF_FFPROBE" Hidden="true" />
+      <Field Name="DEF_PARALLELIZATION" Hidden="true" />
+      <Field Name="DEF_PARALLELTASKS" Hidden="true" />
+      <Field Name="DEF_TRANSCRIPTER" Hidden="true" />
+      <Field Name="DEF_WAVEVIZ" Hidden="true" />
+      <Event Name="DistilleryChanged" Hidden="true" />
+      <Method Name="Equals" Hidden="true" />
+      <Event Name="FfmpegChanged" Hidden="true" />
+      <Event Name="FfprobeChanged" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Event Name="JavaRuntimeChanged" Hidden="true" />
+      <Method Name="OnCompatibleMediaFileExtensionsChanged" Hidden="true" />
+      <Method Name="OnDistilleryChanged" Hidden="true" />
+      <Method Name="OnFfmpegChanged" Hidden="true" />
+      <Method Name="OnFfprobeChanged" Hidden="true" />
+      <Method Name="OnJavaRuntimeChanged" Hidden="true" />
+      <Method Name="OnParallelizationChanged" Hidden="true" />
+      <Method Name="OnParallelTasksChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnTranscripterChanged" Hidden="true" />
+      <Method Name="OnWaveVizChanged" Hidden="true" />
+      <Event Name="ParallelizationChanged" Hidden="true" />
+      <Event Name="ParallelTasksChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Method Name="Setup" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Event Name="TranscripterChanged" Hidden="true" />
+      <Event Name="WaveVizChanged" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AwEQoAAGG0AkgkMk4gAAEAiSiAAEFICAAAQCEIgACgA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Parallelization" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Enum Name="de.fhb.oll.mediacategorizer.settings.ParallelizationMode">
+    <Position X="1" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

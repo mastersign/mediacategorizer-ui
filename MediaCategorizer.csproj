@@ -204,6 +204,20 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
+    <None Include="diagrams\Configuration.cd" />
+    <None Include="diagrams\IProcess.cd" />
+    <None Include="diagrams\Namespaces.dgml" />
+    <None Include="diagrams\Project.cd" />
+    <None Include="diagrams\Process.cd" />
+    <None Include="diagrams\ProcessChain.cd" />
+    <None Include="diagrams\Setup.cd" />
+    <None Include="diagrams\ToolFFmpeg.cd" />
+    <None Include="diagrams\ToolDistillery.cd" />
+    <None Include="diagrams\ToolBase.cd" />
+    <None Include="diagrams\ToolWaveViz.cd" />
+    <None Include="diagrams\ToolTranscripter.cd" />
+    <None Include="diagrams\ToolFFprobe.cd" />
+    <None Include="diagrams\UI.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

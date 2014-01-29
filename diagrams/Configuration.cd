@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="de.fhb.oll.mediacategorizer.model.Configuration" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.75" Width="3.5" />
+    <Members>
+      <Field Name="_categoryCloud" Hidden="true" />
+      <Field Name="_cleanupOutputDir" Hidden="true" />
+      <Field Name="_confidenceTestDuration" Hidden="true" />
+      <Field Name="_goodConfidence" Hidden="true" />
+      <Field Name="_indexFilter" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_mainCloud" Hidden="true" />
+      <Field Name="_mediaCloud" Hidden="true" />
+      <Field Name="_minConfidence" Hidden="true" />
+      <Field Name="_minMatchScore" Hidden="true" />
+      <Field Name="_profileSelectionCriterion" Hidden="true" />
+      <Field Name="_rejectExistingIntermediates" Hidden="true" />
+      <Field Name="_showResult" Hidden="true" />
+      <Field Name="_skipMatchIncludes" Hidden="true" />
+      <Field Name="_skipMediaCopy" Hidden="true" />
+      <Field Name="_skipWordClouds" Hidden="true" />
+      <Field Name="_skipWordIncludes" Hidden="true" />
+      <Field Name="_visualizeResult" Hidden="true" />
+      <Field Name="_waveform" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="CategoryCloudChanged" Hidden="true" />
+      <Method Name="CategoryCloudPropertyChangedHandler" Hidden="true" />
+      <Event Name="CleanupOutputDirChanged" Hidden="true" />
+      <Event Name="ConfidenceTestDurationChanged" Hidden="true" />
+      <Method Name="Configuration" Hidden="true" />
+      <Field Name="DEF_CLEANUPOUTPUTDIR" Hidden="true" />
+      <Field Name="DEF_CONFIDENCETESTDURATION" Hidden="true" />
+      <Field Name="DEF_GOODCONFIDENCE" Hidden="true" />
+      <Field Name="DEF_MINCONFIDENCE" Hidden="true" />
+      <Field Name="DEF_MINMATCHSCORE" Hidden="true" />
+      <Field Name="DEF_PROFILESELECTIONCRITERION" Hidden="true" />
+      <Field Name="DEF_REJECTEXISTINGINTERMEDIATES" Hidden="true" />
+      <Field Name="DEF_SHOWRESULT" Hidden="true" />
+      <Field Name="DEF_SKIPMATCHINCLUDES" Hidden="true" />
+      <Field Name="DEF_SKIPMEDIACOPY" Hidden="true" />
+      <Field Name="DEF_SKIPWORDCLOUDS" Hidden="true" />
+      <Field Name="DEF_SKIPWORDINCLUDES" Hidden="true" />
+      <Field Name="DEF_VISUALIZERESULT" Hidden="true" />
+      <Method Name="GetVolatilePropertyPairs" Hidden="true" />
+      <Event Name="GoodConfidenceChanged" Hidden="true" />
+      <Event Name="IndexFilterChanged" Hidden="true" />
+      <Method Name="IndexFilterPropertyChangedHandler" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Event Name="MainCloudChanged" Hidden="true" />
+      <Method Name="MainCloudPropertyChangedHandler" Hidden="true" />
+      <Event Name="MediaCloudChanged" Hidden="true" />
+      <Method Name="MediaCloudPropertyChangedHandler" Hidden="true" />
+      <Event Name="MinConfidenceChanged" Hidden="true" />
+      <Event Name="MinMatchScoreChanged" Hidden="true" />
+      <Method Name="OnCategoryCloudChanged" Hidden="true" />
+      <Method Name="OnCleanupOutputDirChanged" Hidden="true" />
+      <Method Name="OnConfidenceTestDurationChanged" Hidden="true" />
+      <Method Name="OnGoodConfidenceChanged" Hidden="true" />
+      <Method Name="OnIndexFilterChanged" Hidden="true" />
+      <Method Name="OnMainCloudChanged" Hidden="true" />
+      <Method Name="OnMediaCloudChanged" Hidden="true" />
+      <Method Name="OnMinConfidenceChanged" Hidden="true" />
+      <Method Name="OnMinMatchScoreChanged" Hidden="true" />
+      <Method Name="OnProfileSelectionCriterionChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnRejectExistingIntermediatesChanged" Hidden="true" />
+      <Method Name="OnShowResultChanged" Hidden="true" />
+      <Method Name="OnSkipMatchIncludesChanged" Hidden="true" />
+      <Method Name="OnSkipMediaCopyChanged" Hidden="true" />
+      <Method Name="OnSkipWordCloudsChanged" Hidden="true" />
+      <Method Name="OnSkipWordIncludesChanged" Hidden="true" />
+      <Method Name="OnVisualizeResultChanged" Hidden="true" />
+      <Method Name="OnWaveformChanged" Hidden="true" />
+      <Event Name="ProfileSelectionCriterionChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Event Name="RejectExistingIntermediatesChanged" Hidden="true" />
+      <Event Name="ShowResultChanged" Hidden="true" />
+      <Event Name="SkipMatchIncludesChanged" Hidden="true" />
+      <Event Name="SkipMediaCopyChanged" Hidden="true" />
+      <Event Name="SkipWordCloudsChanged" Hidden="true" />
+      <Event Name="SkipWordIncludesChanged" Hidden="true" />
+      <Event Name="VisualizeResultChanged" Hidden="true" />
+      <Field Name="volatileProperties" Hidden="true" />
+      <Property Name="VolatileProperties" Hidden="true" />
+      <Event Name="WaveformChanged" Hidden="true" />
+      <Method Name="WaveformPropertyChangedHandler" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
+    </Members>
+    <AssociationLine Name="CategoryCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.75" Y="3.969" />
+        <Point X="2.75" Y="5.601" />
+        <Point X="5.25" Y="5.601" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="MainCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.375" Y="3.969" />
+        <Point X="3.375" Y="4.583" />
+        <Point X="5.25" Y="4.583" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="MediaCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.062" Y="3.969" />
+        <Point X="3.062" Y="5.092" />
+        <Point X="5.25" Y="5.092" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ProfileSelectionCriterion" Type="de.fhb.oll.mediacategorizer.model.ProfileSelectionCriterion" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.125" Y="3.969" />
+        <Point X="2.125" Y="6.182" />
+        <Point X="3.688" Y="6.182" />
+        <Point X="3.688" Y="6.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.223" Y="0.425" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Waveform" Type="de.fhb.oll.mediacategorizer.model.WaveformParameter" FixedFromPoint="true">
+      <Path>
+        <Point X="1.5" Y="3.969" />
+        <Point X="1.5" Y="6.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.068" Y="1.31" Height="0.182" Width="0.858" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>HgwAoAAHqRMClEIg9lzQERkA4E8UgCPiCIhFAUMLiEQ=</HashCode>
+      <FileName>model\EDN.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CategoryCloud" />
+      <Property Name="MainCloud" />
+      <Property Name="IndexFilter" />
+      <Property Name="MediaCloud" />
+      <Property Name="ProfileSelectionCriterion" />
+      <Property Name="Waveform" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.model.FilterParameter" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="0.75" Width="2.25" />
+    <Members>
+      <Field Name="_blacklistMaxSize" Hidden="true" />
+      <Field Name="_blacklistResource" Hidden="true" />
+      <Field Name="_filterGoodConfidence" Hidden="true" />
+      <Field Name="_filterMinConfidence" Hidden="true" />
+      <Field Name="_filterNoPunctuation" Hidden="true" />
+      <Field Name="_filterNotInBlacklist" Hidden="true" />
+      <Field Name="_filterNotShort" Hidden="true" />
+      <Field Name="_filterNoun" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="BlacklistMaxSizeChanged" Hidden="true" />
+      <Event Name="BlacklistResourceChanged" Hidden="true" />
+      <Field Name="DEF_BLACKLISTMAXSIZE" Hidden="true" />
+      <Field Name="DEF_BLACKLISTRESOURCE" Hidden="true" />
+      <Field Name="DEF_FILTERGOODCONFIDENCE" Hidden="true" />
+      <Field Name="DEF_FILTERMINCONFIDENCE" Hidden="true" />
+      <Field Name="DEF_FILTERNOPUNCTUATION" Hidden="true" />
+      <Field Name="DEF_FILTERNOTINBLACKLIST" Hidden="true" />
+      <Field Name="DEF_FILTERNOTSHORT" Hidden="true" />
+      <Field Name="DEF_FILTERNOUN" Hidden="true" />
+      <Event Name="FilterGoodConfidenceChanged" Hidden="true" />
+      <Event Name="FilterMinConfidenceChanged" Hidden="true" />
+      <Event Name="FilterNoPunctuationChanged" Hidden="true" />
+      <Event Name="FilterNotInBlacklistChanged" Hidden="true" />
+      <Event Name="FilterNotShortChanged" Hidden="true" />
+      <Event Name="FilterNounChanged" Hidden="true" />
+      <Method Name="FilterParameter" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Method Name="OnBlacklistMaxSizeChanged" Hidden="true" />
+      <Method Name="OnBlacklistResourceChanged" Hidden="true" />
+      <Method Name="OnFilterGoodConfidenceChanged" Hidden="true" />
+      <Method Name="OnFilterMinConfidenceChanged" Hidden="true" />
+      <Method Name="OnFilterNoPunctuationChanged" Hidden="true" />
+      <Method Name="OnFilterNotInBlacklistChanged" Hidden="true" />
+      <Method Name="OnFilterNotShortChanged" Hidden="true" />
+      <Method Name="OnFilterNounChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>UAAgIIIgMAAAEAIEIAggUIIAggQGAhLiCQAQABEiAgA=</HashCode>
+      <FileName>model\EDN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.model.CloudParameter" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="3.5" Width="2.25" />
+    <Members>
+      <Field Name="_backgroundColor" Hidden="true" />
+      <Field Name="_color" Hidden="true" />
+      <Field Name="_fontBold" Hidden="true" />
+      <Field Name="_fontFamily" Hidden="true" />
+      <Field Name="_fontItalic" Hidden="true" />
+      <Field Name="_height" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_maxFontSize" Hidden="true" />
+      <Field Name="_minFontSize" Hidden="true" />
+      <Field Name="_minOccurence" Hidden="true" />
+      <Field Name="_orderPriority" Hidden="true" />
+      <Field Name="_precision" Hidden="true" />
+      <Field Name="_width" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="BackgroundColorChanged" Hidden="true" />
+      <Method Name="CloudParameter" Hidden="true" />
+      <Method Name="CloudPrecisionAsEdn" Hidden="true" />
+      <Event Name="ColorChanged" Hidden="true" />
+      <Method Name="ColorToEdn" Hidden="true" />
+      <Field Name="DEF_FONTBOLD" Hidden="true" />
+      <Field Name="DEF_FONTITALIC" Hidden="true" />
+      <Field Name="DEF_HEIGHT" Hidden="true" />
+      <Field Name="DEF_MAXFONTSIZE" Hidden="true" />
+      <Field Name="DEF_MINFONTSIZE" Hidden="true" />
+      <Field Name="DEF_MINOCCURENCE" Hidden="true" />
+      <Field Name="DEF_ORDERPRIORITY" Hidden="true" />
+      <Field Name="DEF_PRECISION" Hidden="true" />
+      <Field Name="DEF_WIDTH" Hidden="true" />
+      <Event Name="FontBoldChanged" Hidden="true" />
+      <Event Name="FontFamilyChanged" Hidden="true" />
+      <Property Name="FontFamilyName" Hidden="true" />
+      <Event Name="FontItalicChanged" Hidden="true" />
+      <Method Name="FontStyleAsEdn" Hidden="true" />
+      <Event Name="HeightChanged" Hidden="true" />
+      <Method Name="Initialize" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Event Name="MaxFontSizeChanged" Hidden="true" />
+      <Event Name="MinFontSizeChanged" Hidden="true" />
+      <Event Name="MinOccurenceChanged" Hidden="true" />
+      <Method Name="OnBackgroundColorChanged" Hidden="true" />
+      <Method Name="OnColorChanged" Hidden="true" />
+      <Method Name="OnFontBoldChanged" Hidden="true" />
+      <Method Name="OnFontFamilyChanged" Hidden="true" />
+      <Method Name="OnFontItalicChanged" Hidden="true" />
+      <Method Name="OnHeightChanged" Hidden="true" />
+      <Method Name="OnMaxFontSizeChanged" Hidden="true" />
+      <Method Name="OnMinFontSizeChanged" Hidden="true" />
+      <Method Name="OnMinOccurenceChanged" Hidden="true" />
+      <Method Name="OnOrderPriorityChanged" Hidden="true" />
+      <Method Name="OnPrecisionChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnWidthChanged" Hidden="true" />
+      <Event Name="OrderPriorityChanged" Hidden="true" />
+      <Event Name="PrecisionChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Event Name="WidthChanged" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>IUQGIBRAFQOIqwREIDiAEEAAijKUAAEgUACQpQBFECA=</HashCode>
+      <FileName>model\CloudParameter.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Precision" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.model.WaveformParameter">
+    <Position X="0.5" Y="6.5" Width="2" />
+    <Members>
+      <Field Name="_backgroundColor" Hidden="true" />
+      <Field Name="_foreground1Color" Hidden="true" />
+      <Field Name="_foreground2Color" Hidden="true" />
+      <Field Name="_height" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_lineColor" Hidden="true" />
+      <Field Name="_width" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="BackgroundColorChanged" Hidden="true" />
+      <Field Name="DEF_HEIGHT" Hidden="true" />
+      <Field Name="DEF_WIDTH" Hidden="true" />
+      <Event Name="Foreground1ColorChanged" Hidden="true" />
+      <Event Name="Foreground2ColorChanged" Hidden="true" />
+      <Event Name="HeightChanged" Hidden="true" />
+      <Method Name="Initialize" Hidden="true" />
+      <Event Name="LineColorChanged" Hidden="true" />
+      <Method Name="OnBackgroundColorChanged" Hidden="true" />
+      <Method Name="OnForeground1ColorChanged" Hidden="true" />
+      <Method Name="OnForeground2ColorChanged" Hidden="true" />
+      <Method Name="OnHeightChanged" Hidden="true" />
+      <Method Name="OnLineColorChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnWidthChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Method Name="WaveformParameter" Hidden="true" />
+      <Event Name="WidthChanged" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AQADIAQCBACACwQEIiAAEEAAiJEEAAAAAAAAAABAEAA=</HashCode>
+      <FileName>model\WaveformParameter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Enum Name="de.fhb.oll.mediacategorizer.model.ProfileSelectionCriterion">
+    <Position X="2.75" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAgAACAABAEAAAAAAAgAAAABAAAAgAAAAEQBAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="de.fhb.oll.mediacategorizer.model.CloudPrecision">
+    <Position X="5.25" Y="7" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAAEAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="de.fhb.oll.mediacategorizer.tools.DistilleryTool">
+    <Position X="0.5" Y="2" Width="7.5" />
+    <Members>
+      <Field Name="ANALYSIS_PART" Hidden="true" />
+      <Method Name="CheckTool" Hidden="true" />
+      <Field Name="currentAnalysisStep" Hidden="true" />
+      <Method Name="FindJavaInEnvVarJavaHome" Hidden="true" />
+      <Method Name="FindJavaInEnvVarPath" Hidden="true" />
+      <Method Name="FindJavaInRegistry" Hidden="true" />
+      <Method Name="FindJavaInSetup" Hidden="true" />
+      <Field Name="JAVA_MAJOR_VERSION" Hidden="true" />
+      <Field Name="javaPath" Hidden="true" />
+      <Field Name="MIN_JAVA_MINOR_VERSION" Hidden="true" />
+      <Field Name="PIPELINE_REGEX" Hidden="true" />
+      <Field Name="PIPELINE_STEP_REGEX" Hidden="true" />
+      <Method Name="ProcessBeginMessage" Hidden="true" />
+      <Method Name="ProcessEndMessage" Hidden="true" />
+      <Method Name="ProcessError" Hidden="true" />
+      <Method Name="ProcessOutput" Hidden="true" />
+      <Method Name="ProcessPipelineAnalysisMessage" Hidden="true" />
+      <Method Name="ProcessPipelineStepMessage" Hidden="true" />
+      <Method Name="ProcessTaskEndMessage" Hidden="true" />
+      <Method Name="ProcessTaskGroupEndMessage" Hidden="true" />
+      <Method Name="ProcessTaskGroupMessage" Hidden="true" />
+      <Field Name="setup" Hidden="true" />
+      <Field Name="TASK_END_REGEX" Hidden="true" />
+      <Field Name="TASK_GROUP_END_REGEX" Hidden="true" />
+      <Field Name="TASK_GROUP_REGEX" Hidden="true" />
+      <Field Name="taskStates" Hidden="true" />
+      <Field Name="totalAnalysisSteps" Hidden="true" />
+      <Method Name="UpdateAnalysisProgress" Hidden="true" />
+      <Method Name="UpdateTaskGroupProgress" Hidden="true" />
+      <Field Name="workingTasks" Hidden="true" />
+    </Members>
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.tools.ToolBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="1.062" />
+        <Point X="1.25" Y="2" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>gAAABIAACgACBloAQAABgCAAgAEQBAUQAIAJCCACICA=</HashCode>
+      <FileName>tools\DistilleryTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.tools.ToolBase" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAwAAAAAQACwAAAgAAQAAAAAAAAgAEAA=</HashCode>
+      <FileName>tools\ToolBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.AnalyzeResultsAndWriteOutputProcess">
+    <Position X="5" Y="0.5" Width="3" />
+    <Members>
+      <Method Name="AnalyzeResultsAndWriteOutputProcess" Hidden="true" />
+      <Method Name="BuildJobFilePath" Hidden="true" />
+      <Method Name="Work" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAgAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>processing\AnalyzeResultsAndWriteOutputProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

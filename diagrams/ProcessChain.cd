@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="de.fhb.oll.mediacategorizer.processing.ProcessChain">
+    <Position X="0.5" Y="0.5" Width="4.5" />
+    <Members>
+      <Field Name="changedStateOfProject" Hidden="true" />
+      <Method Name="ComputeIsFailed" Hidden="true" />
+      <Method Name="ComputeIsRunning" Hidden="true" />
+      <Method Name="CreateDummyProcessChain" Hidden="true" />
+      <Method Name="CreateFailingDummyProcessChain" Hidden="true" />
+      <Method Name="CreateProcessChain" Hidden="true" />
+      <Field Name="endTime" Hidden="true" />
+      <Method Name="GoAhead" Hidden="true" />
+      <Method Name="Initialize" Hidden="true" />
+      <Field Name="isEnded" Hidden="true" />
+      <Field Name="isFailed" Hidden="true" />
+      <Field Name="isRunning" Hidden="true" />
+      <Field Name="lockObject" Hidden="true" />
+      <Method Name="Log" Hidden="true" />
+      <Method Name="OnChainEnded" Hidden="true" />
+      <Method Name="OnChainStarted" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="PostSynced" Hidden="true" />
+      <Field Name="preInitializedLogBuffer" Hidden="true" />
+      <Method Name="ProcessEndedHandler" Hidden="true" />
+      <Field Name="processes" Hidden="true" />
+      <Method Name="ProcessProgressHandler" Hidden="true" />
+      <Method Name="ProcessStartedHandler" Hidden="true" />
+      <Field Name="progress" Hidden="true" />
+      <Field Name="startTime" Hidden="true" />
+      <Field Name="totalProgressWeight" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AgAABEIACCFABcBQOAAiSCEAqgkhYAQCAKAAEQCAApA=</HashCode>
+      <FileName>processing\ProcessChain.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.tools.LogWriter">
+    <Position X="5.5" Y="2.5" Width="2.75" />
+    <Members>
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="LogWorker" Hidden="true" />
+      <Field Name="queue" Hidden="true" />
+      <Field Name="queueEvent" Hidden="true" />
+      <Field Name="writer" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAgAAABAAAAAAAgACAAAAQAAAAAAAAA=</HashCode>
+      <FileName>tools\LogWriter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="de.fhb.oll.mediacategorizer.tools.ILogWriter">
+    <Position X="5.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tools\ILogWriter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

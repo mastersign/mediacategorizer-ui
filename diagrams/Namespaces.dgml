@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="De.fhb.oll.mediacategorizer" Bounds="-920,-614.598151757571,50,25.96" Label="root" UseManualLocation="True" />
+    <Node Id="De.fhb.oll.mediacategorizer.model" Bounds="-1017.85919487847,-549.638142089844,53.6166666666668,25.96" Label="model" UseManualLocation="True" />
+    <Node Id="De.fhb.oll.mediacategorizer.processing" Bounds="-934.242528211806,-549.408100585938,77.0266666666666,25.96" Label="processing" UseManualLocation="True" />
+    <Node Id="De.fhb.oll.mediacategorizer1" Bounds="-1017.23422241211,-487.563038330078,50,25.96" Label="edn" UseManualLocation="True" />
+    <Node Id="Settings" Bounds="-827.215861545139,-549.523121337891,61.3600000000001,25.96" Label="settings" UseManualLocation="True" />
+    <Node Id="Tools" Bounds="-921.234222412109,-486.080631713867,50,25.96" Label="tools" UseManualLocation="True" />
+  </Nodes>
+  <Links>
+    <Link Source="De.fhb.oll.mediacategorizer" Target="De.fhb.oll.mediacategorizer.model" Bounds="-964.403302861589,-588.638133544922,50.2108752621564,33.9580367062094" />
+    <Link Source="De.fhb.oll.mediacategorizer" Target="De.fhb.oll.mediacategorizer.processing" Bounds="-895.483354933396,-588.638133544922,0.338160290892688,30.2305959786416" />
+    <Link Source="De.fhb.oll.mediacategorizer" Target="Settings" Bounds="-875.360133362847,-588.638133544922,51.6760342199733,34.1527229572099" />
+    <Link Source="De.fhb.oll.mediacategorizer.model" Target="De.fhb.oll.mediacategorizer1" Bounds="-991.815260351025,-523.678142089844,0.516949840985603,27.116738753356" />
+    <Link Source="De.fhb.oll.mediacategorizer.processing" Target="Tools" Bounds="-896.058957254541,-523.448100585937,0.226242471964497,28.3677550855829" />
+  </Links>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="Label" Label="Bezeichnung" Description="Anzeigbare Bezeichnung eines Objekts, das Anmerkungen einblenden werden kann" DataType="System.String" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+  </Properties>
+</DirectedGraph>
