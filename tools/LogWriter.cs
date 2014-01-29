@@ -5,9 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace de.fhb.oll.mediacategorizer
+namespace de.fhb.oll.mediacategorizer.tools
 {
     public class LogWriter : ILogWriter, IDisposable
     {
