@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="de.fhb.oll.mediacategorizer.model.Configuration" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="0.75" Width="3.5" />
+    <Position X="0.5" Y="0.75" Width="2.75" />
     <Members>
       <Field Name="_categoryCloud" Hidden="true" />
       <Field Name="_cleanupOutputDir" Hidden="true" />
@@ -86,33 +86,12 @@
       <Method Name="WaveformPropertyChangedHandler" Hidden="true" />
       <Method Name="WriteTo" Hidden="true" />
     </Members>
-    <AssociationLine Name="CategoryCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2.75" Y="3.969" />
-        <Point X="2.75" Y="5.601" />
-        <Point X="5.25" Y="5.601" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="MainCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="3.375" Y="3.969" />
-        <Point X="3.375" Y="4.583" />
-        <Point X="5.25" Y="4.583" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="MediaCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="3.062" Y="3.969" />
-        <Point X="3.062" Y="5.092" />
-        <Point X="5.25" Y="5.092" />
-      </Path>
-    </AssociationLine>
     <AssociationLine Name="ProfileSelectionCriterion" Type="de.fhb.oll.mediacategorizer.model.ProfileSelectionCriterion" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.125" Y="3.969" />
-        <Point X="2.125" Y="6.182" />
-        <Point X="3.688" Y="6.182" />
-        <Point X="3.688" Y="6.5" />
+        <Point X="1.777" Y="3.969" />
+        <Point X="1.777" Y="6.182" />
+        <Point X="3.571" Y="6.182" />
+        <Point X="3.571" Y="6.5" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="-0.223" Y="0.425" />
@@ -120,29 +99,50 @@
     </AssociationLine>
     <AssociationLine Name="Waveform" Type="de.fhb.oll.mediacategorizer.model.WaveformParameter" FixedFromPoint="true">
       <Path>
-        <Point X="1.5" Y="3.969" />
-        <Point X="1.5" Y="6.5" />
+        <Point X="1.286" Y="3.969" />
+        <Point X="1.286" Y="6.5" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="0.068" Y="1.31" Height="0.182" Width="0.858" />
       </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="MainCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.759" Y="3.969" />
+        <Point X="2.759" Y="4.583" />
+        <Point X="4.75" Y="4.583" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="MediaCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.513" Y="3.969" />
+        <Point X="2.513" Y="5.092" />
+        <Point X="4.75" Y="5.092" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="CategoryCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.268" Y="3.969" />
+        <Point X="2.268" Y="5.601" />
+        <Point X="4.75" Y="5.601" />
+      </Path>
     </AssociationLine>
     <TypeIdentifier>
       <HashCode>HgwAoAAHqRMClEIg9lzQERkA4E8UgCPiCIhFAUMLiEQ=</HashCode>
       <FileName>model\EDN.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="CategoryCloud" />
-      <Property Name="MainCloud" />
-      <Property Name="IndexFilter" />
-      <Property Name="MediaCloud" />
       <Property Name="ProfileSelectionCriterion" />
+      <Property Name="IndexFilter" />
       <Property Name="Waveform" />
+      <Property Name="MainCloud" />
+      <Property Name="MediaCloud" />
+      <Property Name="CategoryCloud" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.model.FilterParameter" BaseTypeListCollapsed="true">
-    <Position X="5.25" Y="0.75" Width="2.25" />
+    <Position X="4.75" Y="0.75" Width="2.25" />
     <Members>
       <Field Name="_blacklistMaxSize" Hidden="true" />
       <Field Name="_blacklistResource" Hidden="true" />
@@ -192,7 +192,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.model.CloudParameter" BaseTypeListCollapsed="true">
-    <Position X="5.25" Y="3.5" Width="2.25" />
+    <Position X="4.75" Y="3.5" Width="2.25" />
     <Members>
       <Field Name="_backgroundColor" Hidden="true" />
       <Field Name="_color" Hidden="true" />
@@ -300,13 +300,13 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Enum Name="de.fhb.oll.mediacategorizer.model.ProfileSelectionCriterion">
-    <Position X="2.75" Y="6.5" Width="2" />
+    <Position X="2.75" Y="6.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAgAACAABAEAAAAAAAgAAAABAAAAgAAAAEQBAAAAAA=</HashCode>
     </TypeIdentifier>
   </Enum>
   <Enum Name="de.fhb.oll.mediacategorizer.model.CloudPrecision">
-    <Position X="5.25" Y="7" Width="2.25" />
+    <Position X="4.75" Y="7" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAAEAAA=</HashCode>
     </TypeIdentifier>

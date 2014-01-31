@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="de.fhb.oll.mediacategorizer.model.Project">
-    <Position X="0.5" Y="1" Width="3.25" />
+    <Position X="0.5" Y="1" Width="2.5" />
     <Members>
       <Field Name="_categories" Hidden="true" />
       <Field Name="_configuration" Hidden="true" />
@@ -48,32 +48,32 @@
     </Members>
     <AssociationLine Name="Categories" Type="de.fhb.oll.mediacategorizer.model.Category" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="3.75" Y="1.331" />
-        <Point X="6.25" Y="1.331" />
-        <Point X="6.25" Y="1.75" />
+        <Point X="3" Y="1.331" />
+        <Point X="5.25" Y="1.331" />
+        <Point X="5.25" Y="1.75" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="-0.638" Y="0.495" Height="0.182" Width="2.879" />
       </MemberNameLabel>
     </AssociationLine>
+    <AssociationLine Name="Media" Type="de.fhb.oll.mediacategorizer.model.Media" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.75" Y="3.901" />
+        <Point X="2.75" Y="6.875" />
+        <Point X="4.25" Y="6.875" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.152" Y="-0.325" />
+      </MemberNameLabel>
+    </AssociationLine>
     <AssociationLine Name="ProcessChain" Type="de.fhb.oll.mediacategorizer.processing.ProcessChain" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="0.75" Y="3.901" />
-        <Point X="0.75" Y="5.625" />
+        <Point X="0.692" Y="3.901" />
+        <Point X="0.692" Y="5.625" />
         <Point X="1" Y="5.625" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="-0.9" Y="0.977" Height="0.182" Width="1.061" />
-      </MemberNameLabel>
-    </AssociationLine>
-    <AssociationLine Name="Media" Type="de.fhb.oll.mediacategorizer.model.Media" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="3.156" Y="3.901" />
-        <Point X="3.156" Y="6.625" />
-        <Point X="4.25" Y="6.625" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.152" Y="-0.325" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -90,7 +90,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.model.Category">
-    <Position X="4.25" Y="1.75" Width="3.75" />
+    <Position X="3.25" Y="1.75" Width="3.75" />
     <Members>
       <Field Name="_id" Hidden="true" />
       <Field Name="_isChanged" Hidden="true" />
@@ -115,9 +115,9 @@
     </Members>
     <AssociationLine Name="Resources" Type="de.fhb.oll.mediacategorizer.model.CategoryResource" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="4.688" Y="3.238" />
-        <Point X="4.688" Y="4.648" />
-        <Point X="5.5" Y="4.648" />
+        <Point X="3.688" Y="3.238" />
+        <Point X="3.688" Y="4.648" />
+        <Point X="4.5" Y="4.648" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="-2.763" Y="0.985" Height="0.182" Width="3.483" />
@@ -133,7 +133,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.model.Media" BaseTypeListCollapsed="true">
-    <Position X="4.25" Y="5.5" Width="3.75" />
+    <Position X="4.25" Y="5.75" Width="2.75" />
     <Members>
       <Field Name="_audioFile" Hidden="true" />
       <Field Name="_duration" Hidden="true" />
@@ -177,7 +177,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.model.CategoryResource" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="4" Width="2.5" />
+    <Position X="4.5" Y="4" Width="2.5" />
     <Members>
       <Field Name="_isChanged" Hidden="true" />
       <Field Name="_type" Hidden="true" />
