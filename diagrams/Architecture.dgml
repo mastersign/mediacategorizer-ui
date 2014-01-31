@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="TopToBottom" Layout="Sugiyama" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Distillery" Bounds="167.404044291178,143.672801624275,65.4566666666666,25.96" UseManualLocation="True" />
+    <Node Id="FFmpeg" Bounds="340.964944694733,136.597713012695,62.4533333333334,25.96" Label="FFmpeg" UseManualLocation="True" />
+    <Node Id="FFprobe" Bounds="341.636941358145,80.6375994873047,63.3066666666666,25.96" Label="FFprobe" UseManualLocation="True" />
+    <Node Id="Komponenten" Bounds="32.7607021840413,37.0968654426347,220.100008773804,208.463688179263" Group="Expanded" UseManualLocation="True" />
+    <Node Id="Komponenten(extern)" Bounds="293.893300000723,40.6374994873047,159.016666666667,197.88044230957" Group="Expanded" Label="Komponenten (extern)" UseManualLocation="True" />
+    <Node Id="MastersignCloud" Bounds="117.608075028888,199.632901624275,112.932661282555,25.9275519976222" Label="Mastersign Cloud" UseManualLocation="True" />
+    <Node Id="MediaCategorizer" Bounds="160.876899208984,77.0969654426347,50.00908,25.96" Label="UI" UseManualLocation="True" />
+    <Node Id="MediaCategorizer1" Bounds="224.946385773371,-38.0036116503796,114.066666666667,25.96" Label="MediaCategorizer" UseManualLocation="True" />
+    <Node Id="MicrosoftSpeechAPI" Bounds="35.6196695963541,276.194346108817,132.916666666667,25.96" Label="Microsoft Speech API" UseManualLocation="True" />
+    <Node Id="Transcripter" Bounds="52.7607002766927,143.771694267721,82.6433333333334,25.96" Label="Transcripter" UseManualLocation="True" />
+    <Node Id="WaveViz" Bounds="340.838300000723,192.557841796875,65.1266666666667,25.96" Label="WaveViz" UseManualLocation="True" />
+  </Nodes>
+  <Links>
+    <Link Source="Distillery" Target="MastersignCloud" Bounds="183.912853635145,169.632801624275,10.1735990346033,21.8417060180524" />
+    <Link Source="Komponenten" Target="Distillery" Category="Contains" />
+    <Link Source="Komponenten" Target="MastersignCloud" Category="Contains" />
+    <Link Source="Komponenten" Target="MediaCategorizer" Category="Contains" />
+    <Link Source="Komponenten" Target="Transcripter" Category="Contains" />
+    <Link Source="Komponenten(extern)" Target="FFmpeg" Category="Contains" />
+    <Link Source="Komponenten(extern)" Target="FFprobe" Category="Contains" />
+    <Link Source="Komponenten(extern)" Target="WaveViz" Category="Contains" />
+    <Link Source="MediaCategorizer" Target="Distillery" Bounds="188.659882428666,103.056965442635,6.81022547327044,31.8151999712864" />
+    <Link Source="MediaCategorizer" Target="FFmpeg" Bounds="210.88597157959,98.0625133092436,121.505567496653,38.8044946534882" />
+    <Link Source="MediaCategorizer" Target="FFprobe" Bounds="210.88597157959,90.5493653003476,121.75256878261,2.30021866570361" />
+    <Link Source="MediaCategorizer" Target="Transcripter" Bounds="119.265715285153,103.056965442635,48.7180601228166,35.3320091060327" />
+    <Link Source="MediaCategorizer" Target="WaveViz" Bounds="206.962270437904,103.056965332031,137.694757119354,84.7821075537672" />
+    <Link Source="MediaCategorizer1" Target="Komponenten" Bounds="235.785153294879,-12.0436120223999,35.3356041525062,42.2375613242127" />
+    <Link Source="MediaCategorizer1" Target="Komponenten(extern)" Bounds="289.188996972435,-12.0436120223999,24.8898994300924,44.8132238167954" />
+    <Link Source="Transcripter" Target="MicrosoftSpeechAPI" Bounds="94.8660965885318,169.731693725586,5.88574970321631,97.4790446486983" />
+  </Links>
+  <Categories>
+    <Category Id="Contains" Label="Enthält" Description="Gibt an, ob die Quelle der Verknüpfung das Zielobjekt enthält" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Enthalten in" IsContainment="True" OutgoingActionLabel="Enthält" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="GraphDirection" DataType="Microsoft.VisualStudio.Diagrams.Layout.LayoutOrientation" />
+    <Property Id="Group" Label="Gruppe" Description="Knoten als Gruppe anzeigen" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="Label" Label="Bezeichnung" Description="Anzeigbare Bezeichnung eines Objekts, das Anmerkungen einblenden werden kann" DataType="System.String" />
+    <Property Id="Layout" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+  </Properties>
+</DirectedGraph>
