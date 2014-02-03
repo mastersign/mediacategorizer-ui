@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.settings;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace de.fhb.oll.mediacategorizer
 {
@@ -25,11 +26,29 @@ namespace de.fhb.oll.mediacategorizer
         public PageMedia()
         {
             InitializeComponent();
+
+            openFileDlg = new CommonOpenFileDialog()
+            {
+                Title = "Video(s) hinzufügen...",
+                Multiselect = true,
+                AllowNonFileSystemItems = false,
+                EnsureFileExists = true
+            };
         }
+
+        private void UpdateMediaFileExtensions()
+        {
+            var sm = (SetupManager)Application.Current.Resources["SetupManager"];
+            var extList = sm.Setup.CompatibleMediaFileExtensions.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            openFileDlg.Filters.Clear();
+            openFileDlg.Filters.Add(new CommonFileDialogFilter("Videodatei", string.Join(";", extList)));
+        }
+
+        private readonly CommonOpenFileDialog openFileDlg;
 
         private Project Project { get { return DataContext as Project; } }
 
-        private bool IsDropCompatible(DragEventArgs ea)
+        private static bool IsDropCompatible(DragEventArgs ea)
         {
             return ea.Data.GetDataPresent(DataFormats.FileDrop);
         }
@@ -49,17 +68,6 @@ namespace de.fhb.oll.mediacategorizer
                 .Contains(file);
         }
 
-        private void DragEnterHandler(object sender, DragEventArgs e)
-        {
-            dropBorder.Tag = dropBorder.BorderBrush;
-            dropBorder.BorderBrush = SystemColors.HighlightBrush;
-        }
-
-        private void DragLeaveHandler(object sender, DragEventArgs e)
-        {
-            dropBorder.BorderBrush = dropBorder.Tag as Brush;
-        }
-
         private void DragOverHandler(object sender, DragEventArgs e)
         {
             e.Effects = IsDropCompatible(e) ? DragDropEffects.Link : DragDropEffects.None;
@@ -67,7 +75,6 @@ namespace de.fhb.oll.mediacategorizer
 
         private void DropHandler(object sender, DragEventArgs e)
         {
-            dropBorder.BorderBrush = dropBorder.Tag as Brush;
             var items = e.Data.GetData(DataFormats.FileDrop) as string[];
             if (items != null)
             {
@@ -112,6 +119,32 @@ namespace de.fhb.oll.mediacategorizer
             {
                 int idNo;
                 if (int.TryParse(m.Id, out idNo)) yield return idNo;
+            }
+        }
+
+        private void MediaSelectionChangedHandler(object sender, SelectionChangedEventArgs e)
+        {
+            btnDeleteMedia.IsEnabled = (mediaDataGrid.SelectedItem as Media) != null;
+        }
+
+        private void CreateMediaHandler(object sender, RoutedEventArgs e)
+        {
+            UpdateMediaFileExtensions();
+            var result = openFileDlg.ShowDialog(Window.GetWindow(this));
+            if (result != CommonFileDialogResult.Ok) return;
+            foreach (var fileName in openFileDlg.FileNames)
+            {
+                TryAddMedia(fileName);
+            }
+        }
+
+        private void DeleteMediaHandler(object sender, RoutedEventArgs e)
+        {
+            if (Project == null) return;
+            var items = mediaDataGrid.SelectedItems.Cast<Media>().ToArray();
+            foreach (var item in items)
+            {
+                Project.Media.Remove(item);
             }
         }
     }
