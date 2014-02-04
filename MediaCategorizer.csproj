@@ -76,6 +76,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BrowserWindow.xaml.cs">
+      <DependentUpon>BrowserWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="edn\EdnVector.cs" />
     <Compile Include="edn\IEdnWritable.cs" />
     <Compile Include="edn\Keyword.cs" />
@@ -124,6 +127,10 @@
     <Compile Include="tools\ToolProvider.cs" />
     <Compile Include="tools\TranscripterTool.cs" />
     <Compile Include="tools\WaveVizTool.cs" />
+    <Page Include="BrowserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PageAbout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -251,6 +258,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Browser.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

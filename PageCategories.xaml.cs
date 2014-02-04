@@ -37,9 +37,12 @@ namespace de.fhb.oll.mediacategorizer
             openFileDlg.Filters.Add(new CommonFileDialogFilter("Textdatei", ".txt"));
             openFileDlg.Filters.Add(new CommonFileDialogFilter("HTML-Datei", ".htm;.html"));
             openFileDlg.Filters.Add(new CommonFileDialogFilter("Alle Dateien", ".*"));
+
+            browserWindow = new BrowserWindow();
         }
 
         private readonly CommonOpenFileDialog openFileDlg;
+        private readonly BrowserWindow browserWindow;
 
         private Project ProjectModel { get { return DataContext as Project; } }
 
@@ -61,6 +64,7 @@ namespace de.fhb.oll.mediacategorizer
         private void CategorySelectionChangedHandler(object sender, RoutedEventArgs e)
         {
             btnDeleteCategory.IsEnabled = SelectedCategory != null;
+            btnCreateRessource.IsEnabled = SelectedCategory != null;
         }
 
         private void NewRessourceClickHandler(object sender, RoutedEventArgs e)
@@ -106,7 +110,7 @@ namespace de.fhb.oll.mediacategorizer
 
         private void NewLocalRessource(string path)
         {
-            var ext = System.IO.Path.GetExtension(path);
+            var ext = Path.GetExtension(path);
             var type = CategoryResourceType.Plain;
             if (ext != null)
             {
@@ -129,13 +133,22 @@ namespace de.fhb.oll.mediacategorizer
 
         private static bool IsWikipediaPage(string path)
         {
-            var html = System.IO.File.ReadAllText(path);
+            var html = File.ReadAllText(path);
             return html.Contains("href=\"//de.wikipedia.org/");
         }
 
         private void NewWebRessource()
         {
-
+            browserWindow.ShowDialog();
+            if (browserWindow.Address != null)
+            {
+                var url = browserWindow.Address;
+                var uri = new Uri(url);
+                var type = uri.Host.EndsWith(".wikipedia.org")
+                    ? CategoryResourceType.Wikipedia
+                    : CategoryResourceType.Html;
+                NewRessource(type, uri);
+            }
         }
 
         private void NewRessource(CategoryResourceType type, Uri uri)
@@ -172,7 +185,7 @@ namespace de.fhb.oll.mediacategorizer
         private static bool IsCompatibleFile(string file)
         {
             var extList = new[] { ".txt", ".htm", ".html" };
-            var ext = (System.IO.Path.GetExtension(file) ?? ".").Substring(1);
+            var ext = (Path.GetExtension(file) ?? ".").Substring(1);
             return extList.Contains(ext);
         }
 
