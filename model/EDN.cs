@@ -24,7 +24,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("result-file"), ResultFile,
                 new Keyword("configuration"), Configuration,
                 new Keyword("categories"), new EdnVector(Categories, true),
-                new Keyword("videos"), new EdnVector(GetMedia(), true),
+                new Keyword("media"), new EdnVector(GetMedia(), true),
             });
         }
     }
@@ -69,7 +69,7 @@ namespace de.fhb.oll.mediacategorizer.model
                         new Keyword("skip-word-includes"), SkipWordIncludes,
                         new Keyword("skip-match-includes"), SkipMatchIncludes,
                         new Keyword("main-cloud"), MainCloud,
-                        new Keyword("video-cloud"), MediaCloud,
+                        new Keyword("medium-cloud"), MediaCloud,
                         new Keyword("category-cloud"), CategoryCloud,
                     }));
         }
@@ -143,7 +143,7 @@ namespace de.fhb.oll.mediacategorizer.model
             {
                 new Keyword("id"), Id,
                 new Keyword("name"), Name,
-                new Keyword("video-file"), MediaFile,
+                new Keyword("medium-file"), MediaFile,
                 new Keyword("recognition-profile"), RecognitionProfile.ToString("D"),
                 new Keyword("recognition-profile-name"), RecognitionProfileName,
                 new Keyword("audio-file"), AudioFile,

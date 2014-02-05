@@ -14,8 +14,8 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button x:Name="btnCreateMedia" Content="Video(s) hinzufügen" Style="{DynamicResource LabelButtonStyle}" Click="CreateMediaHandler" />
-            <Button x:Name="btnDeleteMedia" Content="Video(s) entfernen" Style="{DynamicResource LabelButtonStyle}" Click="DeleteMediaHandler" IsEnabled="False" />
+            <Button x:Name="btnCreateMedia" Content="Medien hinzufügen" Style="{DynamicResource LabelButtonStyle}" Click="CreateMediaHandler" />
+            <Button x:Name="btnDeleteMedia" Content="Medien entfernen" Style="{DynamicResource LabelButtonStyle}" Click="DeleteMediaHandler" IsEnabled="False" />
         </StackPanel>
         <DataGrid Grid.Row="2" x:Name="mediaDataGrid" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Background="{Binding Background, ElementName=page}" ItemsSource="{Binding Media}" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" SelectionMode="Extended" HeadersVisibility="Column" CanUserResizeRows="False" CanUserAddRows="False" DragOver="DragOverHandler" Drop="DropHandler" AllowDrop="True" SelectionChanged="MediaSelectionChangedHandler" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
             <DataGrid.Columns>
