@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -374,7 +375,8 @@ namespace de.fhb.oll.mediacategorizer
 
         private void MenuHelpHandler(object sender, RoutedEventArgs e)
         {
-            var url = "http://mastersign.github.io/mediacategorizer/Benutzerhandbuch.html";
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+            var url = "http://mastersign.github.io/mediacategorizer/" + version + "/Benutzerhandbuch.html";
             if (lastPage != null)
             {
                 url += "#Page" + lastPage;
