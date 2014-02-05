@@ -338,6 +338,9 @@
       <Property name="Url" type="string">
         <DefaultValue>null</DefaultValue>
       </Property>
+      <Property name="CachedFile" type="string">
+        <DefaultValue>null</DefaultValue>
+      </Property>
     </Class>
 
     <Class name="Category">

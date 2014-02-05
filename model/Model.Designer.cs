@@ -39,13 +39,13 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public Project()
         {
-            _name = DEF_NAME;
-            _description = DEF_DESCRIPTION;
-            _outputDir = DEF_OUTPUTDIR;
-            _resultFile = DEF_RESULTFILE;
-            Configuration = new Configuration();
-            Categories = new global::System.Collections.ObjectModel.ObservableCollection<Category>();
-            Media = new global::System.Collections.ObjectModel.ObservableCollection<Media>();
+            this._name = DEF_NAME;
+            this._description = DEF_DESCRIPTION;
+            this._outputDir = DEF_OUTPUTDIR;
+            this._resultFile = DEF_RESULTFILE;
+            this.Configuration = new Configuration();
+            this.Categories = new global::System.Collections.ObjectModel.ObservableCollection<Category>();
+            this.Media = new global::System.Collections.ObjectModel.ObservableCollection<Media>();
             this.Initialize();
             
             this.IsChanged = false;
@@ -424,24 +424,24 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public Configuration()
         {
-            _confidenceTestDuration = DEF_CONFIDENCETESTDURATION;
-            _profileSelectionCriterion = DEF_PROFILESELECTIONCRITERION;
-            _minConfidence = DEF_MINCONFIDENCE;
-            _goodConfidence = DEF_GOODCONFIDENCE;
-            _minMatchScore = DEF_MINMATCHSCORE;
-            IndexFilter = new FilterParameter();
-            Waveform = new WaveformParameter();
-            MainCloud = new CloudParameter();
-            MediaCloud = new CloudParameter();
-            CategoryCloud = new CloudParameter();
-            _rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
-            _cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
-            _visualizeResult = DEF_VISUALIZERESULT;
-            _showResult = DEF_SHOWRESULT;
-            _skipWordClouds = DEF_SKIPWORDCLOUDS;
-            _skipWordIncludes = DEF_SKIPWORDINCLUDES;
-            _skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
-            _skipMediaCopy = DEF_SKIPMEDIACOPY;
+            this._confidenceTestDuration = DEF_CONFIDENCETESTDURATION;
+            this._profileSelectionCriterion = DEF_PROFILESELECTIONCRITERION;
+            this._minConfidence = DEF_MINCONFIDENCE;
+            this._goodConfidence = DEF_GOODCONFIDENCE;
+            this._minMatchScore = DEF_MINMATCHSCORE;
+            this.IndexFilter = new FilterParameter();
+            this.Waveform = new WaveformParameter();
+            this.MainCloud = new CloudParameter();
+            this.MediaCloud = new CloudParameter();
+            this.CategoryCloud = new CloudParameter();
+            this._rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
+            this._cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
+            this._visualizeResult = DEF_VISUALIZERESULT;
+            this._showResult = DEF_SHOWRESULT;
+            this._skipWordClouds = DEF_SKIPWORDCLOUDS;
+            this._skipWordIncludes = DEF_SKIPWORDINCLUDES;
+            this._skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
+            this._skipMediaCopy = DEF_SKIPMEDIACOPY;
             
             this.IsChanged = false;
         }
@@ -1258,14 +1258,14 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public FilterParameter()
         {
-            _blacklistResource = DEF_BLACKLISTRESOURCE;
-            _blacklistMaxSize = DEF_BLACKLISTMAXSIZE;
-            _filterNotShort = DEF_FILTERNOTSHORT;
-            _filterNoun = DEF_FILTERNOUN;
-            _filterMinConfidence = DEF_FILTERMINCONFIDENCE;
-            _filterGoodConfidence = DEF_FILTERGOODCONFIDENCE;
-            _filterNoPunctuation = DEF_FILTERNOPUNCTUATION;
-            _filterNotInBlacklist = DEF_FILTERNOTINBLACKLIST;
+            this._blacklistResource = DEF_BLACKLISTRESOURCE;
+            this._blacklistMaxSize = DEF_BLACKLISTMAXSIZE;
+            this._filterNotShort = DEF_FILTERNOTSHORT;
+            this._filterNoun = DEF_FILTERNOUN;
+            this._filterMinConfidence = DEF_FILTERMINCONFIDENCE;
+            this._filterGoodConfidence = DEF_FILTERGOODCONFIDENCE;
+            this._filterNoPunctuation = DEF_FILTERNOPUNCTUATION;
+            this._filterNotInBlacklist = DEF_FILTERNOTINBLACKLIST;
             
             this.IsChanged = false;
         }
@@ -1609,8 +1609,8 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public WaveformParameter()
         {
-            _width = DEF_WIDTH;
-            _height = DEF_HEIGHT;
+            this._width = DEF_WIDTH;
+            this._height = DEF_HEIGHT;
             this.Initialize();
             
             this.IsChanged = false;
@@ -1868,16 +1868,16 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public CloudParameter()
         {
-            _width = DEF_WIDTH;
-            _height = DEF_HEIGHT;
-            _precision = DEF_PRECISION;
-            _orderPriority = DEF_ORDERPRIORITY;
-            _minOccurence = DEF_MINOCCURENCE;
-            FontFamily = new global::System.Windows.Media.FontFamily();
-            _fontBold = DEF_FONTBOLD;
-            _fontItalic = DEF_FONTITALIC;
-            _minFontSize = DEF_MINFONTSIZE;
-            _maxFontSize = DEF_MAXFONTSIZE;
+            this._width = DEF_WIDTH;
+            this._height = DEF_HEIGHT;
+            this._precision = DEF_PRECISION;
+            this._orderPriority = DEF_ORDERPRIORITY;
+            this._minOccurence = DEF_MINOCCURENCE;
+            this.FontFamily = new global::System.Windows.Media.FontFamily();
+            this._fontBold = DEF_FONTBOLD;
+            this._fontItalic = DEF_FONTITALIC;
+            this._minFontSize = DEF_MINFONTSIZE;
+            this._maxFontSize = DEF_MAXFONTSIZE;
             this.Initialize();
             
             this.IsChanged = false;
@@ -2368,8 +2368,9 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public CategoryResource()
         {
-            _type = DEF_TYPE;
-            _url = DEF_URL;
+            this._type = DEF_TYPE;
+            this._url = DEF_URL;
+            this._cachedFile = DEF_CACHEDFILE;
             
             this.IsChanged = false;
         }
@@ -2476,15 +2477,51 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         #endregion
+        
+        #region Property CachedFile
+        
+        private string _cachedFile;
+        
+        public event EventHandler CachedFileChanged;
+        
+        protected virtual void OnCachedFileChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = CachedFileChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"CachedFile");
+        }
+        
+        private const string DEF_CACHEDFILE = @"null";
+        
+        [DefaultValue(DEF_CACHEDFILE)]
+        public virtual string CachedFile
+        {
+            get { return _cachedFile; }
+            set
+            {
+                if (string.Equals(value, _cachedFile))
+                {
+                    return;
+                }
+                _cachedFile = value;
+                this.OnCachedFileChanged();
+            }
+        }
+        
+        #endregion
     }
     
     public partial class Category : INotifyPropertyChanged, IChangeTracking
     {
         public Category()
         {
-            _id = DEF_ID;
-            _name = DEF_NAME;
-            Resources = new global::System.Collections.ObjectModel.ObservableCollection<CategoryResource>();
+            this._id = DEF_ID;
+            this._name = DEF_NAME;
+            this.Resources = new global::System.Collections.ObjectModel.ObservableCollection<CategoryResource>();
             
             this.IsChanged = false;
         }

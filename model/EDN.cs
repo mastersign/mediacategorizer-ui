@@ -175,6 +175,7 @@ namespace de.fhb.oll.mediacategorizer.model
             {
                 new Keyword("type"), TypeAsEdn(),
                 new Keyword("url"), Url,
+                new Keyword("file"), CachedFile,
             }, false);
         }
 

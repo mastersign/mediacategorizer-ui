@@ -14,18 +14,19 @@ namespace de.fhb.oll.mediacategorizer.settings
         Manual,
     }
     
-    public partial class Setup : INotifyPropertyChanged, IChangeTracking, IEquatable<Setup>
+    public partial class Setup : INotifyPropertyChanged, IChangeTracking
     {
         public Setup()
         {
-            _parallelization = DEF_PARALLELIZATION;
-            _parallelTasks = DEF_PARALLELTASKS;
-            _compatibleMediaFileExtensions = DEF_COMPATIBLEMEDIAFILEEXTENSIONS;
-            _ffmpeg = DEF_FFMPEG;
-            _ffprobe = DEF_FFPROBE;
-            _waveViz = DEF_WAVEVIZ;
-            _transcripter = DEF_TRANSCRIPTER;
-            _distillery = DEF_DISTILLERY;
+            this._downloadTimeout = DEF_DOWNLOADTIMEOUT;
+            this._parallelization = DEF_PARALLELIZATION;
+            this._parallelTasks = DEF_PARALLELTASKS;
+            this._compatibleMediaFileExtensions = DEF_COMPATIBLEMEDIAFILEEXTENSIONS;
+            this._ffmpeg = DEF_FFMPEG;
+            this._ffprobe = DEF_FFPROBE;
+            this._waveViz = DEF_WAVEVIZ;
+            this._transcripter = DEF_TRANSCRIPTER;
+            this._distillery = DEF_DISTILLERY;
             
             this.IsChanged = false;
         }
@@ -71,6 +72,7 @@ namespace de.fhb.oll.mediacategorizer.settings
         public string ToString(IFormatProvider formatProvider)
         {
             return (this.GetType().FullName + @": " + (
+                (Environment.NewLine + @"    DownloadTimeout = " + _downloadTimeout.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Parallelization = " + _parallelization.ToString().Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    ParallelTasks = " + _parallelTasks.ToString(formatProvider).Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    CompatibleMediaFileExtensions = " + (!ReferenceEquals(_compatibleMediaFileExtensions, null) ? _compatibleMediaFileExtensions.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
@@ -84,51 +86,41 @@ namespace de.fhb.oll.mediacategorizer.settings
         
         #endregion
         
-        #region Equatability
+        #region Property DownloadTimeout
         
-        public bool Equals(Setup o)
+        private int _downloadTimeout;
+        
+        public event EventHandler DownloadTimeoutChanged;
+        
+        protected virtual void OnDownloadTimeoutChanged()
         {
-            if (ReferenceEquals(o, null))
+            this.IsChanged = true;
+            EventHandler handler = DownloadTimeoutChanged;
+            if (!ReferenceEquals(handler, null))
             {
-                return false;
+                handler(this, EventArgs.Empty);
             }
-            return (
-                (this._parallelization == o._parallelization) && 
-                (this._parallelTasks == o._parallelTasks) && 
-                object.Equals(this._compatibleMediaFileExtensions, o._compatibleMediaFileExtensions) && 
-                object.Equals(this._ffmpeg, o._ffmpeg) && 
-                object.Equals(this._ffprobe, o._ffprobe) && 
-                object.Equals(this._waveViz, o._waveViz) && 
-                object.Equals(this._transcripter, o._transcripter) && 
-                object.Equals(this._distillery, o._distillery) && 
-                object.Equals(this._javaRuntime, o._javaRuntime));
+            this.OnPropertyChanged(@"DownloadTimeout");
         }
         
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(Setup)))
-            {
-                return false;
-            }
-            return this.Equals((Setup)o);
-        }
+        private const int DEF_DOWNLOADTIMEOUT = 30;
         
-        public override int GetHashCode()
+        [DefaultValue(DEF_DOWNLOADTIMEOUT)]
+        [Category(@"Verarbeitung")]
+        [DisplayName(@"Download-Timeout")]
+        [Description(@"Die Anzahl der Sekunden, nach denen der Versuch, eine Kategorie-Ressource herunterzuladen, abgebrochen werden soll.")]
+        public virtual int DownloadTimeout
         {
-            return (this.GetType().GetHashCode() ^ 
-                this._parallelization.GetHashCode() ^ 
-                this._parallelTasks.GetHashCode() ^ 
-                (!ReferenceEquals(this._compatibleMediaFileExtensions, null) ? this._compatibleMediaFileExtensions.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._ffmpeg, null) ? this._ffmpeg.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._ffprobe, null) ? this._ffprobe.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._waveViz, null) ? this._waveViz.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._transcripter, null) ? this._transcripter.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._distillery, null) ? this._distillery.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._javaRuntime, null) ? this._javaRuntime.GetHashCode() : 0));
+            get { return _downloadTimeout; }
+            set
+            {
+                if ((value == _downloadTimeout))
+                {
+                    return;
+                }
+                _downloadTimeout = value;
+                this.OnDownloadTimeoutChanged();
+            }
         }
         
         #endregion

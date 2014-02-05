@@ -108,7 +108,8 @@ namespace de.fhb.oll.mediacategorizer.processing
             var waveformVisualization = new WaveformProcess(this, projectPreparation, audioExtraction);
             var profileSelection = new ProfileSelectionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction);
             var speechRecognitionProcess = new SpeechRecognitionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction, profileSelection);
-            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognitionProcess);
+            var categoryResourceDownloadProcess = new CategoryResourceDownloadProcess(this, projectPreparation);
+            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognitionProcess, categoryResourceDownloadProcess);
             var projectFinalization = new FinalizeProjectProcess(this, analyzeAndOutput);
 
             return new IProcess[]
@@ -119,6 +120,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 waveformVisualization,
                 profileSelection,
                 speechRecognitionProcess,
+                categoryResourceDownloadProcess,
                 analyzeAndOutput,
                 projectFinalization
             };

@@ -6,13 +6,18 @@
   <ModelFeatures>
     <ChangeTracking level="Tracking" escalateChangeState="true" />
     <ToString />
-    <Equatable />
   </ModelFeatures>
 
   <Types>
     
     <Class name="Setup">
 
+      <Property name="DownloadTimeout" type="int">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Download-Timeout</DisplayName>
+        <Description>Die Anzahl der Sekunden, nach denen der Versuch, eine Kategorie-Ressource herunterzuladen, abgebrochen werden soll.</Description>
+        <DefaultValue>30</DefaultValue>
+      </Property>
       <Property name="Parallelization" type="ParallelizationMode">
         <Category>Verarbeitung</Category>
         <DisplayName>Parallelisierung</DisplayName>
