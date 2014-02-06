@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,8 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.settings;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -29,19 +26,34 @@ namespace de.fhb.oll.mediacategorizer
 
             openFileDlg = new CommonOpenFileDialog()
             {
-                Title = "Video(s) hinzufügen...",
+                Title = "Medien hinzufügen...",
                 Multiselect = true,
                 AllowNonFileSystemItems = false,
                 EnsureFileExists = true
             };
         }
 
-        private void UpdateMediaFileExtensions()
+        private static string[] GetAudioFileExtensions()
+        {
+            var sm = (SetupManager) Application.Current.Resources["SetupManager"];
+            return sm.Setup.GetAudioFileExtensions();
+        }
+
+        private static string[] GetVideoFileExtensions()
         {
             var sm = (SetupManager)Application.Current.Resources["SetupManager"];
-            var extList = sm.Setup.CompatibleMediaFileExtensions.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            return sm.Setup.GetVideoFileExtensions();
+        }
+
+        private void UpdateMediaFileExtensions()
+        {
+            var audioExts = GetAudioFileExtensions();
+            var videoExts = GetVideoFileExtensions();
+            var extList = audioExts.Concat(videoExts);
             openFileDlg.Filters.Clear();
-            openFileDlg.Filters.Add(new CommonFileDialogFilter("Videodatei", string.Join(";", extList)));
+            openFileDlg.Filters.Add(new CommonFileDialogFilter("Mediendateien", string.Join(";", extList)));
+            openFileDlg.Filters.Add(new CommonFileDialogFilter("Audiodateien", string.Join(";", audioExts)));
+            openFileDlg.Filters.Add(new CommonFileDialogFilter("Videodateien", string.Join(";", videoExts)));
         }
 
         private readonly CommonOpenFileDialog openFileDlg;
@@ -53,10 +65,9 @@ namespace de.fhb.oll.mediacategorizer
             return ea.Data.GetDataPresent(DataFormats.FileDrop);
         }
 
-        private bool IsCompatibleFile(string file)
+        private static bool IsCompatibleFile(string file)
         {
-            var sm = (SetupManager)Application.Current.Resources["SetupManager"];
-            var extList = sm.Setup.CompatibleMediaFileExtensions.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var extList = GetAudioFileExtensions().Concat(GetVideoFileExtensions());
             var ext = (Path.GetExtension(file) ?? ".").Substring(1);
             return extList.Contains(ext);
         }

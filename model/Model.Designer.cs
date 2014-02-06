@@ -35,6 +35,13 @@ namespace de.fhb.oll.mediacategorizer.model
         Wikipedia,
     }
     
+    public enum MediaType
+    {
+        Unknown,
+        Audio,
+        Video,
+    }
+    
     public partial class Project : INotifyPropertyChanged, IChangeTracking
     {
         public Project()
@@ -2705,6 +2712,8 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public Media()
         {
+            this.EncodedMediaFiles = new global::System.Collections.ObjectModel.ObservableCollection<MediaFile>();
+            
             this.IsChanged = false;
         }
         
@@ -2838,36 +2847,144 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #endregion
         
-        #region Property AudioFile
+        #region Property MediaType
         
         [NonSerialized]
-        private string _audioFile;
+        private MediaType _mediaType;
         
-        public event EventHandler AudioFileChanged;
+        public event EventHandler MediaTypeChanged;
         
-        protected virtual void OnAudioFileChanged()
+        protected virtual void OnMediaTypeChanged()
         {
             this.IsChanged = true;
-            EventHandler handler = AudioFileChanged;
+            EventHandler handler = MediaTypeChanged;
             if (!ReferenceEquals(handler, null))
             {
                 handler(this, EventArgs.Empty);
             }
-            this.OnPropertyChanged(@"AudioFile");
+            this.OnPropertyChanged(@"MediaType");
         }
         
         [XmlIgnore]
-        public virtual string AudioFile
+        public virtual MediaType MediaType
         {
-            get { return _audioFile; }
+            get { return _mediaType; }
             set
             {
-                if (string.Equals(value, _audioFile))
+                if ((value == _mediaType))
                 {
                     return;
                 }
-                _audioFile = value;
-                this.OnAudioFileChanged();
+                _mediaType = value;
+                this.OnMediaTypeChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property EncodedMediaFiles
+        
+        [NonSerialized]
+        private global::System.Collections.ObjectModel.ObservableCollection<MediaFile> _encodedMediaFiles;
+        
+        public event EventHandler EncodedMediaFilesChanged;
+        
+        protected virtual void OnEncodedMediaFilesChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = EncodedMediaFilesChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"EncodedMediaFiles");
+        }
+        
+        private void EncodedMediaFilesItemPropertyChanged(object sender, EventArgs ea)
+        {
+            this.OnEncodedMediaFilesChanged();
+        }
+        
+        private void EncodedMediaFilesCollectionChangedHandler(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs ea)
+        {
+            if (!ReferenceEquals(ea.OldItems, null))
+            {
+                foreach (MediaFile item in ea.OldItems)
+                {
+                    if (!ReferenceEquals(item, null))
+                    {
+                        item.PropertyChanged -= this.EncodedMediaFilesItemPropertyChanged;
+                    }
+                }
+            }
+            this.OnEncodedMediaFilesChanged();
+            if (!ReferenceEquals(ea.NewItems, null))
+            {
+                foreach (MediaFile item in ea.NewItems)
+                {
+                    if (!ReferenceEquals(item, null))
+                    {
+                        item.PropertyChanged += this.EncodedMediaFilesItemPropertyChanged;
+                    }
+                }
+            }
+        }
+        
+        [XmlIgnore]
+        public virtual global::System.Collections.ObjectModel.ObservableCollection<MediaFile> EncodedMediaFiles
+        {
+            get { return _encodedMediaFiles; }
+            set
+            {
+                if ((value == _encodedMediaFiles))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_encodedMediaFiles, null))
+                {
+                    _encodedMediaFiles.CollectionChanged -= this.EncodedMediaFilesCollectionChangedHandler;
+                }
+                _encodedMediaFiles = value;
+                if (!ReferenceEquals(_encodedMediaFiles, null))
+                {
+                    _encodedMediaFiles.CollectionChanged += this.EncodedMediaFilesCollectionChangedHandler;
+                }
+                this.OnEncodedMediaFilesChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property ExtractedAudioFile
+        
+        [NonSerialized]
+        private string _extractedAudioFile;
+        
+        public event EventHandler ExtractedAudioFileChanged;
+        
+        protected virtual void OnExtractedAudioFileChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ExtractedAudioFileChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ExtractedAudioFile");
+        }
+        
+        [XmlIgnore]
+        public virtual string ExtractedAudioFile
+        {
+            get { return _extractedAudioFile; }
+            set
+            {
+                if (string.Equals(value, _extractedAudioFile))
+                {
+                    return;
+                }
+                _extractedAudioFile = value;
+                this.OnExtractedAudioFileChanged();
             }
         }
         
@@ -3043,6 +3160,111 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _resultsFile = value;
                 this.OnResultsFileChanged();
+            }
+        }
+        
+        #endregion
+    }
+    
+    public partial class MediaFile : INotifyPropertyChanged, IChangeTracking
+    {
+        public MediaFile()
+        {
+            this.IsChanged = false;
+        }
+        
+        #region Change Tracking
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
+        [NonSerialized]
+        private bool _isChanged = false;
+        
+        [Browsable(false)]
+        [XmlIgnore]
+        public bool IsChanged
+        {
+            get { return this._isChanged; }
+            protected set { this._isChanged = value; }
+        }
+        
+        public void AcceptChanges()
+        {
+            this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property Path
+        
+        private string _path;
+        
+        public event EventHandler PathChanged;
+        
+        protected virtual void OnPathChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PathChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Path");
+        }
+        
+        public virtual string Path
+        {
+            get { return _path; }
+            set
+            {
+                if (string.Equals(value, _path))
+                {
+                    return;
+                }
+                _path = value;
+                this.OnPathChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property MimeType
+        
+        private string _mimeType;
+        
+        public event EventHandler MimeTypeChanged;
+        
+        protected virtual void OnMimeTypeChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = MimeTypeChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"MimeType");
+        }
+        
+        public virtual string MimeType
+        {
+            get { return _mimeType; }
+            set
+            {
+                if (string.Equals(value, _mimeType))
+                {
+                    return;
+                }
+                _mimeType = value;
+                this.OnMimeTypeChanged();
             }
         }
         

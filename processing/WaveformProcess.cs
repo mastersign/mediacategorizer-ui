@@ -40,7 +40,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             if (!File.Exists(m.WaveformFile))
             {
                 var waveviz = GetWaveVizTool();
-                if (!waveviz.GenerateWaveVisualization(m.AudioFile, m.WaveformFile,
+                if (!waveviz.GenerateWaveVisualization(m.ExtractedAudioFile, m.WaveformFile,
                     parameter.Width, parameter.Height,
                     parameter.BackgroundColor, parameter.Foreground1Color,
                     parameter.Foreground2Color, parameter.LineColor))

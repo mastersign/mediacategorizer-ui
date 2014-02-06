@@ -360,7 +360,9 @@
       <Property name="Id" />
       <Property name="Name" />
       <Property name="MediaFile" />
-      <Property name="AudioFile" persistent="false" />
+      <Property name="MediaType" type="MediaType" persistent="false" />
+      <Property name="EncodedMediaFiles" type="MediaFile" isCollection="true" persistent="false" />
+      <Property name="ExtractedAudioFile" persistent="false" />
       <Property name="Duration" type="double" persistent="false" />
       <Property name="WaveformFile" persistent="false" />
       <Property name="RecognitionProfile" type="System.Guid" persistent="false" />
@@ -370,5 +372,17 @@
         <Property>Id</Property>
       </EqualityMembers>
     </Class>
+
+    <Class name="MediaFile">
+      <Property name="Path" />
+      <Property name="MimeType" />
+    </Class>
+
+    <Enum name="MediaType">
+      <Member name="Unknown" />
+      <Member name="Audio" />
+      <Member name="Video" />
+    </Enum>
+    
   </Types>
 </Model>

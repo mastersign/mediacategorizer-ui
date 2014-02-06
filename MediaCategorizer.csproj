@@ -83,6 +83,8 @@
     <Compile Include="edn\IEdnWritable.cs" />
     <Compile Include="edn\Keyword.cs" />
     <Compile Include="processing\CategoryResourceDownloadProcess.cs" />
+    <Compile Include="processing\MediaEncodingProcess.cs" />
+    <Compile Include="settings\Setup.cs" />
     <Compile Include="tools\ILogWriter.cs" />
     <Compile Include="tools\LogWriter.cs" />
     <Compile Include="model\EDN.cs" />

@@ -11,13 +11,14 @@ namespace de.fhb.oll.mediacategorizer.processing
     class CategoryResourceDownloadProcess : MultiTaskProcessBase
     {
         public CategoryResourceDownloadProcess(ProcessChain chain, params IProcess[] dependencies)
-            : base(chain, "Kategorieressourcen downloaden", dependencies)
+            : base(chain, "Kategorieressourcen herunterladen", dependencies)
         {
             ProgressWeight = 3;
         }
 
         protected override void Work()
         {
+            OnProgress("Kategorieressourcen werden von Web-Server heruntergeladen...");
             var tasks =
                 from c in Project.Categories
                 from sr in (c.Resources.Select((r, i) => new { Ressource = r, Index = i }))

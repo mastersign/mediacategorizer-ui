@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Threading;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.settings;
@@ -109,6 +108,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             var profileSelection = new ProfileSelectionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction);
             var speechRecognitionProcess = new SpeechRecognitionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction, profileSelection);
             var categoryResourceDownloadProcess = new CategoryResourceDownloadProcess(this, projectPreparation);
+            var mediaEncodingProcess = new MediaEncodingProcess(this, audioExtraction);
             var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognitionProcess, categoryResourceDownloadProcess);
             var projectFinalization = new FinalizeProjectProcess(this, analyzeAndOutput);
 
@@ -121,6 +121,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 profileSelection,
                 speechRecognitionProcess,
                 categoryResourceDownloadProcess,
+                mediaEncodingProcess,
                 analyzeAndOutput,
                 projectFinalization
             };

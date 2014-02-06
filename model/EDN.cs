@@ -144,13 +144,27 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("id"), Id,
                 new Keyword("name"), Name,
                 new Keyword("medium-file"), MediaFile,
+                new Keyword("medium-type"), new Keyword(MediaType.ToString().ToLowerInvariant()),
+                new Keyword("encoded-media-files"), new EdnVector(EncodedMediaFiles, true),
                 new Keyword("recognition-profile"), RecognitionProfile.ToString("D"),
                 new Keyword("recognition-profile-name"), RecognitionProfileName,
-                new Keyword("audio-file"), AudioFile,
+                new Keyword("extracted-audio-file"), ExtractedAudioFile,
                 new Keyword("duration"), Duration,
                 new Keyword("waveform-file"), WaveformFile,
                 new Keyword("results-file"), ResultsFile,
             });
+        }
+    }
+
+    partial class MediaFile : IEdnWritable
+    {
+        public void WriteTo(EdnWriter w)
+        {
+            w.WriteMap(new object[]
+            {
+                new Keyword("mime-type"), MimeType,
+                new Keyword("path"), Path,
+            }, false);
         }
     }
 
