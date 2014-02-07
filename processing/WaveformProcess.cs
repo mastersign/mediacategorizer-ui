@@ -28,9 +28,9 @@ namespace de.fhb.oll.mediacategorizer.processing
             RunTasks(media.Select(m => (ProcessTask)((pH, eH) => ProcessMedia(m, pH, eH))).ToArray());
         }
 
-        private string BuildWaveformPath(Media media)
+        private string BuildWaveformPath(Media media, string extension = "")
         {
-            return Path.Combine(Project.GetWorkingDirectory(), string.Format("{0}.png", media.Id));
+            return Path.Combine(Project.GetWorkingDirectory(), string.Format("{0}{1}.png", media.Id, extension));
         }
 
         private void ProcessMedia(Media m, Action<float> progressHandler, Action<string> errorHandler)
@@ -48,10 +48,20 @@ namespace de.fhb.oll.mediacategorizer.processing
                     errorHandler("WaveViz wurde mit einem Fehler beendet");
                 }
             }
-            else
+            progressHandler(0.5f);
+            m.WaveformFileBackground = BuildWaveformPath(m, "_bg");
+            if (!File.Exists(m.WaveformFileBackground))
             {
-                progressHandler(1);
+                var waveviz = GetWaveVizTool();
+                if (!waveviz.GenerateWaveVisualization(m.ExtractedAudioFile, m.WaveformFileBackground,
+                    parameter.Width, parameter.Height,
+                    parameter.PassiveBackgroundColor, parameter.PassiveForeground1Color,
+                    parameter.PassiveForeground2Color, parameter.PassiveLineColor))
+                {
+                    errorHandler("WaveViz wurde mit einem Fehler beendet");
+                }
             }
+            progressHandler(1.0f);
         }
     }
 }

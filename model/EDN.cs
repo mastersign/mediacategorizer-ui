@@ -71,6 +71,7 @@ namespace de.fhb.oll.mediacategorizer.model
                         new Keyword("main-cloud"), MainCloud,
                         new Keyword("medium-cloud"), MediaCloud,
                         new Keyword("category-cloud"), CategoryCloud,
+                        new Keyword("waveform"), Waveform,
                     }));
         }
     }
@@ -135,6 +136,18 @@ namespace de.fhb.oll.mediacategorizer.model
         }
     }
 
+    partial class WaveformParameter : IEdnWritable
+    {
+        public void WriteTo(EdnWriter w)
+        {
+            w.WriteMap(new object[]
+            {
+                new Keyword("width"), Width,
+                new Keyword("height"), Height,
+            }, false);
+        }
+    }
+
     partial class Media : IEdnWritable
     {
         public void WriteTo(EdnWriter w)
@@ -151,6 +164,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("extracted-audio-file"), ExtractedAudioFile,
                 new Keyword("duration"), Duration,
                 new Keyword("waveform-file"), WaveformFile,
+                new Keyword("waveform-file-bg"), WaveformFileBackground,
                 new Keyword("results-file"), ResultsFile,
             });
         }

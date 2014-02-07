@@ -1671,7 +1671,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Width");
         }
         
-        private const int DEF_WIDTH = 640;
+        private const int DEF_WIDTH = 540;
         
         [DefaultValue(DEF_WIDTH)]
         [DisplayName(@"Breite (px)")]
@@ -1709,7 +1709,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Height");
         }
         
-        private const int DEF_HEIGHT = 80;
+        private const int DEF_HEIGHT = 70;
         
         [DefaultValue(DEF_HEIGHT)]
         [DisplayName(@"Höhe (px)")]
@@ -1748,7 +1748,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [DisplayName(@"Hintergrund")]
-        [Description(@"Die Farbe des Hintergrundes.")]
+        [Description(@"Die Farbe des aktiven Hintergrundes.")]
         public virtual global::System.Windows.Media.Color BackgroundColor
         {
             get { return _backgroundColor; }
@@ -1783,7 +1783,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [DisplayName(@"Wellenform 1")]
-        [Description(@"Die erste Farbe der Wellenform.")]
+        [Description(@"Die erste Farbe der aktiven Wellenform.")]
         public virtual global::System.Windows.Media.Color Foreground1Color
         {
             get { return _foreground1Color; }
@@ -1818,7 +1818,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [DisplayName(@"Wellenform 2")]
-        [Description(@"Die zweite Farbe der Wellenform.")]
+        [Description(@"Die zweite Farbe der aktiven Wellenform.")]
         public virtual global::System.Windows.Media.Color Foreground2Color
         {
             get { return _foreground2Color; }
@@ -1853,7 +1853,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [DisplayName(@"Horizontlinie")]
-        [Description(@"Die Farbe der Horizontlinie.")]
+        [Description(@"Die Farbe der aktiven Horizontlinie.")]
         public virtual global::System.Windows.Media.Color LineColor
         {
             get { return _lineColor; }
@@ -1865,6 +1865,146 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _lineColor = value;
                 this.OnLineColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property PassiveBackgroundColor
+        
+        private global::System.Windows.Media.Color _passiveBackgroundColor;
+        
+        public event EventHandler PassiveBackgroundColorChanged;
+        
+        protected virtual void OnPassiveBackgroundColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PassiveBackgroundColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"PassiveBackgroundColor");
+        }
+        
+        [DisplayName(@"Passiver Hintergrund")]
+        [Description(@"Die Farbe des passiven Hintergrundes.")]
+        public virtual global::System.Windows.Media.Color PassiveBackgroundColor
+        {
+            get { return _passiveBackgroundColor; }
+            set
+            {
+                if (value.Equals(_passiveBackgroundColor))
+                {
+                    return;
+                }
+                _passiveBackgroundColor = value;
+                this.OnPassiveBackgroundColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property PassiveForeground1Color
+        
+        private global::System.Windows.Media.Color _passiveForeground1Color;
+        
+        public event EventHandler PassiveForeground1ColorChanged;
+        
+        protected virtual void OnPassiveForeground1ColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PassiveForeground1ColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"PassiveForeground1Color");
+        }
+        
+        [DisplayName(@"Passive Wellenform 1")]
+        [Description(@"Die erste Farbe der passiven Wellenform.")]
+        public virtual global::System.Windows.Media.Color PassiveForeground1Color
+        {
+            get { return _passiveForeground1Color; }
+            set
+            {
+                if (value.Equals(_passiveForeground1Color))
+                {
+                    return;
+                }
+                _passiveForeground1Color = value;
+                this.OnPassiveForeground1ColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property PassiveForeground2Color
+        
+        private global::System.Windows.Media.Color _passiveForeground2Color;
+        
+        public event EventHandler PassiveForeground2ColorChanged;
+        
+        protected virtual void OnPassiveForeground2ColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PassiveForeground2ColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"PassiveForeground2Color");
+        }
+        
+        [DisplayName(@"Passive Wellenform 2")]
+        [Description(@"Die zweite Farbe der passiven Wellenform.")]
+        public virtual global::System.Windows.Media.Color PassiveForeground2Color
+        {
+            get { return _passiveForeground2Color; }
+            set
+            {
+                if (value.Equals(_passiveForeground2Color))
+                {
+                    return;
+                }
+                _passiveForeground2Color = value;
+                this.OnPassiveForeground2ColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property PassiveLineColor
+        
+        private global::System.Windows.Media.Color _passiveLineColor;
+        
+        public event EventHandler PassiveLineColorChanged;
+        
+        protected virtual void OnPassiveLineColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PassiveLineColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"PassiveLineColor");
+        }
+        
+        [DisplayName(@"Passive Horizontlinie")]
+        [Description(@"Die Farbe der passiven Horizontlinie.")]
+        public virtual global::System.Windows.Media.Color PassiveLineColor
+        {
+            get { return _passiveLineColor; }
+            set
+            {
+                if (value.Equals(_passiveLineColor))
+                {
+                    return;
+                }
+                _passiveLineColor = value;
+                this.OnPassiveLineColorChanged();
             }
         }
         
@@ -3055,6 +3195,41 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _waveformFile = value;
                 this.OnWaveformFileChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property WaveformFileBackground
+        
+        [NonSerialized]
+        private string _waveformFileBackground;
+        
+        public event EventHandler WaveformFileBackgroundChanged;
+        
+        protected virtual void OnWaveformFileBackgroundChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = WaveformFileBackgroundChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"WaveformFileBackground");
+        }
+        
+        [XmlIgnore]
+        public virtual string WaveformFileBackground
+        {
+            get { return _waveformFileBackground; }
+            set
+            {
+                if (string.Equals(value, _waveformFileBackground))
+                {
+                    return;
+                }
+                _waveformFileBackground = value;
+                this.OnWaveformFileBackgroundChanged();
             }
         }
         
