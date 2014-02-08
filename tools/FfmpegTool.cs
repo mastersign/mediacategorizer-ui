@@ -26,13 +26,13 @@ namespace de.fhb.oll.mediacategorizer.tools
         private static string BuildArguments(string source, string target, 
             string optionFormat, params object[] optionArgs)
         {
-            return string.Format("-v repeat+info -i \"{0}\" {2} \"{1}\"", 
+            return string.Format("-v repeat+info -n -i \"{0}\" {2} \"{1}\"", 
                 source, target, string.Format(optionFormat, optionArgs));
         }
 
         private static string BuildExtractAudioArguments(string source, string target)
         {
-            return BuildArguments(source, target, "-n -vn -ac 1 -ar 16000 -acodec pcm_s16le");
+            return BuildArguments(source, target, "-vn -ac 1 -ar 16000 -acodec pcm_s16le");
         }
 
         private static string BuildTranscodeVideoArguments(string source, string target, 
