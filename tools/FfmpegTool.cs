@@ -49,6 +49,18 @@ namespace de.fhb.oll.mediacategorizer.tools
             return p.ExitCode == 0 && errors.Count == 0 && File.Exists(targetPath);
         }
 
+        public bool TranscodeVideo(string sourcePath, string targetPath, 
+            VideoFormat format, int maxWidth, int videoBitrate, int audioBitrate, bool mono)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TranscodeAudio(string sourcePath, string targetPath,
+            AudioFormat format, int audioBitrate, bool mono)
+        {
+            throw new NotImplementedException();
+        }
+
         private void RunErrorReader(TextReader sr, Action<float> progressHandler)
         {
             string l;
@@ -89,13 +101,26 @@ namespace de.fhb.oll.mediacategorizer.tools
             }
         }
 
-        private TimeSpan GetTimeValue(Match match)
+        private static TimeSpan GetTimeValue(Match match)
         {
             var h = int.Parse(match.Groups[1].Value);
             var m = int.Parse(match.Groups[2].Value);
             var s = int.Parse(match.Groups[3].Value);
             var ms = int.Parse(match.Groups[4].Value);
             return new TimeSpan(0, h, m, s, ms);
+        }
+
+        public enum VideoFormat
+        {
+            Mp4,
+            Ogg,
+            WebM,
+        }
+
+        public enum AudioFormat
+        {
+            Mp3,
+            Ogg,
         }
     }
 }
