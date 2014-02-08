@@ -23,18 +23,63 @@ namespace de.fhb.oll.mediacategorizer.tools
             : base(logWriter, setup.Ffmpeg)
         { }
 
-        private static string BuildArguments(string source, string target)
+        private static string BuildArguments(string source, string target, 
+            string optionFormat, params object[] optionArgs)
         {
-            return string.Format("-v repeat+info -i \"{0}\" -n -vn -ac 1 -ar 16000 -acodec pcm_s16le \"{1}\"",
-                source, target);
+            return string.Format("-v repeat+info -i \"{0}\" {2} \"{1}\"", 
+                source, target, string.Format(optionFormat, optionArgs));
         }
 
-        public bool ExtractAudio(string sourcePath, string targetPath,
-            Action<float> progressHandler)
+        private static string BuildExtractAudioArguments(string source, string target)
+        {
+            return BuildArguments(source, target, "-n -vn -ac 1 -ar 16000 -acodec pcm_s16le");
+        }
+
+        private static string BuildTranscodeVideoArguments(string source, string target, 
+            VideoFormat format, int maxWidth, int videoBitrate, int audioBitrate, bool mono)
+        {
+            switch (format)
+            {
+                case VideoFormat.Mp4:
+                    return BuildArguments(source, target,
+                        "-b:v {0}k -vcodec libx264 -b:a {1}k -vf \"scale='min(iw,{2})':-1\"{3}",
+                        videoBitrate, audioBitrate, maxWidth, mono ? " -ac 1" : "");
+                case VideoFormat.Ogg:
+                    return BuildArguments(source, target, 
+                        "-b:v {0}k -vcodec libtheora -acodec libvorbis -b:a {1}k -vf \"scale='min(iw,{2})':-1\"{3}",
+                        videoBitrate, audioBitrate, maxWidth, mono ? " -ac 1" : "");
+                case VideoFormat.WebM:
+                    return BuildArguments(source, target, 
+                        "-b:v {0}k -vcodec libvpx -acodec libvorbis -b:a {1}k -vf \"scale='min(iw,{2})':-1\"{3} -f webm",
+                        videoBitrate, audioBitrate, maxWidth, mono ? " -ac 1" : "");
+                default:
+                    throw new ArgumentOutOfRangeException("format");
+            }
+        }
+
+        private static string BuildTranscodeAudioArguments(string source, string target,
+            AudioFormat format, int audioBitrate, bool mono)
+        {
+            switch (format)
+            {
+                case AudioFormat.Mp3:
+                    return BuildArguments(source, target, 
+                        "-vn -b:a {0}k {1} -acodec libmp3lame",
+                        audioBitrate, mono ? " -ac 1" : "");
+                case AudioFormat.Ogg:
+                    return BuildArguments(source, target, 
+                        "-vn -b:a {0}k {1} -acodec libvorbis",
+                        audioBitrate, mono ? " -ac 1" : "");
+                default:
+                    throw new ArgumentOutOfRangeException("format");
+            }
+        }
+
+        private bool Transcode(string arguments, Action<float> progressHandler)
         {
             errors = new List<string>();
             duration = TimeSpan.Zero;
-            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), BuildArguments(sourcePath, targetPath));
+            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), arguments);
             pi.RedirectStandardInput = false;
             pi.RedirectStandardOutput = true;
             pi.RedirectStandardError = true;
@@ -46,19 +91,30 @@ namespace de.fhb.oll.mediacategorizer.tools
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             Task.Run(() => RunErrorReader(p.StandardError, progressHandler));
             p.WaitForExit();
-            return p.ExitCode == 0 && errors.Count == 0 && File.Exists(targetPath);
+            return p.ExitCode == 0 && errors.Count == 0;
         }
 
-        public bool TranscodeVideo(string sourcePath, string targetPath, 
-            VideoFormat format, int maxWidth, int videoBitrate, int audioBitrate, bool mono)
+        public bool ExtractAudio(string sourcePath, string targetPath,
+            Action<float> progressHandler)
         {
-            throw new NotImplementedException();
+            var args = BuildExtractAudioArguments(sourcePath, targetPath);
+            return Transcode(args, progressHandler) && File.Exists(targetPath);
+        }
+
+        public bool TranscodeVideo(string sourcePath, string targetPath,
+            VideoFormat format, int maxWidth, int videoBitrate, int audioBitrate, bool mono,
+            Action<float> progressHandler)
+        {
+            var args = BuildTranscodeVideoArguments(sourcePath, targetPath, format,maxWidth, videoBitrate, audioBitrate, mono);
+            return Transcode(args, progressHandler) && File.Exists(targetPath);
         }
 
         public bool TranscodeAudio(string sourcePath, string targetPath,
-            AudioFormat format, int audioBitrate, bool mono)
+            AudioFormat format, int audioBitrate, bool mono,
+            Action<float> progressHandler)
         {
-            throw new NotImplementedException();
+            var args = BuildTranscodeAudioArguments(sourcePath, targetPath, format, audioBitrate, mono);
+            return Transcode(args, progressHandler) && File.Exists(targetPath);
         }
 
         private void RunErrorReader(TextReader sr, Action<float> progressHandler)
