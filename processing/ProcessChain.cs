@@ -109,7 +109,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             var speechRecognitionProcess = new SpeechRecognitionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction, profileSelection);
             var categoryResourceDownloadProcess = new CategoryResourceDownloadProcess(this, projectPreparation);
             var mediaEncodingProcess = new MediaEncodingProcess(this, audioExtraction);
-            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognitionProcess, categoryResourceDownloadProcess);
+            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognitionProcess, categoryResourceDownloadProcess, mediaEncodingProcess);
             var projectFinalization = new FinalizeProjectProcess(this, analyzeAndOutput);
 
             return new IProcess[]
