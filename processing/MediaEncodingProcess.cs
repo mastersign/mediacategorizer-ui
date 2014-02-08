@@ -111,20 +111,21 @@ namespace de.fhb.oll.mediacategorizer.processing
             {
                 var ext = GetExtension(f);
                 var targetPath = baseTargetPath + ext;
-                var res = GetFfmpegTool().TranscodeAudio(
-                    m.MediaFile, targetPath, f, p.AudioBitrate, p.JoinChannels, audioProgressHandler);
-                if (res)
+                if (!File.Exists(targetPath))
                 {
-                    m.EncodedMediaFiles.Add(new MediaFile
+                    var res = GetFfmpegTool().TranscodeAudio(
+                        m.MediaFile, targetPath, f, p.AudioBitrate, p.JoinChannels, audioProgressHandler);
+                    if (!res)
                     {
-                        Path = targetPath,
-                        MimeType = GetMimeType(MediaType.Audio, ext),
-                    });
+                        errorHandler("Transkodierung von '" + m.MediaFile + "' in das Audio-Format " + f +
+                                     " fehlgeschlagen.");
+                    }
                 }
-                else
+                m.EncodedMediaFiles.Add(new MediaFile
                 {
-                    errorHandler("Transkodierung von '" + m.MediaFile + "' in das Audio-Format " + f + " fehlgeschlagen.");
-                }
+                    Path = targetPath,
+                    MimeType = GetMimeType(MediaType.Audio, ext),
+                });
                 no[0]++;
             });
             if (cfg.AudioTranscodeMP3) audioHandler(FfmpegTool.AudioFormat.Mp3, cfg.AudioParameterMP3);
@@ -157,21 +158,22 @@ namespace de.fhb.oll.mediacategorizer.processing
             {
                 var ext = GetExtension(f);
                 var targetPath = baseTargetPath + ext;
-                var res = GetFfmpegTool().TranscodeVideo(
-                    m.MediaFile, targetPath, f, cfg.VideoWidth, p.VideoBitrate, p.AudioBitrate, p.JoinChannels,
-                    videoProgressHandler);
-                if (res)
+                if (!File.Exists(targetPath))
                 {
-                    m.EncodedMediaFiles.Add(new MediaFile
+                    var res = GetFfmpegTool().TranscodeVideo(
+                        m.MediaFile, targetPath, f, cfg.VideoWidth, p.VideoBitrate, p.AudioBitrate, p.JoinChannels,
+                        videoProgressHandler);
+                    if (!res)
                     {
-                        Path = targetPath,
-                        MimeType = GetMimeType(MediaType.Video, ext),
-                    });
+                        errorHandler("Transkodierung von '" + m.MediaFile + "' in das Video-Format " + f +
+                                     " fehlgeschlagen.");
+                    }
                 }
-                else
+                m.EncodedMediaFiles.Add(new MediaFile
                 {
-                    errorHandler("Transkodierung von '" + m.MediaFile + "' in das Video-Format " + f + " fehlgeschlagen.");
-                }
+                    Path = targetPath,
+                    MimeType = GetMimeType(MediaType.Video, ext),
+                });
                 no[0]++;
             });
             if (cfg.VideoTranscodeH264) processHandler(FfmpegTool.VideoFormat.Mp4, cfg.VideoParameterH264);
