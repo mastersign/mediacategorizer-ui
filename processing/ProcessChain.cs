@@ -102,25 +102,25 @@ namespace de.fhb.oll.mediacategorizer.processing
         private IProcess[] CreateProcessChain()
         {
             var projectPreparation = new PrepareProjectProcess(this);
-            var mediaInspectionProcess = new MediaInspectionProcess(this, projectPreparation);
-            var audioExtraction = new AudioExtractionProcess(this, projectPreparation);
+            var mediaInspection = new MediaInspectionProcess(this, projectPreparation);
+            var audioExtraction = new AudioExtractionProcess(this, projectPreparation, mediaInspection);
             var waveformVisualization = new WaveformProcess(this, projectPreparation, audioExtraction);
-            var profileSelection = new ProfileSelectionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction);
-            var speechRecognitionProcess = new SpeechRecognitionProcess(this, projectPreparation, mediaInspectionProcess, audioExtraction, profileSelection);
-            var categoryResourceDownloadProcess = new CategoryResourceDownloadProcess(this, projectPreparation);
-            var mediaEncodingProcess = new MediaEncodingProcess(this, audioExtraction);
-            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognitionProcess, categoryResourceDownloadProcess, mediaEncodingProcess);
+            var profileSelection = new ProfileSelectionProcess(this, projectPreparation, mediaInspection, audioExtraction);
+            var speechRecognition = new SpeechRecognitionProcess(this, projectPreparation, mediaInspection, audioExtraction, profileSelection);
+            var categoryResourceDownload = new CategoryResourceDownloadProcess(this, projectPreparation);
+            var mediaEncodingProcess = new MediaEncodingProcess(this, mediaInspection, audioExtraction);
+            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognition, categoryResourceDownload, mediaEncodingProcess);
             var projectFinalization = new FinalizeProjectProcess(this, analyzeAndOutput);
 
             return new IProcess[]
             {
                 projectPreparation, 
-                mediaInspectionProcess,
+                mediaInspection,
                 audioExtraction, 
                 waveformVisualization,
                 profileSelection,
-                speechRecognitionProcess,
-                categoryResourceDownloadProcess,
+                speechRecognition,
+                categoryResourceDownload,
                 mediaEncodingProcess,
                 analyzeAndOutput,
                 projectFinalization
