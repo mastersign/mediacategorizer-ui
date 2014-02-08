@@ -34,7 +34,6 @@ namespace de.fhb.oll.mediacategorizer.processing
         private void ProcessMedia(Media m, Action<float> progressHandler, Action<string> errorHandler)
         {
             OnProgress(m.MediaFile);
-            var cfg = Project.Configuration;
             if (m.MediaFile == null || !File.Exists(m.MediaFile))
             {
                 errorHandler("Mediendatei wurde nicht gefunden: " + m.MediaFile);
