@@ -21,6 +21,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             InitializeLogWriter();
             CheckTools();
             CheckMediaFiles();
+            CheckTranscodeConfiguration();
         }
 
         private void PrepareProjectDirectory()
@@ -89,6 +90,20 @@ namespace de.fhb.oll.mediacategorizer.processing
                     OnError(string.Format("Eine Mediendatei wurde nicht gefunden: {0}", 
                         m.MediaFile));
                 }
+            }
+        }
+
+        private void CheckTranscodeConfiguration()
+        {
+            var cfg = Project.Configuration;
+            if (!cfg.UseTranscoding) return;
+            if (!cfg.AudioTranscodeMP3 && !cfg.AudioTranscodeOGG)
+            {
+                OnError("Für die Audio-Transkodierung muss mindestens ein Audio-Format aktiviert sein. (MP3, OGG)");
+            }
+            if (!cfg.VideoTranscodeH264 && !cfg.VideoTranscodeOGG && !cfg.VideoTranscodeWebM)
+            {
+                OnError("Für die Video-Transkodierung muss mindestens ein Video-Format aktiviert sein. (MP4, OGG, WebM)");
             }
         }
     }

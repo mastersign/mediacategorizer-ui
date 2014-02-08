@@ -449,6 +449,18 @@ namespace de.fhb.oll.mediacategorizer.model
             this._skipWordIncludes = DEF_SKIPWORDINCLUDES;
             this._skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
             this._skipMediaCopy = DEF_SKIPMEDIACOPY;
+            this._useTranscoding = DEF_USETRANSCODING;
+            this._videoWidth = DEF_VIDEOWIDTH;
+            this._videoTranscodeH264 = DEF_VIDEOTRANSCODEH264;
+            this._videoTranscodeOGG = DEF_VIDEOTRANSCODEOGG;
+            this._videoTranscodeWebM = DEF_VIDEOTRANSCODEWEBM;
+            this._audioTranscodeMP3 = DEF_AUDIOTRANSCODEMP3;
+            this._audioTranscodeOGG = DEF_AUDIOTRANSCODEOGG;
+            this.VideoParameterH264 = new VideoEncodingParameter();
+            this.VideoParameterOGG = new VideoEncodingParameter();
+            this.VideoParameterWebM = new VideoEncodingParameter();
+            this.AudioParameterMP3 = new AudioEncodingParameter();
+            this.AudioParameterOGG = new AudioEncodingParameter();
             
             this.IsChanged = false;
         }
@@ -498,6 +510,26 @@ namespace de.fhb.oll.mediacategorizer.model
             if (!ReferenceEquals(_categoryCloud, null))
             {
                 _categoryCloud.AcceptChanges();
+            }
+            if (!ReferenceEquals(_videoParameterH264, null))
+            {
+                _videoParameterH264.AcceptChanges();
+            }
+            if (!ReferenceEquals(_videoParameterOGG, null))
+            {
+                _videoParameterOGG.AcceptChanges();
+            }
+            if (!ReferenceEquals(_videoParameterWebM, null))
+            {
+                _videoParameterWebM.AcceptChanges();
+            }
+            if (!ReferenceEquals(_audioParameterMP3, null))
+            {
+                _audioParameterMP3.AcceptChanges();
+            }
+            if (!ReferenceEquals(_audioParameterOGG, null))
+            {
+                _audioParameterOGG.AcceptChanges();
             }
             this.IsChanged = false;
         }
@@ -1259,6 +1291,529 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         #endregion
+        
+        #region Property UseTranscoding
+        
+        private bool _useTranscoding;
+        
+        public event EventHandler UseTranscodingChanged;
+        
+        protected virtual void OnUseTranscodingChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = UseTranscodingChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"UseTranscoding");
+        }
+        
+        private const bool DEF_USETRANSCODING = true;
+        
+        [DefaultValue(DEF_USETRANSCODING)]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Medien Transkodieren")]
+        [Description(@"Gibt an, ob die Originalmedien für die Einbettung in die Ergebniswebseite umgewandelt werden sollen.")]
+        public virtual bool UseTranscoding
+        {
+            get { return _useTranscoding; }
+            set
+            {
+                if ((value == _useTranscoding))
+                {
+                    return;
+                }
+                _useTranscoding = value;
+                this.OnUseTranscodingChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property VideoWidth
+        
+        private int _videoWidth;
+        
+        public event EventHandler VideoWidthChanged;
+        
+        protected virtual void OnVideoWidthChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoWidthChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoWidth");
+        }
+        
+        private const int DEF_VIDEOWIDTH = 540;
+        
+        [DefaultValue(DEF_VIDEOWIDTH)]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Video-Breite")]
+        [Description(@"Gibt die Breite des Video-Bildes an. Die Höhe ergibt sich aus dem Seitenverhältnis des Originalvideos.")]
+        public virtual int VideoWidth
+        {
+            get { return _videoWidth; }
+            set
+            {
+                if ((value == _videoWidth))
+                {
+                    return;
+                }
+                _videoWidth = value;
+                this.OnVideoWidthChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property VideoTranscodeH264
+        
+        private bool _videoTranscodeH264;
+        
+        public event EventHandler VideoTranscodeH264Changed;
+        
+        protected virtual void OnVideoTranscodeH264Changed()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoTranscodeH264Changed;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoTranscodeH264");
+        }
+        
+        private const bool DEF_VIDEOTRANSCODEH264 = true;
+        
+        [DefaultValue(DEF_VIDEOTRANSCODEH264)]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Video-Format MP4")]
+        [Description(@"Aktiviert die Transkodierung von Video-Dateien in H.264/AAC kodierte MP4-Dateien. (IE 9, Chrome 3, Firefox 21, Konqueror 4.4, Safari 3.1, Android 3.0)")]
+        public virtual bool VideoTranscodeH264
+        {
+            get { return _videoTranscodeH264; }
+            set
+            {
+                if ((value == _videoTranscodeH264))
+                {
+                    return;
+                }
+                _videoTranscodeH264 = value;
+                this.OnVideoTranscodeH264Changed();
+            }
+        }
+        
+        #endregion
+        
+        #region Property VideoTranscodeOGG
+        
+        private bool _videoTranscodeOGG;
+        
+        public event EventHandler VideoTranscodeOGGChanged;
+        
+        protected virtual void OnVideoTranscodeOGGChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoTranscodeOGGChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoTranscodeOGG");
+        }
+        
+        private const bool DEF_VIDEOTRANSCODEOGG = true;
+        
+        [DefaultValue(DEF_VIDEOTRANSCODEOGG)]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Video-Format OGG")]
+        [Description(@"Aktiviert die Transkodierung von Video-Dateien in Theora/Vorbis kodierte OGG-Dateien. (Chrome 3, Firefox 3.5, Konqueror 4.4, Opera 10.50, Android 2.3)")]
+        public virtual bool VideoTranscodeOGG
+        {
+            get { return _videoTranscodeOGG; }
+            set
+            {
+                if ((value == _videoTranscodeOGG))
+                {
+                    return;
+                }
+                _videoTranscodeOGG = value;
+                this.OnVideoTranscodeOGGChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property VideoTranscodeWebM
+        
+        private bool _videoTranscodeWebM;
+        
+        public event EventHandler VideoTranscodeWebMChanged;
+        
+        protected virtual void OnVideoTranscodeWebMChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoTranscodeWebMChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoTranscodeWebM");
+        }
+        
+        private const bool DEF_VIDEOTRANSCODEWEBM = false;
+        
+        [DefaultValue(DEF_VIDEOTRANSCODEWEBM)]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Video-Format WebM")]
+        [Description(@"Aktiviert die Transkodierung von Video-Dateien in VP8/Vorbis kodierte WebM-Dateien. (Chrome 6, Firefox 4.0, Konqueror 4.4, Opera 10.60, Android 2.3)")]
+        public virtual bool VideoTranscodeWebM
+        {
+            get { return _videoTranscodeWebM; }
+            set
+            {
+                if ((value == _videoTranscodeWebM))
+                {
+                    return;
+                }
+                _videoTranscodeWebM = value;
+                this.OnVideoTranscodeWebMChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property AudioTranscodeMP3
+        
+        private bool _audioTranscodeMP3;
+        
+        public event EventHandler AudioTranscodeMP3Changed;
+        
+        protected virtual void OnAudioTranscodeMP3Changed()
+        {
+            this.IsChanged = true;
+            EventHandler handler = AudioTranscodeMP3Changed;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"AudioTranscodeMP3");
+        }
+        
+        private const bool DEF_AUDIOTRANSCODEMP3 = true;
+        
+        [DefaultValue(DEF_AUDIOTRANSCODEMP3)]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Audio-Format MP3")]
+        [Description(@"Aktiviert die Transkodierung von Audio-Dateien in MP3-Dateien. (IE 9, Chrome, Firefox 21, Opera 14, Safari 3.1)")]
+        public virtual bool AudioTranscodeMP3
+        {
+            get { return _audioTranscodeMP3; }
+            set
+            {
+                if ((value == _audioTranscodeMP3))
+                {
+                    return;
+                }
+                _audioTranscodeMP3 = value;
+                this.OnAudioTranscodeMP3Changed();
+            }
+        }
+        
+        #endregion
+        
+        #region Property AudioTranscodeOGG
+        
+        private bool _audioTranscodeOGG;
+        
+        public event EventHandler AudioTranscodeOGGChanged;
+        
+        protected virtual void OnAudioTranscodeOGGChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = AudioTranscodeOGGChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"AudioTranscodeOGG");
+        }
+        
+        private const bool DEF_AUDIOTRANSCODEOGG = true;
+        
+        [DefaultValue(DEF_AUDIOTRANSCODEOGG)]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Audio-Format OGG")]
+        [Description(@"Aktiviert die Transkodierung von Audio-Dateien in Vorbis kodierte OGG-Dateien. (Chrome 9, Firefox 3.5, Opera 10.50, Safari)")]
+        public virtual bool AudioTranscodeOGG
+        {
+            get { return _audioTranscodeOGG; }
+            set
+            {
+                if ((value == _audioTranscodeOGG))
+                {
+                    return;
+                }
+                _audioTranscodeOGG = value;
+                this.OnAudioTranscodeOGGChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property VideoParameterH264
+        
+        private VideoEncodingParameter _videoParameterH264;
+        
+        public event EventHandler VideoParameterH264Changed;
+        
+        protected virtual void OnVideoParameterH264Changed()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoParameterH264Changed;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoParameterH264");
+        }
+        
+        private void VideoParameterH264PropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
+        {
+            this.OnVideoParameterH264Changed();
+        }
+        
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Video-Parameter MP4")]
+        [Description(@"Die Parameter für die Video-Transkodierung in das MP4-Format.")]
+        public virtual VideoEncodingParameter VideoParameterH264
+        {
+            get { return _videoParameterH264; }
+            set
+            {
+                if ((value == _videoParameterH264))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_videoParameterH264, null))
+                {
+                    _videoParameterH264.PropertyChanged -= this.VideoParameterH264PropertyChangedHandler;
+                }
+                _videoParameterH264 = value;
+                if (!ReferenceEquals(_videoParameterH264, null))
+                {
+                    _videoParameterH264.PropertyChanged += this.VideoParameterH264PropertyChangedHandler;
+                }
+                this.OnVideoParameterH264Changed();
+            }
+        }
+        
+        #endregion
+        
+        #region Property VideoParameterOGG
+        
+        private VideoEncodingParameter _videoParameterOGG;
+        
+        public event EventHandler VideoParameterOGGChanged;
+        
+        protected virtual void OnVideoParameterOGGChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoParameterOGGChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoParameterOGG");
+        }
+        
+        private void VideoParameterOGGPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
+        {
+            this.OnVideoParameterOGGChanged();
+        }
+        
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Video-Parameter OGG")]
+        [Description(@"Die Parameter für die Video-Transkodierung in das OGG-Format.")]
+        public virtual VideoEncodingParameter VideoParameterOGG
+        {
+            get { return _videoParameterOGG; }
+            set
+            {
+                if ((value == _videoParameterOGG))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_videoParameterOGG, null))
+                {
+                    _videoParameterOGG.PropertyChanged -= this.VideoParameterOGGPropertyChangedHandler;
+                }
+                _videoParameterOGG = value;
+                if (!ReferenceEquals(_videoParameterOGG, null))
+                {
+                    _videoParameterOGG.PropertyChanged += this.VideoParameterOGGPropertyChangedHandler;
+                }
+                this.OnVideoParameterOGGChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property VideoParameterWebM
+        
+        private VideoEncodingParameter _videoParameterWebM;
+        
+        public event EventHandler VideoParameterWebMChanged;
+        
+        protected virtual void OnVideoParameterWebMChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoParameterWebMChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoParameterWebM");
+        }
+        
+        private void VideoParameterWebMPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
+        {
+            this.OnVideoParameterWebMChanged();
+        }
+        
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Video-Parameter WebM")]
+        [Description(@"Die Parameter für die Video-Transkodierung in das WebM-Format.")]
+        public virtual VideoEncodingParameter VideoParameterWebM
+        {
+            get { return _videoParameterWebM; }
+            set
+            {
+                if ((value == _videoParameterWebM))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_videoParameterWebM, null))
+                {
+                    _videoParameterWebM.PropertyChanged -= this.VideoParameterWebMPropertyChangedHandler;
+                }
+                _videoParameterWebM = value;
+                if (!ReferenceEquals(_videoParameterWebM, null))
+                {
+                    _videoParameterWebM.PropertyChanged += this.VideoParameterWebMPropertyChangedHandler;
+                }
+                this.OnVideoParameterWebMChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property AudioParameterMP3
+        
+        private AudioEncodingParameter _audioParameterMP3;
+        
+        public event EventHandler AudioParameterMP3Changed;
+        
+        protected virtual void OnAudioParameterMP3Changed()
+        {
+            this.IsChanged = true;
+            EventHandler handler = AudioParameterMP3Changed;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"AudioParameterMP3");
+        }
+        
+        private void AudioParameterMP3PropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
+        {
+            this.OnAudioParameterMP3Changed();
+        }
+        
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Audio-Parameter MP3")]
+        [Description(@"Die Parameter für die Audio-Transkodierung in das MP3-Format.")]
+        public virtual AudioEncodingParameter AudioParameterMP3
+        {
+            get { return _audioParameterMP3; }
+            set
+            {
+                if ((value == _audioParameterMP3))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_audioParameterMP3, null))
+                {
+                    _audioParameterMP3.PropertyChanged -= this.AudioParameterMP3PropertyChangedHandler;
+                }
+                _audioParameterMP3 = value;
+                if (!ReferenceEquals(_audioParameterMP3, null))
+                {
+                    _audioParameterMP3.PropertyChanged += this.AudioParameterMP3PropertyChangedHandler;
+                }
+                this.OnAudioParameterMP3Changed();
+            }
+        }
+        
+        #endregion
+        
+        #region Property AudioParameterOGG
+        
+        private AudioEncodingParameter _audioParameterOGG;
+        
+        public event EventHandler AudioParameterOGGChanged;
+        
+        protected virtual void OnAudioParameterOGGChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = AudioParameterOGGChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"AudioParameterOGG");
+        }
+        
+        private void AudioParameterOGGPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
+        {
+            this.OnAudioParameterOGGChanged();
+        }
+        
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Audio-Parameter OGG")]
+        [Description(@"Die Parameter für die Audio-Transkodierung in das OGG-Format.")]
+        public virtual AudioEncodingParameter AudioParameterOGG
+        {
+            get { return _audioParameterOGG; }
+            set
+            {
+                if ((value == _audioParameterOGG))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_audioParameterOGG, null))
+                {
+                    _audioParameterOGG.PropertyChanged -= this.AudioParameterOGGPropertyChangedHandler;
+                }
+                _audioParameterOGG = value;
+                if (!ReferenceEquals(_audioParameterOGG, null))
+                {
+                    _audioParameterOGG.PropertyChanged += this.AudioParameterOGGPropertyChangedHandler;
+                }
+                this.OnAudioParameterOGGChanged();
+            }
+        }
+        
+        #endregion
     }
     
     public partial class FilterParameter : INotifyPropertyChanged, IChangeTracking
@@ -1606,6 +2161,281 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _filterNotInBlacklist = value;
                 this.OnFilterNotInBlacklistChanged();
+            }
+        }
+        
+        #endregion
+    }
+    
+    public partial class VideoEncodingParameter : INotifyPropertyChanged, IChangeTracking
+    {
+        public VideoEncodingParameter()
+        {
+            this._videoBitrate = DEF_VIDEOBITRATE;
+            this._audioBitrate = DEF_AUDIOBITRATE;
+            this._joinChannels = DEF_JOINCHANNELS;
+            
+            this.IsChanged = false;
+        }
+        
+        #region Change Tracking
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
+        [NonSerialized]
+        private bool _isChanged = false;
+        
+        [Browsable(false)]
+        [XmlIgnore]
+        public bool IsChanged
+        {
+            get { return this._isChanged; }
+            protected set { this._isChanged = value; }
+        }
+        
+        public void AcceptChanges()
+        {
+            this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property VideoBitrate
+        
+        private int _videoBitrate;
+        
+        public event EventHandler VideoBitrateChanged;
+        
+        protected virtual void OnVideoBitrateChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoBitrateChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoBitrate");
+        }
+        
+        private const int DEF_VIDEOBITRATE = 110;
+        
+        [DefaultValue(DEF_VIDEOBITRATE)]
+        [DisplayName(@"Video-Bitrate (KB)")]
+        [Description(@"Die Ziel-Bitrate des Video-Datenstroms.")]
+        public virtual int VideoBitrate
+        {
+            get { return _videoBitrate; }
+            set
+            {
+                if ((value == _videoBitrate))
+                {
+                    return;
+                }
+                _videoBitrate = value;
+                this.OnVideoBitrateChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property AudioBitrate
+        
+        private int _audioBitrate;
+        
+        public event EventHandler AudioBitrateChanged;
+        
+        protected virtual void OnAudioBitrateChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = AudioBitrateChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"AudioBitrate");
+        }
+        
+        private const int DEF_AUDIOBITRATE = 48;
+        
+        [DefaultValue(DEF_AUDIOBITRATE)]
+        [DisplayName(@"Audio-Bitrate (KB)")]
+        [Description(@"Die Ziel-Bitrate des Audio-Datestroms.")]
+        public virtual int AudioBitrate
+        {
+            get { return _audioBitrate; }
+            set
+            {
+                if ((value == _audioBitrate))
+                {
+                    return;
+                }
+                _audioBitrate = value;
+                this.OnAudioBitrateChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property JoinChannels
+        
+        private bool _joinChannels;
+        
+        public event EventHandler JoinChannelsChanged;
+        
+        protected virtual void OnJoinChannelsChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = JoinChannelsChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"JoinChannels");
+        }
+        
+        private const bool DEF_JOINCHANNELS = true;
+        
+        [DefaultValue(DEF_JOINCHANNELS)]
+        [DisplayName(@"Mono-Tonspur")]
+        [Description(@"Gibt an, ob die Audio-Kanäle des Originalmediums in einen Mono-Kanal konvertiert werden sollen.")]
+        public virtual bool JoinChannels
+        {
+            get { return _joinChannels; }
+            set
+            {
+                if ((value == _joinChannels))
+                {
+                    return;
+                }
+                _joinChannels = value;
+                this.OnJoinChannelsChanged();
+            }
+        }
+        
+        #endregion
+    }
+    
+    public partial class AudioEncodingParameter : INotifyPropertyChanged, IChangeTracking
+    {
+        public AudioEncodingParameter()
+        {
+            this._audioBitrate = DEF_AUDIOBITRATE;
+            this._joinChannels = DEF_JOINCHANNELS;
+            
+            this.IsChanged = false;
+        }
+        
+        #region Change Tracking
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
+        [NonSerialized]
+        private bool _isChanged = false;
+        
+        [Browsable(false)]
+        [XmlIgnore]
+        public bool IsChanged
+        {
+            get { return this._isChanged; }
+            protected set { this._isChanged = value; }
+        }
+        
+        public void AcceptChanges()
+        {
+            this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property AudioBitrate
+        
+        private int _audioBitrate;
+        
+        public event EventHandler AudioBitrateChanged;
+        
+        protected virtual void OnAudioBitrateChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = AudioBitrateChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"AudioBitrate");
+        }
+        
+        private const int DEF_AUDIOBITRATE = 48;
+        
+        [DefaultValue(DEF_AUDIOBITRATE)]
+        [DisplayName(@"Audio-Bitrate (KB)")]
+        [Description(@"Die Ziel-Bitrate des Audio-Datestroms.")]
+        public virtual int AudioBitrate
+        {
+            get { return _audioBitrate; }
+            set
+            {
+                if ((value == _audioBitrate))
+                {
+                    return;
+                }
+                _audioBitrate = value;
+                this.OnAudioBitrateChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property JoinChannels
+        
+        private bool _joinChannels;
+        
+        public event EventHandler JoinChannelsChanged;
+        
+        protected virtual void OnJoinChannelsChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = JoinChannelsChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"JoinChannels");
+        }
+        
+        private const bool DEF_JOINCHANNELS = true;
+        
+        [DefaultValue(DEF_JOINCHANNELS)]
+        [DisplayName(@"Mono-Tonspur")]
+        [Description(@"Gibt an, ob die Audio-Kanäle des Originalmediums in einen Mono-Kanal konvertiert werden sollen.")]
+        public virtual bool JoinChannels
+        {
+            get { return _joinChannels; }
+            set
+            {
+                if ((value == _joinChannels))
+                {
+                    return;
+                }
+                _joinChannels = value;
+                this.OnJoinChannelsChanged();
             }
         }
         
