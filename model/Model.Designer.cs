@@ -450,6 +450,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this._skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
             this._skipMediaCopy = DEF_SKIPMEDIACOPY;
             this._useTranscoding = DEF_USETRANSCODING;
+            this._videoToAudio = DEF_VIDEOTOAUDIO;
             this._videoWidth = DEF_VIDEOWIDTH;
             this._videoTranscodeH264 = DEF_VIDEOTRANSCODEH264;
             this._videoTranscodeOGG = DEF_VIDEOTRANSCODEOGG;
@@ -1326,6 +1327,45 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _useTranscoding = value;
                 this.OnUseTranscodingChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property VideoToAudio
+        
+        private bool _videoToAudio;
+        
+        public event EventHandler VideoToAudioChanged;
+        
+        protected virtual void OnVideoToAudioChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = VideoToAudioChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"VideoToAudio");
+        }
+        
+        private const bool DEF_VIDEOTOAUDIO = false;
+        
+        [DefaultValue(DEF_VIDEOTOAUDIO)]
+        [Category(@"Transkodierung")]
+        [DisplayName(@"Video in Audio umwandeln")]
+        [Description(@"Gibt an, ob bei Videomedien nur die Tonspur in die Ergebniswebseite eingebunden werden soll.")]
+        public virtual bool VideoToAudio
+        {
+            get { return _videoToAudio; }
+            set
+            {
+                if ((value == _videoToAudio))
+                {
+                    return;
+                }
+                _videoToAudio = value;
+                this.OnVideoToAudioChanged();
             }
         }
         
