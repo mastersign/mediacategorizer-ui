@@ -35,13 +35,13 @@
         <Category>Ressourcen</Category>
         <DisplayName>Audiodateiendungen</DisplayName>
         <Description>Eine Liste mit Dateiendungen für unterstützte Audiodateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.</Description>
-        <DefaultValue>mp3</DefaultValue>
+        <DefaultValue>wav mp3 wma ogg ac3 acc aif mp1 mp2 mpa m2a m4a ra</DefaultValue>
       </Property>
       <Property name="CompatibleVideoFileExtensions" type="string">
         <Category>Ressourcen</Category>
         <DisplayName>Videodateiendungen</DisplayName>
         <Description>Eine Liste mit Dateiendungen für unterstützte Videodateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.</Description>
-        <DefaultValue>mp4</DefaultValue>
+        <DefaultValue>avi mpg wmv ogv webm mov mkv 3gp mpv m2v mp4 m4v</DefaultValue>
       </Property>
 
       <Property name="Ffmpeg">
