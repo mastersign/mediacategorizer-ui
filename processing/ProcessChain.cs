@@ -103,13 +103,13 @@ namespace de.fhb.oll.mediacategorizer.processing
         {
             var projectPreparation = new PrepareProjectProcess(this);
             var mediaInspection = new MediaInspectionProcess(this, projectPreparation);
-            var audioExtraction = new AudioExtractionProcess(this, projectPreparation, mediaInspection);
-            var waveformVisualization = new WaveformProcess(this, projectPreparation, audioExtraction);
-            var profileSelection = new ProfileSelectionProcess(this, projectPreparation, mediaInspection, audioExtraction);
-            var speechRecognition = new SpeechRecognitionProcess(this, projectPreparation, mediaInspection, audioExtraction, profileSelection);
+            var audioExtraction = new AudioExtractionProcess(this, mediaInspection);
+            var waveformVisualization = new WaveformProcess(this, audioExtraction);
+            var profileSelection = new ProfileSelectionProcess(this, audioExtraction);
+            var speechRecognition = new SpeechRecognitionProcess(this, profileSelection);
             var categoryResourceDownload = new CategoryResourceDownloadProcess(this, projectPreparation);
-            var mediaEncodingProcess = new MediaEncodingProcess(this, mediaInspection, audioExtraction);
-            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, projectPreparation, waveformVisualization, speechRecognition, categoryResourceDownload, mediaEncodingProcess);
+            var mediaEncodingProcess = new MediaEncodingProcess(this, audioExtraction);
+            var analyzeAndOutput = new AnalyzeResultsAndWriteOutputProcess(this, waveformVisualization, speechRecognition, categoryResourceDownload, mediaEncodingProcess);
             var projectFinalization = new FinalizeProjectProcess(this, analyzeAndOutput);
 
             return new IProcess[]

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="BottomToTop" Layout="Sugiyama" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="AnalyzeAndOutputGeneration" Bounds="260.498333333333,286.45,197.576666666667,27.29" Label="analysis and output generation" />
+    <Node Id="AudioExtraction" Bounds="141.89,114.58,112.793333333333,27.29" Label="audio extraction" />
+    <Node Id="CategoryResourceDownload" Bounds="373.676666666667,57.29,183.22,27.29" Label="category resource download" />
+    <Node Id="MediaEncoding" Bounds="0,171.87,112.573333333333,27.29" Label="media encoding" />
+    <Node Id="MediaInspection" Bounds="225.298333333333,57.29,117.976666666667,27.29" Label="media inspection" />
+    <Node Id="ProfileSelection" Bounds="142.631666666667,171.87,111.31,27.29" Label="profile selection" />
+    <Node Id="ProjectFinalization" Bounds="296.181666666667,343.74,126.21,27.29" Label="project finalization" />
+    <Node Id="ProjectPreparation" Bounds="218.995,0,130.583333333333,27.29" Label="project preparation" />
+    <Node Id="SpeechRecognition" Bounds="198.63,229.16,129.313333333333,27.29" Label="speech recognition" />
+    <Node Id="WaveformVisualization" Bounds="284.196666666667,171.87,150.18,27.29" Label="waveform visualization" />
+  </Nodes>
+  <Links>
+    <Link Source="AnalyzeAndOutputGeneration" Target="CategoryResourceDownload" Bounds="384.533142089844,93.5800018310547,80.7535095214844,192.870010375977" />
+    <Link Source="AnalyzeAndOutputGeneration" Target="MediaEncoding" Bounds="89.0981979370117,203.48274230957,211.309608459473,82.9672698974609" />
+    <Link Source="AnalyzeAndOutputGeneration" Target="SpeechRecognition" Bounds="293.879821777344,261.062103271484,42.5421142578125,25.3879089355469" />
+    <Link Source="AnalyzeAndOutputGeneration" Target="WaveformVisualization" Bounds="359.286651611328,208.160003662109,0,78.2900085449219" />
+    <Link Source="AudioExtraction" Target="MediaInspection" Bounds="218.769653320313,89.5696868896484,37.5438232421875,25.0103149414063" />
+    <Link Source="CategoryResourceDownload" Target="ProjectPreparation" Bounds="335.976654052734,30.0058765411377,86.2004699707031,27.2841243743896" />
+    <Link Source="MediaEncoding" Target="AudioExtraction" Bounds="90.1074066162109,145.237335205078,66.01220703125,26.6326599121094" />
+    <Link Source="MediaInspection" Target="ProjectPreparation" Bounds="284.286651611328,36.2900009155273,0,21" />
+    <Link Source="ProfileSelection" Target="AudioExtraction" Bounds="198.286666870117,150.869995117188,0,21" />
+    <Link Source="ProjectFinalization" Target="AnalyzeAndOutputGeneration" Bounds="359.286651611328,322.739990234375,0,21" />
+    <Link Source="SpeechRecognition" Target="ProfileSelection" Bounds="220.519775390625,205.110916137695,27.2855682373047,24.0490875244141" />
+    <Link Source="WaveformVisualization" Target="AudioExtraction" Bounds="245.111892700195,144.887222290039,75.8287200927734,26.9827728271484" />
+  </Links>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="GraphDirection" DataType="Microsoft.VisualStudio.Diagrams.Layout.LayoutOrientation" />
+    <Property Id="Label" Label="Bezeichnung" Description="Anzeigbare Bezeichnung eines Objekts, das Anmerkungen einblenden werden kann" DataType="System.String" />
+    <Property Id="Layout" DataType="System.String" />
+  </Properties>
+</DirectedGraph>
