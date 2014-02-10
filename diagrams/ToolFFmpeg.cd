@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="de.fhb.oll.mediacategorizer.tools.FfmpegTool">
-    <Position X="0.5" Y="2" Width="5.75" />
+    <Position X="0.5" Y="2" Width="6.75" />
     <Members>
       <Method Name="BuildArguments" Hidden="true" />
       <Field Name="duration" Hidden="true" />
@@ -15,26 +15,38 @@
       <Field Name="PROGRESS_REGEX" Hidden="true" />
       <Method Name="RunErrorReader" Hidden="true" />
     </Members>
+    <NestedTypes>
+      <Enum Name="de.fhb.oll.mediacategorizer.tools.FfmpegTool.VideoFormat" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>tools\FfmpegTool.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="de.fhb.oll.mediacategorizer.tools.FfmpegTool.AudioFormat" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>tools\FfmpegTool.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <InheritanceLine Type="de.fhb.oll.mediacategorizer.tools.ToolBase" FixedToPoint="true">
       <Path>
-        <Point X="1.25" Y="1.062" />
-        <Point X="1.25" Y="2" />
+        <Point X="1.125" Y="1.062" />
+        <Point X="1.125" Y="2" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAABAIAADAAAAEAAAEAAAAAEACAKEAAAAACAAAAAAA=</HashCode>
+      <HashCode>AAAABAIAATDAAAGAAAEAAEAAEASAKEAAAAACAAAAAAA=</HashCode>
       <FileName>tools\FfmpegTool.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.tools.ToolBase" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAwAAAAAQACwAAAgAAQAAAAAAAAgAEAA=</HashCode>
       <FileName>tools\ToolBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.processing.AudioExtractionProcess">
-    <Position X="3.25" Y="0.5" Width="3" />
+    <Position X="2" Y="0.5" Width="2.5" />
     <Members>
       <Method Name="AudioExtractionProcess" Hidden="true" />
       <Method Name="BuildAudioPath" Hidden="true" />
@@ -44,6 +56,22 @@
     <TypeIdentifier>
       <HashCode>AAgCAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>processing\AudioExtractionProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.MediaEncodingProcess">
+    <Position X="4.75" Y="0.5" Width="2.5" />
+    <Members>
+      <Method Name="GetExtension" Hidden="true" />
+      <Method Name="GetMimeType" Hidden="true" />
+      <Method Name="MediaEncodingProcess" Hidden="true" />
+      <Method Name="ProcessMedia" Hidden="true" />
+      <Method Name="TranscodeAudio" Hidden="true" />
+      <Method Name="TranscodeVideo" Hidden="true" />
+      <Method Name="Work" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAgCAQBAAABAAACAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>processing\MediaEncodingProcess.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

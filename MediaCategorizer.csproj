@@ -220,6 +220,7 @@
     <None Include="diagrams\Configuration.cd" />
     <None Include="diagrams\IProcess.cd" />
     <None Include="diagrams\Namespaces.dgml" />
+    <None Include="diagrams\ProcesseDependencies.dgml" />
     <None Include="diagrams\Project.cd" />
     <None Include="diagrams\Process.cd" />
     <None Include="diagrams\ProcessChain.cd" />

@@ -222,7 +222,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             this.OnPropertyChanged(@"CompatibleAudioFileExtensions");
         }
         
-        private const string DEF_COMPATIBLEAUDIOFILEEXTENSIONS = @"mp3";
+        private const string DEF_COMPATIBLEAUDIOFILEEXTENSIONS = @"wav mp3 wma ogg ac3 acc aif mp1 mp2 mpa m2a m4a ra";
         
         [DefaultValue(DEF_COMPATIBLEAUDIOFILEEXTENSIONS)]
         [Category(@"Ressourcen")]
@@ -261,7 +261,7 @@ namespace de.fhb.oll.mediacategorizer.settings
             this.OnPropertyChanged(@"CompatibleVideoFileExtensions");
         }
         
-        private const string DEF_COMPATIBLEVIDEOFILEEXTENSIONS = @"mp4";
+        private const string DEF_COMPATIBLEVIDEOFILEEXTENSIONS = @"avi mpg wmv ogv webm mov mkv 3gp mpv m2v mp4 m4v";
         
         [DefaultValue(DEF_COMPATIBLEVIDEOFILEEXTENSIONS)]
         [Category(@"Ressourcen")]
