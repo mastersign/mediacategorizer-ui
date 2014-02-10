@@ -46,6 +46,11 @@ namespace de.fhb.oll.mediacategorizer.processing
             if (audioExts.Contains(sourceExt)) m.MediaType = MediaType.Audio;
             if (videoExts.Contains(sourceExt)) m.MediaType = MediaType.Video;
 
+            if (m.MediaType == MediaType.Video && Project.Configuration.VideoToAudio)
+            {
+                m.MediaType = MediaType.Audio;
+            }
+
             var baseTargetPath = Path.Combine(Project.GetWorkingDirectory(), m.Id + ".");
 
             if (Project.Configuration.UseTranscoding || m.MediaType == MediaType.Unknown)

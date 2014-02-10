@@ -169,6 +169,12 @@
         <Description>Gibt an, ob die Originalmedien für die Einbettung in die Ergebniswebseite umgewandelt werden sollen.</Description>
         <DefaultValue>true</DefaultValue>
       </Property>
+      <Property name="VideoToAudio" type="bool">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video in Audio umwandeln</DisplayName>
+        <Description>Gibt an, ob bei Videomedien nur die Tonspur in die Ergebniswebseite eingebunden werden soll.</Description>
+        <DefaultValue>false</DefaultValue>
+      </Property>
       <Property name="VideoWidth" type="int">
         <Category>Transkodierung</Category>
         <DisplayName>Video-Breite</DisplayName>
