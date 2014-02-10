@@ -3,6 +3,10 @@
   <Class Name="de.fhb.oll.mediacategorizer.model.Configuration" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="0.75" Width="2.75" />
     <Members>
+      <Field Name="_audioParameterMP3" Hidden="true" />
+      <Field Name="_audioParameterOGG" Hidden="true" />
+      <Field Name="_audioTranscodeMP3" Hidden="true" />
+      <Field Name="_audioTranscodeOGG" Hidden="true" />
       <Field Name="_categoryCloud" Hidden="true" />
       <Field Name="_cleanupOutputDir" Hidden="true" />
       <Field Name="_confidenceTestDuration" Hidden="true" />
@@ -20,14 +24,30 @@
       <Field Name="_skipMediaCopy" Hidden="true" />
       <Field Name="_skipWordClouds" Hidden="true" />
       <Field Name="_skipWordIncludes" Hidden="true" />
+      <Field Name="_useTranscoding" Hidden="true" />
+      <Field Name="_videoParameterH264" Hidden="true" />
+      <Field Name="_videoParameterOGG" Hidden="true" />
+      <Field Name="_videoParameterWebM" Hidden="true" />
+      <Field Name="_videoTranscodeH264" Hidden="true" />
+      <Field Name="_videoTranscodeOGG" Hidden="true" />
+      <Field Name="_videoTranscodeWebM" Hidden="true" />
+      <Field Name="_videoWidth" Hidden="true" />
       <Field Name="_visualizeResult" Hidden="true" />
       <Field Name="_waveform" Hidden="true" />
       <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="AudioParameterMP3Changed" Hidden="true" />
+      <Method Name="AudioParameterMP3PropertyChangedHandler" Hidden="true" />
+      <Event Name="AudioParameterOGGChanged" Hidden="true" />
+      <Method Name="AudioParameterOGGPropertyChangedHandler" Hidden="true" />
+      <Event Name="AudioTranscodeMP3Changed" Hidden="true" />
+      <Event Name="AudioTranscodeOGGChanged" Hidden="true" />
       <Event Name="CategoryCloudChanged" Hidden="true" />
       <Method Name="CategoryCloudPropertyChangedHandler" Hidden="true" />
       <Event Name="CleanupOutputDirChanged" Hidden="true" />
       <Event Name="ConfidenceTestDurationChanged" Hidden="true" />
       <Method Name="Configuration" Hidden="true" />
+      <Field Name="DEF_AUDIOTRANSCODEMP3" Hidden="true" />
+      <Field Name="DEF_AUDIOTRANSCODEOGG" Hidden="true" />
       <Field Name="DEF_CLEANUPOUTPUTDIR" Hidden="true" />
       <Field Name="DEF_CONFIDENCETESTDURATION" Hidden="true" />
       <Field Name="DEF_GOODCONFIDENCE" Hidden="true" />
@@ -40,6 +60,11 @@
       <Field Name="DEF_SKIPMEDIACOPY" Hidden="true" />
       <Field Name="DEF_SKIPWORDCLOUDS" Hidden="true" />
       <Field Name="DEF_SKIPWORDINCLUDES" Hidden="true" />
+      <Field Name="DEF_USETRANSCODING" Hidden="true" />
+      <Field Name="DEF_VIDEOTRANSCODEH264" Hidden="true" />
+      <Field Name="DEF_VIDEOTRANSCODEOGG" Hidden="true" />
+      <Field Name="DEF_VIDEOTRANSCODEWEBM" Hidden="true" />
+      <Field Name="DEF_VIDEOWIDTH" Hidden="true" />
       <Field Name="DEF_VISUALIZERESULT" Hidden="true" />
       <Method Name="GetVolatilePropertyPairs" Hidden="true" />
       <Event Name="GoodConfidenceChanged" Hidden="true" />
@@ -52,6 +77,10 @@
       <Method Name="MediaCloudPropertyChangedHandler" Hidden="true" />
       <Event Name="MinConfidenceChanged" Hidden="true" />
       <Event Name="MinMatchScoreChanged" Hidden="true" />
+      <Method Name="OnAudioParameterMP3Changed" Hidden="true" />
+      <Method Name="OnAudioParameterOGGChanged" Hidden="true" />
+      <Method Name="OnAudioTranscodeMP3Changed" Hidden="true" />
+      <Method Name="OnAudioTranscodeOGGChanged" Hidden="true" />
       <Method Name="OnCategoryCloudChanged" Hidden="true" />
       <Method Name="OnCleanupOutputDirChanged" Hidden="true" />
       <Method Name="OnConfidenceTestDurationChanged" Hidden="true" />
@@ -69,6 +98,14 @@
       <Method Name="OnSkipMediaCopyChanged" Hidden="true" />
       <Method Name="OnSkipWordCloudsChanged" Hidden="true" />
       <Method Name="OnSkipWordIncludesChanged" Hidden="true" />
+      <Method Name="OnUseTranscodingChanged" Hidden="true" />
+      <Method Name="OnVideoParameterH264Changed" Hidden="true" />
+      <Method Name="OnVideoParameterOGGChanged" Hidden="true" />
+      <Method Name="OnVideoParameterWebMChanged" Hidden="true" />
+      <Method Name="OnVideoTranscodeH264Changed" Hidden="true" />
+      <Method Name="OnVideoTranscodeOGGChanged" Hidden="true" />
+      <Method Name="OnVideoTranscodeWebMChanged" Hidden="true" />
+      <Method Name="OnVideoWidthChanged" Hidden="true" />
       <Method Name="OnVisualizeResultChanged" Hidden="true" />
       <Method Name="OnWaveformChanged" Hidden="true" />
       <Event Name="ProfileSelectionCriterionChanged" Hidden="true" />
@@ -79,6 +116,17 @@
       <Event Name="SkipMediaCopyChanged" Hidden="true" />
       <Event Name="SkipWordCloudsChanged" Hidden="true" />
       <Event Name="SkipWordIncludesChanged" Hidden="true" />
+      <Event Name="UseTranscodingChanged" Hidden="true" />
+      <Event Name="VideoParameterH264Changed" Hidden="true" />
+      <Method Name="VideoParameterH264PropertyChangedHandler" Hidden="true" />
+      <Event Name="VideoParameterOGGChanged" Hidden="true" />
+      <Method Name="VideoParameterOGGPropertyChangedHandler" Hidden="true" />
+      <Event Name="VideoParameterWebMChanged" Hidden="true" />
+      <Method Name="VideoParameterWebMPropertyChangedHandler" Hidden="true" />
+      <Event Name="VideoTranscodeH264Changed" Hidden="true" />
+      <Event Name="VideoTranscodeOGGChanged" Hidden="true" />
+      <Event Name="VideoTranscodeWebMChanged" Hidden="true" />
+      <Event Name="VideoWidthChanged" Hidden="true" />
       <Event Name="VisualizeResultChanged" Hidden="true" />
       <Field Name="volatileProperties" Hidden="true" />
       <Property Name="VolatileProperties" Hidden="true" />
@@ -86,58 +134,99 @@
       <Method Name="WaveformPropertyChangedHandler" Hidden="true" />
       <Method Name="WriteTo" Hidden="true" />
     </Members>
-    <AssociationLine Name="ProfileSelectionCriterion" Type="de.fhb.oll.mediacategorizer.model.ProfileSelectionCriterion" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="Waveform" Type="de.fhb.oll.mediacategorizer.model.WaveformParameter" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="1.777" Y="3.969" />
-        <Point X="1.777" Y="6.182" />
-        <Point X="3.571" Y="6.182" />
-        <Point X="3.571" Y="6.5" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.223" Y="0.425" />
-      </MemberNameLabel>
-    </AssociationLine>
-    <AssociationLine Name="Waveform" Type="de.fhb.oll.mediacategorizer.model.WaveformParameter" FixedFromPoint="true">
-      <Path>
-        <Point X="1.286" Y="3.969" />
-        <Point X="1.286" Y="6.5" />
+        <Point X="3.25" Y="4.812" />
+        <Point X="4.385" Y="4.812" />
+        <Point X="4.385" Y="9.067" />
+        <Point X="4.75" Y="9.067" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="0.068" Y="1.31" Height="0.182" Width="0.858" />
+        <Position X="-0.599" Y="1.925" Height="0.182" Width="0.858" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="MainCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="MainCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedToPoint="true">
       <Path>
-        <Point X="2.759" Y="3.969" />
-        <Point X="2.759" Y="4.583" />
-        <Point X="4.75" Y="4.583" />
+        <Point X="3.25" Y="4.231" />
+        <Point X="4.75" Y="4.231" />
       </Path>
     </AssociationLine>
-    <AssociationLine Name="MediaCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="MediaCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedToPoint="true">
       <Path>
-        <Point X="2.513" Y="3.969" />
-        <Point X="2.513" Y="5.092" />
-        <Point X="4.75" Y="5.092" />
+        <Point X="3.25" Y="4.564" />
+        <Point X="4.75" Y="4.564" />
       </Path>
     </AssociationLine>
-    <AssociationLine Name="CategoryCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="CategoryCloud" Type="de.fhb.oll.mediacategorizer.model.CloudParameter" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.268" Y="3.969" />
-        <Point X="2.268" Y="5.601" />
-        <Point X="4.75" Y="5.601" />
+        <Point X="3.25" Y="3.875" />
+        <Point X="4.75" Y="3.875" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="AudioParameterMP3" Type="de.fhb.oll.mediacategorizer.model.AudioEncodingParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.812" Y="5.507" />
+        <Point X="1.812" Y="5.882" />
+        <Point X="1.125" Y="5.882" />
+        <Point X="1.125" Y="6.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-1.565" Y="0.454" Height="0.182" Width="1.493" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="AudioParameterOGG" Type="de.fhb.oll.mediacategorizer.model.AudioEncodingParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.812" Y="5.507" />
+        <Point X="1.812" Y="5.882" />
+        <Point X="2.062" Y="5.882" />
+        <Point X="2.062" Y="6.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.536" Y="0.154" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="VideoParameterH264" Type="de.fhb.oll.mediacategorizer.model.VideoEncodingParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="5.062" />
+        <Point X="3.625" Y="5.062" />
+        <Point X="3.625" Y="8.875" />
+        <Point X="2.5" Y="8.875" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.12" Y="0.091" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="VideoParameterOGG" Type="de.fhb.oll.mediacategorizer.model.VideoEncodingParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="5.062" />
+        <Point X="3.625" Y="5.062" />
+        <Point X="3.625" Y="9.25" />
+        <Point X="2.5" Y="9.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="VideoParameterWebM" Type="de.fhb.oll.mediacategorizer.model.VideoEncodingParameter" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="5.062" />
+        <Point X="3.625" Y="5.062" />
+        <Point X="3.625" Y="9.647" />
+        <Point X="2.5" Y="9.647" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>HgwAoAAHqRMClEIg9lzQERkA4E8UgCPiCIhFAUMLiEQ=</HashCode>
+      <HashCode>HgwZoSAXqTcClXbw9tzQF1kI/M8cgSfyKIhVR9NPiEY=</HashCode>
       <FileName>model\EDN.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="ProfileSelectionCriterion" />
       <Property Name="IndexFilter" />
       <Property Name="Waveform" />
       <Property Name="MainCloud" />
       <Property Name="MediaCloud" />
       <Property Name="CategoryCloud" />
+      <Property Name="AudioParameterMP3" />
+      <Property Name="AudioParameterOGG" />
+      <Property Name="VideoParameterH264" />
+      <Property Name="VideoParameterOGG" />
+      <Property Name="VideoParameterWebM" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -257,13 +346,10 @@
       <HashCode>IUQGIBRAFQOIqwREIDiAEEAAijKUAAEgUACQpQBFECA=</HashCode>
       <FileName>model\CloudParameter.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Precision" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.model.WaveformParameter">
-    <Position X="0.5" Y="6.5" Width="2" />
+    <Position X="4.75" Y="7.5" Width="2.25" />
     <Members>
       <Field Name="_backgroundColor" Hidden="true" />
       <Field Name="_foreground1Color" Hidden="true" />
@@ -271,6 +357,10 @@
       <Field Name="_height" Hidden="true" />
       <Field Name="_isChanged" Hidden="true" />
       <Field Name="_lineColor" Hidden="true" />
+      <Field Name="_passiveBackgroundColor" Hidden="true" />
+      <Field Name="_passiveForeground1Color" Hidden="true" />
+      <Field Name="_passiveForeground2Color" Hidden="true" />
+      <Field Name="_passiveLineColor" Hidden="true" />
       <Field Name="_width" Hidden="true" />
       <Method Name="AcceptChanges" Hidden="true" />
       <Event Name="BackgroundColorChanged" Hidden="true" />
@@ -286,30 +376,81 @@
       <Method Name="OnForeground2ColorChanged" Hidden="true" />
       <Method Name="OnHeightChanged" Hidden="true" />
       <Method Name="OnLineColorChanged" Hidden="true" />
+      <Method Name="OnPassiveBackgroundColorChanged" Hidden="true" />
+      <Method Name="OnPassiveForeground1ColorChanged" Hidden="true" />
+      <Method Name="OnPassiveForeground2ColorChanged" Hidden="true" />
+      <Method Name="OnPassiveLineColorChanged" Hidden="true" />
       <Method Name="OnPropertyChanged" Hidden="true" />
       <Method Name="OnWidthChanged" Hidden="true" />
+      <Event Name="PassiveBackgroundColorChanged" Hidden="true" />
+      <Event Name="PassiveForeground1ColorChanged" Hidden="true" />
+      <Event Name="PassiveForeground2ColorChanged" Hidden="true" />
+      <Event Name="PassiveLineColorChanged" Hidden="true" />
       <Event Name="PropertyChanged" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
       <Method Name="WaveformParameter" Hidden="true" />
       <Event Name="WidthChanged" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AQADIAQCBACACwQEIiAAEEAAiJEEAAAAAAAAAABAEAA=</HashCode>
-      <FileName>model\WaveformParameter.cs</FileName>
+      <HashCode>AQBDIgQCBIDgCwQEIiQAEEABiNMEAAAgAAABACBAkAA=</HashCode>
+      <FileName>model\EDN.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Enum Name="de.fhb.oll.mediacategorizer.model.ProfileSelectionCriterion">
-    <Position X="2.75" Y="6.5" Width="1.75" />
+  <Class Name="de.fhb.oll.mediacategorizer.model.AudioEncodingParameter">
+    <Position X="0.5" Y="6.75" Width="2" />
+    <Members>
+      <Field Name="_audioBitrate" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_joinChannels" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="AudioBitrateChanged" Hidden="true" />
+      <Method Name="AudioEncodingParameter" Hidden="true" />
+      <Field Name="DEF_AUDIOBITRATE" Hidden="true" />
+      <Field Name="DEF_JOINCHANNELS" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Event Name="JoinChannelsChanged" Hidden="true" />
+      <Method Name="OnAudioBitrateChanged" Hidden="true" />
+      <Method Name="OnJoinChannelsChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AAAgAACAABAEAAAAAAAgAAAABAAAAgAAAAEQBAAAAAA=</HashCode>
+      <HashCode>AQAAIAIAABAACABEMAAAEAAAgAAEhAAQAAAAAAAAAAA=</HashCode>
+      <FileName>model\AudioEncodingParameter.cs</FileName>
     </TypeIdentifier>
-  </Enum>
-  <Enum Name="de.fhb.oll.mediacategorizer.model.CloudPrecision">
-    <Position X="4.75" Y="7" Width="2.25" />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.model.VideoEncodingParameter">
+    <Position X="0.5" Y="8.5" Width="2" />
+    <Members>
+      <Field Name="_audioBitrate" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_joinChannels" Hidden="true" />
+      <Field Name="_videoBitrate" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="AudioBitrateChanged" Hidden="true" />
+      <Field Name="DEF_AUDIOBITRATE" Hidden="true" />
+      <Field Name="DEF_JOINCHANNELS" Hidden="true" />
+      <Field Name="DEF_VIDEOBITRATE" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Event Name="JoinChannelsChanged" Hidden="true" />
+      <Method Name="OnAudioBitrateChanged" Hidden="true" />
+      <Method Name="OnJoinChannelsChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnVideoBitrateChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Event Name="VideoBitrateChanged" Hidden="true" />
+      <Method Name="VideoEncodingParameter" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAAEAAA=</HashCode>
+      <HashCode>AQAAIgIAABAACABEMCBAEAIAgAAEhAgQAAAAAAAAAAA=</HashCode>
+      <FileName>model\VideoEncodingParameter.cs</FileName>
     </TypeIdentifier>
-  </Enum>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
