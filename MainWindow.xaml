@@ -31,7 +31,7 @@
                LoadCompleted="FrameLoadCompleteHandler" DataContextChanged="FrameDataContextChangedHandler"/>
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,8,8,8" x:Name="navigationPanel">
             <Expander Header="Start" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" IsExpanded="True" Tag="Start" FontWeight="Bold">
-                <TextBlock TextWrapping="Wrap" Text="Geben Sie einen Namen und eine Beschreibung für das Projekt an." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
+                <TextBlock TextWrapping="Wrap" Text="Geben Sie einen Namen, eine Beschreibung und ein Ausgabeverzeichnis für das Projekt an." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
             </Expander>
             <Expander Header="Kategorien" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" Tag="Categories" FontWeight="Bold">
                 <TextBlock TextWrapping="Wrap" Text="Richten Sie die Kategorien mit ihren Beispieldokumenten ein." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
@@ -43,7 +43,7 @@
                 <TextBlock TextWrapping="Wrap" Text="Passen Sie die Parameter für die Analyse und die Ergebnisausgabe an." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
             </Expander>
             <Expander Header="Ausführung" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" Tag="Processing" FontWeight="Bold">
-                <TextBlock TextWrapping="Wrap" Text="Geben Sie den Pfad für die Projektausgabe an und starten Sie die Analyse." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
+                <TextBlock TextWrapping="Wrap" Text="Starten Sie die Analyse und beobachten Sie den Projektfortschritt." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
             </Expander>
         </StackPanel>
     </Grid>
