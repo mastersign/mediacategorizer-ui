@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace de.fhb.oll.mediacategorizer.tools
 {
@@ -24,7 +25,7 @@ namespace de.fhb.oll.mediacategorizer.tools
 
         private static void ProcessExitedHandler(object sender, EventArgs e)
         {
-            var p = (Process) sender;
+            var p = (Process)sender;
             lock (PROCESSES)
             {
                 PROCESSES.Remove(p);
@@ -38,7 +39,14 @@ namespace de.fhb.oll.mediacategorizer.tools
             {
                 processes = PROCESSES.ToArray();
             }
+            if (processes.Length == 0) return;
+
             foreach (var p in processes) p.Kill();
+            new Thread(() =>
+            {
+                Thread.Sleep(250);
+                KillRunningToolProcesses();
+            }).Start();
         }
 
         private readonly ILogWriter logWriter;
