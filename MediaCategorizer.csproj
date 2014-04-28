@@ -132,6 +132,7 @@
     <Compile Include="tools\DistilleryTool.cs" />
     <Compile Include="tools\FfprobeTool.cs" />
     <Compile Include="tools\FfmpegTool.cs" />
+    <Compile Include="ProfileManagement.cs" />
     <Compile Include="tools\ToolBase.cs" />
     <Compile Include="tools\ToolProvider.cs" />
     <Compile Include="tools\TranscripterTool.cs" />

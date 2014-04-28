@@ -33,12 +33,10 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected override void Work()
         {
-            var transcripter = GetTranscripterTool();
-
             OnProgress("Verarbeitungsgruppen bilden");
 
-            profiles = transcripter.GetSpeechRecognitionProfiles().ToDictionary(
-                t => t.Item1, t => t.Item2);
+            profiles = Project.GetProfilesAsDictionary();
+
             processGroups = profiles.Keys
                 .Select(pId => Tuple.Create(pId, Project.GetMedia().Where(m => m.RecognitionProfile == pId).ToArray()))
                 .Where(t => t.Item2.Length > 0)

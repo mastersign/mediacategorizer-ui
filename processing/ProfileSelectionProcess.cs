@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.tools;
 
@@ -34,12 +33,11 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected override void Work()
         {
-            var transcripter = GetTranscripterTool();
             OnProgress("Sprachprofile ermitteln");
-            profiles = transcripter.GetSpeechRecognitionProfiles().ToDictionary(t => t.Item1, t => t.Item2);
+            profiles = Project.GetProfilesAsDictionary();
 
             OnProgress("Erkennungssicherheiten ermitteln");
-            RunTestsForAllProfiles(transcripter);
+            RunTestsForProfiles();
 
             OnProgress("Erkennungssicherheiten auswerten");
             var criterion = GetCriterion();
@@ -81,28 +79,29 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
         }
 
-        private void RunTestsForAllProfiles(TranscripterTool transcripter)
+        private void RunTestsForProfiles()
         {
             results = Project.GetMedia().ToDictionary(
                 m => m, m => new Dictionary<Guid, TranscripterTool.ConfidenceTestResult>());
+
             PhaseCount = profiles.Count;
             CurrentPhase = 0;
 
-            var originalProfile = transcripter.GetCurrentSpeechRecognitionProfileId();
+            var originalProfile = ProfileManagement.GetCurrentSpeechRecognitionProfileId();
             foreach (var profile in profiles)
             {
                 WorkItem = profile.Value;
-                RunTestsForProfile(transcripter, profile.Key);
+                RunTestsForProfile(profile.Key);
                 CurrentPhase = CurrentPhase + 1;
             }
-            transcripter.SetCurrentSpeechRecognitionProfile(originalProfile);
+            ProfileManagement.SetCurrentSpeechRecognitionProfile(originalProfile);
             WorkItem = null;
         }
 
-        private void RunTestsForProfile(TranscripterTool transcripter, Guid profileId)
+        private void RunTestsForProfile(Guid profileId)
         {
             currentProfileId = profileId;
-            transcripter.SetCurrentSpeechRecognitionProfile(profileId);
+            ProfileManagement.SetCurrentSpeechRecognitionProfile(profileId);
 
             WorkItem = profiles[profileId];
 
