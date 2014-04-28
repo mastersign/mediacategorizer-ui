@@ -33,6 +33,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         public event EventHandler<ProcessResultEventArgs> Ended;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public bool IsCanceled { get; private set; }
+
         public Dispatcher Dispatcher { get; set; }
 
         protected ProcessBase(ProcessChain chain, string name, IProcess[] dependencies)
@@ -199,6 +201,12 @@ namespace de.fhb.oll.mediacategorizer.processing
             OnStarted();
             var t = Task.Run((Action)Work);
             t.ContinueWith(WorkFinalizer);
+        }
+
+        public void Cancel()
+        {
+            if (State != ProcessState.Running) return;
+            IsCanceled = true;
         }
 
         private void WorkFinalizer(Task workTask)

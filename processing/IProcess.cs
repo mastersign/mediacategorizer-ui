@@ -38,5 +38,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         IEnumerable<IProcess> GetDependencies();
 
         void Start();
+
+        void Cancel();
     }
 }
