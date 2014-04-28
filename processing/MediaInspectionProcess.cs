@@ -27,7 +27,7 @@ namespace de.fhb.oll.mediacategorizer.processing
         protected override void Work()
         {
             OnProgress("Video- und Audiodatenströme untersuchen");
-            var media = Project.Media.ToArray();
+            var media = Project.GetMedia().ToArray();
             RunTasks(media.Select(m => (ProcessTask)((pH, eH) => ProcessMedia(m, pH, eH))).ToArray());
         }
 

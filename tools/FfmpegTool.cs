@@ -34,7 +34,7 @@ namespace de.fhb.oll.mediacategorizer.tools
         {
             errors = new List<string>();
             duration = TimeSpan.Zero;
-            var pi = new ProcessStartInfo(ToolPath, BuildArguments(sourcePath, targetPath));
+            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), BuildArguments(sourcePath, targetPath));
             pi.RedirectStandardInput = false;
             pi.RedirectStandardOutput = true;
             pi.RedirectStandardError = true;
@@ -42,6 +42,7 @@ namespace de.fhb.oll.mediacategorizer.tools
             pi.CreateNoWindow = true;
             LogProcessStart(pi);
             var p = Process.Start(pi);
+            RegisterProcess(p);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             Task.Run(() => RunErrorReader(p.StandardError, progressHandler));
             p.WaitForExit();

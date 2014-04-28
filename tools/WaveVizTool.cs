@@ -30,11 +30,12 @@ namespace de.fhb.oll.mediacategorizer.tools
                 FormatColor(background), FormatColor(foreground1),
                 FormatColor(foreground2), FormatColor(lineColor));
 
-            var pi = new ProcessStartInfo(ToolPath, arguments);
+            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), arguments);
             pi.CreateNoWindow = true;
             pi.UseShellExecute = false;
             LogProcessStart(pi);
             var p = Process.Start(pi);
+            RegisterProcess(p);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             p.WaitForExit();
             return p.ExitCode == 0;

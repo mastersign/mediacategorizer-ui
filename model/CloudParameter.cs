@@ -14,6 +14,7 @@ namespace de.fhb.oll.mediacategorizer.model
         {
             Color = System.Windows.Media.Color.FromRgb(0, 76, 204);
             BackgroundColor = System.Windows.Media.Colors.Transparent;
+            FontFamily = new System.Windows.Media.FontFamily("Calibri");
         }
 
         /// <summary>

@@ -41,14 +41,18 @@ namespace de.fhb.oll.mediacategorizer.processing
 
             OnProgress("Analyse starten...");
             var distillery = GetDistilleryTool();
-            distillery.RunDistillery(jobFile, wi => { WorkItem = wi; }, OnProgress, OnProgress, OnError);
-
-            if (Project.Configuration.ShowResult)
+            var state = distillery.RunDistillery(jobFile, wi => { WorkItem = wi; }, OnProgress, OnProgress, OnError);
+            if (!state)
             {
-                Process.Start(Path.Combine(Project.OutputDir, 
-                    Project.Configuration.VisualizeResult 
-                        ? "index.html" 
-                        : Project.ResultFile));
+                OnError("Der Java-Prozess wurde mit einem Fehler beendet.");
+            }
+            else if (Project.Configuration.ShowResult)
+            {
+                var resultFileToShow = Path.Combine(Project.GetOutputDir(),
+                    Project.Configuration.VisualizeResult
+                        ? "index.html"
+                        : Project.ResultFile);
+                if (File.Exists(resultFileToShow)) Process.Start(resultFileToShow);
             }
         }
     }

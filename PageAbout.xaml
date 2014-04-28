@@ -1,0 +1,42 @@
+﻿<Page x:Name="page" x:Class="de.fhb.oll.mediacategorizer.PageAbout"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	  mc:Ignorable="d" 
+	  d:DesignHeight="400" d:DesignWidth="600"
+	Title="Info">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="176" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image HorizontalAlignment="Left" Height="128" Margin="16,8,0,0" VerticalAlignment="Top" Width="128" Source="logo/logo_256.png" Grid.RowSpan="6"/>
+            <TextBlock x:Name="tbTitle"  Grid.Row="0" Grid.Column="1" Margin="0,16,0,0" TextWrapping="Wrap" Text="Kein Titel" FontSize="24" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="Produkt" Padding="0,5" />
+            <TextBlock x:Name="tbProduct" Grid.Column="2"  Grid.Row="1" Text="Kein Produkt" Padding="8,5,5,5" TextWrapping="Wrap"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" Text="Version" Padding="0,5" />
+            <TextBlock x:Name="tbVersion" Grid.Column="2"  Grid.Row="2" Text="0.0.0.0" Padding="8,5,5,5" TextWrapping="Wrap"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" Text="Beschreibung" Padding="0,5" />
+            <TextBlock x:Name="tbDescription" Grid.Column="2"  Grid.Row="3" Text="Keine Beschreibung" Padding="8,5,5,5" TextWrapping="Wrap"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" Text="Hersteller" Padding="0,5" />
+            <TextBlock x:Name="tbCompany" Grid.Column="2"  Grid.Row="4" Text="Kein Unternehmen" Padding="8,5,5,5" TextWrapping="Wrap"/>
+            <TextBlock x:Name="tbCopyright" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" VerticalAlignment="Bottom" Text="Kein Copyright" Padding="5" TextWrapping="Wrap" Height="26"/>
+        </Grid>
+    </Grid>
+</Page>

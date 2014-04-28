@@ -20,11 +20,11 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("media-categorizer-version"), version.ToString(3),
                 new Keyword("job-name"), Name,
                 new Keyword("job-description"), Description,
-                new Keyword("output-dir"), OutputDir,
+                new Keyword("output-dir"), GetOutputDir(),
                 new Keyword("result-file"), ResultFile,
                 new Keyword("configuration"), Configuration,
-                new Keyword("videos"), new EdnVector(Media, true),
                 new Keyword("categories"), new EdnVector(Categories, true),
+                new Keyword("videos"), new EdnVector(GetMedia(), true),
             });
         }
     }
@@ -100,6 +100,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("height"), Height,
                 new Keyword("precision"), CloudPrecisionAsEdn(),
                 new Keyword("order-priority"), OrderPriority,
+                new Keyword("min-occurrence"), MinOccurence,
                 new Keyword("font-family"), FontFamily.Source,
                 new Keyword("font-style"), FontStyleAsEdn(),
                 new Keyword("min-font-size"), MinFontSize,
@@ -146,6 +147,7 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("recognition-profile"), RecognitionProfile.ToString("D"),
                 new Keyword("recognition-profile-name"), RecognitionProfileName,
                 new Keyword("audio-file"), AudioFile,
+                new Keyword("duration"), Duration,
                 new Keyword("waveform-file"), WaveformFile,
                 new Keyword("results-file"), ResultsFile,
             });

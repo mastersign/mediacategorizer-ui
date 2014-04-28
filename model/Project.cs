@@ -56,11 +56,23 @@ namespace de.fhb.oll.mediacategorizer.model
             return result;
         }
 
-        public string GetWorkingDirectory()
+        public string GetOutputDir()
         {
-            return Path.Combine(OutputDir, WORKING_DIR_NAME);
+            return Path.IsPathRooted(OutputDir)
+                ? OutputDir
+                : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), OutputDir);
         }
 
+        public string GetWorkingDirectory()
+        {
+            return Path.Combine(GetOutputDir(), WORKING_DIR_NAME);
+        }
+
+        public IEnumerable<Media> GetMedia()
+        {
+            return Media.Where(m => m != null);
+        }
+            
         [XmlIgnore]
         public ProcessChain ProcessChain { get; set; }
 

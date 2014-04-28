@@ -123,6 +123,7 @@ namespace de.fhb.oll.mediacategorizer
             menuMain.IsEnabled = true;
             menuProject.IsEnabled = true;
             navigationPanel.IsEnabled = true;
+            UpdateTitle();
         }
 
         private void ProjectChangedHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -292,6 +293,7 @@ namespace de.fhb.oll.mediacategorizer
             {
                 OverwritePrompt = true,
                 Title = saveAs ? "Projekt speicher unter..." : "Projekt speichern...",
+                DefaultExtension = PROJECT_FILE_EXT,
                 AlwaysAppendDefaultExtension = true,
             };
             dlg.Filters.Add(new CommonFileDialogFilter("Media-Categorizer-Projekt", PROJECT_FILE_EXT) { ShowExtensions = true });
@@ -367,19 +369,20 @@ namespace de.fhb.oll.mediacategorizer
 
         private void MenuInfoHandler(object sender, RoutedEventArgs e)
         {
-            // TODO Infobox
-            MessageBox.Show(this, "Info", "Menu", MessageBoxButton.OK, MessageBoxImage.Information);
+            GoToPage("About");
+        }
+
+        private void ClosingHandler(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!CheckProjectStateBeforeClosing("Programm beenden")) e.Cancel = true;
         }
 
         private void ClosedHandler(object sender, EventArgs e)
         {
             var sm = (SetupManager)Application.Current.Resources["SetupManager"];
             sm.Save();
-        }
-
-        private void ClosingHandler(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (!CheckProjectStateBeforeClosing("Programm beenden")) e.Cancel = true;
+            ToolBase.KillRunningToolProcesses();
+            Environment.Exit(0);
         }
     }
 }

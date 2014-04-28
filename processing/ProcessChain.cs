@@ -25,7 +25,11 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         public event EventHandler ChainStarted;
 
+        private DateTime? startTime;
+
         public event EventHandler ChainEnded;
+
+        private DateTime? endTime;
 
         private bool isRunning;
 
@@ -42,13 +46,10 @@ namespace de.fhb.oll.mediacategorizer.processing
         public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly List<Tuple<string, string>> preInitializedLogBuffer = new List<Tuple<string, string>>();
+
         private LogWriter logWriter;
 
-        public Setup Setup { get; private set; }
-
-        public ToolProvider ToolProvider { get; private set; }
-
-        public Project Project { get; private set; }
+        private bool changedStateOfProject;
 
         public ProcessChain(Setup setup, ToolProvider toolProvider, Project project)
         {
@@ -71,6 +72,9 @@ namespace de.fhb.oll.mediacategorizer.processing
 
             DisposeLogWriter();
             preInitializedLogBuffer.Clear();
+
+            StartTime = null;
+            EndTime = null;
 
             Progress = 0f;
             totalProgressWeight = 0f;
@@ -142,6 +146,12 @@ namespace de.fhb.oll.mediacategorizer.processing
             return new IProcess[] { p1, p2, p2a, p2b, p3 };
         }
 
+        public Setup Setup { get; private set; }
+
+        public ToolProvider ToolProvider { get; private set; }
+
+        public Project Project { get; private set; }
+
         protected void PostSynced(Delegate d, params object[] args)
         {
             if (d == null) return;
@@ -162,14 +172,39 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         protected virtual void OnChainStarted()
         {
+            StartTime = DateTime.Now;
             Log("Process Chain", "Started");
             PostSynced(ChainStarted, this, EventArgs.Empty);
         }
 
+        public DateTime? StartTime
+        {
+            get { return startTime; }
+            private set
+            {
+                if (startTime == value) return;
+                startTime = value;
+                OnPropertyChanged();
+            }
+        }
+
         protected virtual void OnChainEnded()
         {
+            EndTime = DateTime.Now;
+            if (changedStateOfProject == false) Project.AcceptChanges();
             Log("Process Chain", "Ended");
             PostSynced(ChainEnded, this, EventArgs.Empty);
+        }
+
+        public DateTime? EndTime
+        {
+            get { return endTime; }
+            private set
+            {
+                if (endTime == value) return;
+                endTime = value;
+                OnPropertyChanged();
+            }
         }
 
         private void ProcessStartedHandler(object sender, EventArgs eventArgs)
@@ -296,6 +331,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             {
                 throw new InvalidOperationException("An ended chain can not be started. Use the Reset method before restart the chain.");
             }
+            changedStateOfProject = Project.IsChanged;
             GoAhead();
         }
 

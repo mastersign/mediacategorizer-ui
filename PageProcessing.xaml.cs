@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,9 +22,27 @@ namespace de.fhb.oll.mediacategorizer
     /// </summary>
     public partial class PageProcessing : Page
     {
+        private readonly Timer timer;
+
         public PageProcessing()
         {
             InitializeComponent();
+            timer = new Timer(OnTimer);
+        }
+
+        private void OnTimer(object state)
+        {
+            if (!CheckAccess())
+            {
+                Dispatcher.InvokeAsync(() => OnTimer(null));
+                return;
+            }
+            var processChain = GetProcessChain();
+            lblDurationTime.Content = processChain.StartTime != null 
+                ? processChain.EndTime != null
+                    ? (processChain.EndTime - processChain.StartTime).Value.ToString(@"%d\:hh\:mm\:ss")
+                    : (DateTime.Now - processChain.StartTime).Value.ToString(@"%d\:hh\:mm\:ss")
+                : "";
         }
 
         private ProcessChain GetProcessChain()
@@ -54,6 +72,7 @@ namespace de.fhb.oll.mediacategorizer
         {
             lblStatus.Content = "Verarbeiten";
             btnStartProcessing.IsEnabled = false;
+            timer.Change(0, 1000);
         }
 
         private void ChainEndedHandler(object sender, EventArgs e)
@@ -61,6 +80,7 @@ namespace de.fhb.oll.mediacategorizer
             var pc = (ProcessChain)sender;
             lblStatus.Content = pc.IsFailed ? "Fehlgeschlagen" : "Beendet";
             btnStartProcessing.IsEnabled = true;
+            timer.Change(0, Timeout.Infinite);
         }
     }
 }

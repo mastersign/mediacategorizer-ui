@@ -22,12 +22,13 @@ namespace de.fhb.oll.mediacategorizer.tools
         {
             var arguments = string.Format("--confidence-test --progress --test-duration {0} \"{1}\"",
                 duration.ToString(CultureInfo.InvariantCulture), waveFile);
-            var pi = new ProcessStartInfo(ToolPath, arguments);
+            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), arguments);
             pi.CreateNoWindow = true;
             pi.RedirectStandardOutput = true;
             pi.UseShellExecute = false;
             LogProcessStart(pi);
             var p = Process.Start(pi);
+            RegisterProcess(p);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             ObserveProgress(p.StandardOutput, duration, progressHandler);
             var result = new ConfidenceTestResult(p.StandardOutput);
@@ -43,12 +44,13 @@ namespace de.fhb.oll.mediacategorizer.tools
         {
             var arguments = string.Format("--progress --target {1} \"{0}\"",
                 waveFile, recognitionResultFile);
-            var pi = new ProcessStartInfo(ToolPath, arguments);
+            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), arguments);
             pi.CreateNoWindow = true;
             pi.RedirectStandardOutput = true;
             pi.UseShellExecute = false;
             LogProcessStart(pi);
             var p = Process.Start(pi);
+            RegisterProcess(p);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             ObserveProgress(p.StandardOutput, duration, progressHandler);
             p.WaitForExit();

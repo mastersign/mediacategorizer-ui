@@ -12,7 +12,6 @@
   </ReferencedTypes>
 
   <ModelFeatures>
-    <Equatable />
     <ChangeTracking level="Tracking" escalateChangeState="true" propagateTransaction="true" />
   </ModelFeatures>
 
@@ -281,6 +280,12 @@
         <DefaultValue>0.6</DefaultValue>
       </Property>
 
+      <Property name="MinOccurence" type="int">
+        <DisplayName>Minimales Vorkommen</DisplayName>
+        <Description>Die Mindestanzahl für das Auftreten eines Wortes, damit es in der Wortwolke angezeigt wird.</Description>
+        <DefaultValue>1</DefaultValue>
+      </Property>
+
       <Property name="FontFamily" type="System.Windows.Media.FontFamily" persistent="false">
         <DisplayName>Schriftfamilie</DisplayName>
         <Description>Der Name der Schriftfamilie für die Worte in der Wolke.</Description>
@@ -340,6 +345,9 @@
         <DefaultValue>No Name</DefaultValue>
       </Property>
       <Property name="Resources" type="CategoryResource" isCollection="true" />
+      <EqualityMembers>
+        <Property>Id</Property>
+      </EqualityMembers>
     </Class>
 
     <Class name="Media">

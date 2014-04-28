@@ -27,13 +27,14 @@ namespace de.fhb.oll.mediacategorizer.tools
         {
             errors = new List<string>();
             duration = TimeSpan.Zero;
-            var pi = new ProcessStartInfo(ToolPath, string.Format("-i \"{0}\"", sourcePath));
+            var pi = new ProcessStartInfo(GetAbsoluteToolPath(), string.Format("-i \"{0}\"", sourcePath));
             pi.RedirectStandardOutput = true;
             pi.RedirectStandardError = true;
             pi.UseShellExecute = false;
             pi.CreateNoWindow = true;
             LogProcessStart(pi);
             var p = Process.Start(pi);
+            RegisterProcess(p);
             p.PriorityClass = ProcessPriorityClass.BelowNormal;
             var readTask = Task.Run(() => RunErrorReader(p.StandardError));
             p.WaitForExit();
