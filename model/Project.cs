@@ -33,6 +33,7 @@ namespace de.fhb.oll.mediacategorizer.model
 
         private void Initialize()
         {
+            LoadProfiles();
         }
 
         public void SaveToFile(string file)
@@ -72,9 +73,23 @@ namespace de.fhb.oll.mediacategorizer.model
         {
             return Media.Where(m => m != null);
         }
-            
+
         [XmlIgnore]
         public ProcessChain ProcessChain { get; set; }
+
+        public void LoadProfiles()
+        {
+            Profiles = new ObservableCollection<Profile>(
+                ProfileManagement.GetSpeechRecognitionProfiles()
+                    .Select(Profile.FromTuple));
+        }
+
+        public Dictionary<Guid, string> GetProfilesAsDictionary()
+        {
+            return Profiles != null
+                ? Profiles.Where(p => p.Enabled).ToDictionary(p => p.Id, p => p.Name)
+                : new Dictionary<Guid, string>();
+        }
 
         [Conditional("DEBUG")]
         public void LoadDemoData()

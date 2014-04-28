@@ -42,6 +42,9 @@
             <Expander Header="Parameter" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" Tag="Parameters" FontWeight="Bold">
                 <TextBlock TextWrapping="Wrap" Text="Passen Sie die Parameter für die Analyse und die Ergebnisausgabe an." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
             </Expander>
+            <Expander Header="Sprachprofile" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" Tag="Profiles" FontWeight="Bold">
+                <TextBlock TextWrapping="Wrap" Text="Wählen Sie die Sprachprofile aus, mit denen die Spracherkennung durchgeführt werden soll." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
+            </Expander>
             <Expander Header="Ausführung" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" Tag="Processing" FontWeight="Bold">
                 <TextBlock TextWrapping="Wrap" Text="Starten Sie die Analyse und beobachten Sie den Projektfortschritt." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
             </Expander>
