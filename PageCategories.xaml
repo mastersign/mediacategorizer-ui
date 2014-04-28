@@ -8,55 +8,55 @@
 	  mc:Ignorable="d" 
 	  d:DesignHeight="400" d:DesignWidth="500"
 	Title="Kategorien">
-	<Page.Resources>
-		<ObjectDataProvider MethodName="GetValues"
+    <Page.Resources>
+        <ObjectDataProvider MethodName="GetValues"
 			ObjectType="{x:Type sys:Enum}"
 			x:Key="CategoryResourceTypeValues">
-			<ObjectDataProvider.MethodParameters>
-				<x:Type TypeName="model:CategoryResourceType" />
-			</ObjectDataProvider.MethodParameters>
-		</ObjectDataProvider>
-	</Page.Resources>
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="30"/>
-			<RowDefinition Height="28"/>
-			<RowDefinition Height="2*"/>
-			<RowDefinition Height="3*"/>
-		</Grid.RowDefinitions>
-		<Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
-		<StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top">
-			<Button x:Name="btnCreateCategory" Content="Kategorie hinzufügen" Style="{DynamicResource LabelButtonStyle}" Click="CreateCategoryHandler" />
-			<Button x:Name="btnDeleteCategory" Content="Kategorie entfernen" Style="{DynamicResource LabelButtonStyle}" Click="DeleteCategoryHandler" IsEnabled="False" />
-		</StackPanel>
-		<DataGrid Grid.Row="2" x:Name="categoryDataGrid" Margin="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Background="{Binding Background, ElementName=page}" ItemsSource="{Binding Categories}" GridLinesVisibility="None" AutoGenerateColumns="False" SelectionMode="Single" HeadersVisibility="Column" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="CategorySelectionChangedHandler">
-			<DataGrid.Columns>
-				<DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="ID" IsReadOnly="True" Width="2*"/>
-				<DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" IsReadOnly="True" Width="3*"/>
-				<DataGridTextColumn Binding="{Binding ResourceCount}" ClipboardContentBinding="{x:Null}" Header="Ressourcen" IsReadOnly="True" Width="2*"/>
-			</DataGrid.Columns>
-		</DataGrid>
-		<Grid x:Name="detailsGrid" Grid.Row="3" DataContext="{Binding SelectedItem, ElementName=categoryDataGrid}">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-			<Label Content="ID" HorizontalAlignment="Right" Margin="0,2,0,0" VerticalAlignment="Top"/>
-			<TextBox Grid.Row="0" Grid.Column="1" Margin="8,4,0,0" TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Top"/>
-			<Label Content="Name" HorizontalAlignment="Right" Margin="0,2,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top"/>
-			<TextBox Grid.Column="1" Margin="8,4,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top"/>
-			<Label Content="Ressourcen" HorizontalAlignment="Right" Margin="0,2" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top"/>
-			<DataGrid x:Name="resourceDataGrid" Grid.Column="1" Margin="8,2,0,2" Grid.Row="2" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" ItemsSource="{Binding Resources}" AutoGenerateColumns="False" CanUserReorderColumns="False" HeadersVisibility="Column" Background="{Binding Background, ElementName=page}" GridLinesVisibility="None" SelectionMode="Single" CanUserResizeRows="False" ColumnWidth="Auto">
-				<DataGrid.Columns>
-					<DataGridComboBoxColumn Header="Typ" MinWidth="80" SelectedItemBinding="{Binding Type}" ItemsSource="{Binding Source={StaticResource CategoryResourceTypeValues}}" Width="*" />
-					<DataGridTextColumn Header="URL" MinWidth="200" Binding="{Binding Url}" Width="3*" />
-				</DataGrid.Columns>
-			</DataGrid>
-		</Grid>
-	</Grid>
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="model:CategoryResourceType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button x:Name="btnCreateCategory" Content="Kategorie hinzufügen" Style="{DynamicResource LabelButtonStyle}" Click="CreateCategoryHandler" />
+            <Button x:Name="btnDeleteCategory" Content="Kategorie entfernen" Style="{DynamicResource LabelButtonStyle}" Click="DeleteCategoryHandler" IsEnabled="False" />
+        </StackPanel>
+        <DataGrid Grid.Row="2" x:Name="categoryDataGrid" Margin="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Background="{Binding Background, ElementName=page}" ItemsSource="{Binding Categories}" AutoGenerateColumns="False" SelectionMode="Single" HeadersVisibility="Column" CanUserResizeRows="False" CanUserAddRows="False" SelectionChanged="CategorySelectionChangedHandler" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" GridLinesVisibility="Horizontal">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="ID" Width="1*"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="3*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid x:Name="detailsGrid" Grid.Row="3" DataContext="{Binding SelectedItem, ElementName=categoryDataGrid}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="28"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Ressourcen in der Kategorie" HorizontalAlignment="Right" Margin="0,2,0,0" VerticalAlignment="Top"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding Name}" HorizontalAlignment="Stretch" Margin="0,2,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button x:Name="btnCreateRessource" Content="Ressource(n) hinzufügen" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="5,1" Click="NewRessourceClickHandler" Margin="5,0,0,0" IsEnabled="False"/>
+                <Button x:Name="btnDeleteRessource" Content="Ressource(n) entfernen" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="5,1" Margin="5,0,0,0" Click="DeleteRessourceClickHandler" IsEnabled="False" />
+            </StackPanel>
+            <DataGrid x:Name="resourceDataGrid" Margin="0,2" Grid.Row="2" Grid.Column="0"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" ItemsSource="{Binding Resources}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" HeadersVisibility="Column" Background="{Binding Background, ElementName=page}" CanUserResizeRows="False" ColumnWidth="Auto" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.ColumnSpan="2" AllowDrop="True" SelectionChanged="ResourceSelectionChangedHandler" DragOver="DragOverHandler" Drop="DropHandler">
+                <DataGrid.Columns>
+                    <DataGridComboBoxColumn Header="Typ" MinWidth="80" SelectedItemBinding="{Binding Type}" ItemsSource="{Binding Source={StaticResource CategoryResourceTypeValues}}" Width="*" />
+                    <DataGridTextColumn Header="URL" MinWidth="200" Binding="{Binding Url}" Width="3*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
 </Page>

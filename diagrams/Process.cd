@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="de.fhb.oll.mediacategorizer.processing.ProcessBase">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <Members>
+      <Property Name="CurrentMessage" Hidden="true" />
+      <Field Name="currentProgress" Hidden="true" />
+      <Property Name="CurrentProgress" Hidden="true" />
+      <Field Name="dependencies" Hidden="true" />
+      <Field Name="detailedErrorMessage" Hidden="true" />
+      <Property Name="DetailedErrorMessage" Hidden="true" />
+      <Property Name="Dispatcher" Hidden="true" />
+      <Event Name="Ended" Hidden="true" />
+      <Field Name="errorMessage" Hidden="true" />
+      <Property Name="ErrorMessage" Hidden="true" />
+      <Method Name="GetDependencies" Hidden="true" />
+      <Property Name="Name" Hidden="true" />
+      <Method Name="OnEnded" Hidden="true" />
+      <Method Name="OnStarted" Hidden="true" />
+      <Event Name="Progress" Hidden="true" />
+      <Field Name="progressMessage" Hidden="true" />
+      <Property Name="ProgressMessage" Hidden="true" />
+      <Property Name="ProgressWeight" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Property Name="SimpleStringRepresentation" Hidden="true" />
+      <Method Name="Start" Hidden="true" />
+      <Event Name="Started" Hidden="true" />
+      <Field Name="state" Hidden="true" />
+      <Property Name="State" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Method Name="WorkFinalizer" Hidden="true" />
+      <Field Name="workItem" Hidden="true" />
+      <Property Name="WorkItem" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>JQgAAAmAKKCEgAEkLAAACEQAiEqAACCEAAAAjADAAAA=</HashCode>
+      <FileName>processing\ProcessBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.PrepareProjectProcess" Collapsed="true">
+    <Position X="4" Y="0.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.ProcessBase" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="2.188" />
+        <Point X="3.625" Y="2.188" />
+        <Point X="3.625" Y="0.846" />
+        <Point X="4" Y="0.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AgoAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>processing\PrepareProjectProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.MediaInspectionProcess" Collapsed="true">
+    <Position X="4" Y="3.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="5.875" />
+        <Point X="3.625" Y="5.875" />
+        <Point X="3.625" Y="3.846" />
+        <Point X="4" Y="3.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>processing\MediaInspectionProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase">
+    <Position X="0.5" Y="4.5" Width="2.75" />
+    <Members>
+      <Method Name="ErrorHandler" Hidden="true" />
+      <Field Name="errors" Hidden="true" />
+      <Field Name="finishedEvent" Hidden="true" />
+      <Field Name="maxParallelTasks" Hidden="true" />
+      <Method Name="ProcessTask" Hidden="true" />
+      <Method Name="ProgressHandler" Hidden="true" />
+      <Field Name="progressList" Hidden="true" />
+      <Field Name="runningTasks" Hidden="true" />
+      <Method Name="SetMaxParallelTasks" Hidden="true" />
+      <Method Name="TaskFinished" Hidden="true" />
+      <Field Name="taskList" Hidden="true" />
+      <Method Name="UpdateWorkItem" Hidden="true" />
+      <Method Name="WorkQueue" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAEEAQAAAQCAAIgBAEAAABAIDAAAAAIAAgACQACAAA=</HashCode>
+      <FileName>processing\MultiTaskProcessBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.AudioExtractionProcess" Collapsed="true">
+    <Position X="4" Y="4.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="5.875" />
+        <Point X="3.625" Y="5.875" />
+        <Point X="3.625" Y="4.846" />
+        <Point X="4" Y="4.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgCAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>processing\AudioExtractionProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.WaveformProcess" Collapsed="true">
+    <Position X="4" Y="5.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="5.875" />
+        <Point X="3.625" Y="5.875" />
+        <Point X="3.625" Y="5.688" />
+        <Point X="4" Y="5.688" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgCAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>processing\WaveformProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.ProfileSelectionProcess" Collapsed="true">
+    <Position X="4" Y="6.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="5.875" />
+        <Point X="3.625" Y="5.875" />
+        <Point X="3.625" Y="6.846" />
+        <Point X="4" Y="6.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AQwBAAgAAAAAAAAAAAIQACAAAAAIAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>processing\ProfileSelectionProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.SpeechRecognitionProcess" Collapsed="true">
+    <Position X="4" Y="7.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="5.875" />
+        <Point X="3.625" Y="5.875" />
+        <Point X="3.625" Y="7.846" />
+        <Point X="4" Y="7.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgBAAAAAAAAAAAAgAIQAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>processing\SpeechRecognitionProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.AnalyzeResultsAndWriteOutputProcess" Collapsed="true">
+    <Position X="4" Y="1.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.ProcessBase" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="2.188" />
+        <Point X="3.625" Y="2.188" />
+        <Point X="3.625" Y="1.812" />
+        <Point X="4" Y="1.812" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>processing\AnalyzeResultsAndWriteOutputProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.FinalizeProjectProcess" Collapsed="true">
+    <Position X="4" Y="2.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.ProcessBase" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="2.188" />
+        <Point X="3.625" Y="2.188" />
+        <Point X="3.625" Y="2.846" />
+        <Point X="4" Y="2.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>processing\FinalizeProjectProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

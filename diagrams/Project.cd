@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="de.fhb.oll.mediacategorizer.model.Project">
+    <Position X="0.5" Y="1" Width="2.5" />
+    <Members>
+      <Field Name="_categories" Hidden="true" />
+      <Field Name="_configuration" Hidden="true" />
+      <Field Name="_description" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_media" Hidden="true" />
+      <Field Name="_name" Hidden="true" />
+      <Field Name="_outputDir" Hidden="true" />
+      <Field Name="_resultFile" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="CategoriesChanged" Hidden="true" />
+      <Method Name="CategoriesCollectionChangedHandler" Hidden="true" />
+      <Method Name="CategoriesItemPropertyChanged" Hidden="true" />
+      <Event Name="ConfigurationChanged" Hidden="true" />
+      <Method Name="ConfigurationPropertyChangedHandler" Hidden="true" />
+      <Field Name="DEF_DESCRIPTION" Hidden="true" />
+      <Field Name="DEF_NAME" Hidden="true" />
+      <Field Name="DEF_OUTPUTDIR" Hidden="true" />
+      <Field Name="DEF_RESULTFILE" Hidden="true" />
+      <Event Name="DescriptionChanged" Hidden="true" />
+      <Method Name="GetMedia" Hidden="true" />
+      <Method Name="Initialize" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Method Name="LoadDemoData" Hidden="true" />
+      <Event Name="MediaChanged" Hidden="true" />
+      <Method Name="MediaCollectionChangedHandler" Hidden="true" />
+      <Method Name="MediaItemPropertyChanged" Hidden="true" />
+      <Event Name="NameChanged" Hidden="true" />
+      <Method Name="OnCategoriesChanged" Hidden="true" />
+      <Method Name="OnConfigurationChanged" Hidden="true" />
+      <Method Name="OnDescriptionChanged" Hidden="true" />
+      <Method Name="OnMediaChanged" Hidden="true" />
+      <Method Name="OnNameChanged" Hidden="true" />
+      <Method Name="OnOutputDirChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnResultFileChanged" Hidden="true" />
+      <Event Name="OutputDirChanged" Hidden="true" />
+      <Method Name="Project" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Event Name="ResultFileChanged" Hidden="true" />
+      <Field Name="serializer" Hidden="true" />
+      <Field Name="WORKING_DIR_NAME" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Categories" Type="de.fhb.oll.mediacategorizer.model.Category" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="1.331" />
+        <Point X="5.25" Y="1.331" />
+        <Point X="5.25" Y="1.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.638" Y="0.495" Height="0.182" Width="2.879" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Media" Type="de.fhb.oll.mediacategorizer.model.Media" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.75" Y="3.901" />
+        <Point X="2.75" Y="6.875" />
+        <Point X="4.25" Y="6.875" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.152" Y="-0.325" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ProcessChain" Type="de.fhb.oll.mediacategorizer.processing.ProcessChain" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="0.692" Y="3.901" />
+        <Point X="0.692" Y="5.625" />
+        <Point X="1" Y="5.625" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.9" Y="0.977" Height="0.182" Width="1.061" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AoAGIEFgKAEoR0AEIAAAEkQAgABEFQAiwBEMAEgIEcw=</HashCode>
+      <FileName>model\EDN.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ProcessChain" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Categories" />
+      <Property Name="Media" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.model.Category">
+    <Position X="3.25" Y="1.75" Width="3.75" />
+    <Members>
+      <Field Name="_id" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_name" Hidden="true" />
+      <Field Name="_resources" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Method Name="Category" Hidden="true" />
+      <Field Name="DEF_ID" Hidden="true" />
+      <Field Name="DEF_NAME" Hidden="true" />
+      <Event Name="IdChanged" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Event Name="NameChanged" Hidden="true" />
+      <Method Name="OnIdChanged" Hidden="true" />
+      <Method Name="OnNameChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnResourcesChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Event Name="ResourcesChanged" Hidden="true" />
+      <Method Name="ResourcesCollectionChangedHandler" Hidden="true" />
+      <Method Name="ResourcesItemPropertyChanged" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Resources" Type="de.fhb.oll.mediacategorizer.model.CategoryResource" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.688" Y="3.238" />
+        <Point X="3.688" Y="4.648" />
+        <Point X="4.5" Y="4.648" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-2.763" Y="0.985" Height="0.182" Width="3.483" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAgCIAAAIhAABAAAIABAEAQggABEAAAgAAAAAgAYAJA=</HashCode>
+      <FileName>model\Category.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Resources" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.model.Media" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="5.75" Width="2.75" />
+    <Members>
+      <Field Name="_audioFile" Hidden="true" />
+      <Field Name="_duration" Hidden="true" />
+      <Field Name="_id" Hidden="true" />
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_mediaFile" Hidden="true" />
+      <Field Name="_name" Hidden="true" />
+      <Field Name="_recognitionProfile" Hidden="true" />
+      <Field Name="_recognitionProfileName" Hidden="true" />
+      <Field Name="_resultsFile" Hidden="true" />
+      <Field Name="_waveformFile" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="AudioFileChanged" Hidden="true" />
+      <Event Name="DurationChanged" Hidden="true" />
+      <Event Name="IdChanged" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Method Name="Media" Hidden="true" />
+      <Event Name="MediaFileChanged" Hidden="true" />
+      <Event Name="NameChanged" Hidden="true" />
+      <Method Name="OnAudioFileChanged" Hidden="true" />
+      <Method Name="OnDurationChanged" Hidden="true" />
+      <Method Name="OnIdChanged" Hidden="true" />
+      <Method Name="OnMediaFileChanged" Hidden="true" />
+      <Method Name="OnNameChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnRecognitionProfileChanged" Hidden="true" />
+      <Method Name="OnRecognitionProfileNameChanged" Hidden="true" />
+      <Method Name="OnResultsFileChanged" Hidden="true" />
+      <Method Name="OnWaveformFileChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Event Name="RecognitionProfileChanged" Hidden="true" />
+      <Event Name="RecognitionProfileNameChanged" Hidden="true" />
+      <Event Name="ResultsFileChanged" Hidden="true" />
+      <Event Name="WaveformFileChanged" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AIICKEMIABwChCAAIBBAESQCgAA8AADggAIQBCAYAAE=</HashCode>
+      <FileName>model\EDN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.model.CategoryResource" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="4" Width="2.5" />
+    <Members>
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_type" Hidden="true" />
+      <Field Name="_url" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Method Name="CategoryResource" Hidden="true" />
+      <Field Name="DEF_TYPE" Hidden="true" />
+      <Field Name="DEF_URL" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Method Name="OnTypeChanged" Hidden="true" />
+      <Method Name="OnUrlChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Method Name="TypeAsEdn" Hidden="true" />
+      <Event Name="TypeChanged" Hidden="true" />
+      <Event Name="UrlChanged" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAgwARAYAAAEAAAgASEAAAgCQAAAAgAAAA=</HashCode>
+      <FileName>model\EDN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.ProcessChain" Collapsed="true">
+    <Position X="1" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAABEIACCFABcBQOAAiSCEAqgkhYAQCAKAAEQCAApA=</HashCode>
+      <FileName>processing\ProcessChain.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

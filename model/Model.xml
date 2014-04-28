@@ -225,31 +225,48 @@
       <Property name="Width" type="int">
         <DisplayName>Breite (px)</DisplayName>
         <Description>Die Breite der Wellenformvisualisierung in Pixel.</Description>
-        <DefaultValue>640</DefaultValue>
+        <DefaultValue>540</DefaultValue>
       </Property>
       <Property name="Height" type="int">
         <DisplayName>Höhe (px)</DisplayName>
         <Description>Die Höhe der Wellenformvisualisierung in Pixel.</Description>
-        <DefaultValue>80</DefaultValue>
+        <DefaultValue>70</DefaultValue>
       </Property>
       
       <Property name="BackgroundColor" type="System.Windows.Media.Color">
         <DisplayName>Hintergrund</DisplayName>
-        <Description>Die Farbe des Hintergrundes.</Description>
+        <Description>Die Farbe des aktiven Hintergrundes.</Description>
       </Property>
       <Property name="Foreground1Color" type="System.Windows.Media.Color">
         <DisplayName>Wellenform 1</DisplayName>
-        <Description>Die erste Farbe der Wellenform.</Description>
+        <Description>Die erste Farbe der aktiven Wellenform.</Description>
       </Property>
       <Property name="Foreground2Color" type="System.Windows.Media.Color">
         <DisplayName>Wellenform 2</DisplayName>
-        <Description>Die zweite Farbe der Wellenform.</Description>
+        <Description>Die zweite Farbe der aktiven Wellenform.</Description>
       </Property>
       <Property name="LineColor" type="System.Windows.Media.Color">
         <DisplayName>Horizontlinie</DisplayName>
-        <Description>Die Farbe der Horizontlinie.</Description>
+        <Description>Die Farbe der aktiven Horizontlinie.</Description>
       </Property>
-      
+
+      <Property name="PassiveBackgroundColor" type="System.Windows.Media.Color">
+        <DisplayName>Passiver Hintergrund</DisplayName>
+        <Description>Die Farbe des passiven Hintergrundes.</Description>
+      </Property>
+      <Property name="PassiveForeground1Color" type="System.Windows.Media.Color">
+        <DisplayName>Passive Wellenform 1</DisplayName>
+        <Description>Die erste Farbe der passiven Wellenform.</Description>
+      </Property>
+      <Property name="PassiveForeground2Color" type="System.Windows.Media.Color">
+        <DisplayName>Passive Wellenform 2</DisplayName>
+        <Description>Die zweite Farbe der passiven Wellenform.</Description>
+      </Property>
+      <Property name="PassiveLineColor" type="System.Windows.Media.Color">
+        <DisplayName>Passive Horizontlinie</DisplayName>
+        <Description>Die Farbe der passiven Horizontlinie.</Description>
+      </Property>
+
     </Class>
 
     <Enum name="CloudPrecision">
@@ -338,6 +355,9 @@
       <Property name="Url" type="string">
         <DefaultValue>null</DefaultValue>
       </Property>
+      <Property name="CachedFile" type="string">
+        <DefaultValue>null</DefaultValue>
+      </Property>
     </Class>
 
     <Class name="Category">
@@ -357,9 +377,12 @@
       <Property name="Id" />
       <Property name="Name" />
       <Property name="MediaFile" />
-      <Property name="AudioFile" persistent="false" />
+      <Property name="MediaType" type="MediaType" persistent="false" />
+      <Property name="EncodedMediaFiles" type="MediaFile" isCollection="true" persistent="false" />
+      <Property name="ExtractedAudioFile" persistent="false" />
       <Property name="Duration" type="double" persistent="false" />
       <Property name="WaveformFile" persistent="false" />
+      <Property name="WaveformFileBackground" persistent="false" />
       <Property name="RecognitionProfile" type="System.Guid" persistent="false" />
       <Property name="RecognitionProfileName" type="string" persistent="false" />
       <Property name="ResultsFile" persistent="false" />
@@ -367,5 +390,17 @@
         <Property>Id</Property>
       </EqualityMembers>
     </Class>
+
+    <Class name="MediaFile">
+      <Property name="Path" />
+      <Property name="MimeType" />
+    </Class>
+
+    <Enum name="MediaType">
+      <Member name="Unknown" />
+      <Member name="Audio" />
+      <Member name="Video" />
+    </Enum>
+    
   </Types>
 </Model>

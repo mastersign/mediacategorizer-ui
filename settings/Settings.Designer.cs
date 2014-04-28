@@ -14,18 +14,20 @@ namespace de.fhb.oll.mediacategorizer.settings
         Manual,
     }
     
-    public partial class Setup : INotifyPropertyChanged, IChangeTracking, IEquatable<Setup>
+    public partial class Setup : INotifyPropertyChanged, IChangeTracking
     {
         public Setup()
         {
-            _parallelization = DEF_PARALLELIZATION;
-            _parallelTasks = DEF_PARALLELTASKS;
-            _compatibleMediaFileExtensions = DEF_COMPATIBLEMEDIAFILEEXTENSIONS;
-            _ffmpeg = DEF_FFMPEG;
-            _ffprobe = DEF_FFPROBE;
-            _waveViz = DEF_WAVEVIZ;
-            _transcripter = DEF_TRANSCRIPTER;
-            _distillery = DEF_DISTILLERY;
+            this._parallelization = DEF_PARALLELIZATION;
+            this._parallelTasks = DEF_PARALLELTASKS;
+            this._downloadTimeout = DEF_DOWNLOADTIMEOUT;
+            this._compatibleAudioFileExtensions = DEF_COMPATIBLEAUDIOFILEEXTENSIONS;
+            this._compatibleVideoFileExtensions = DEF_COMPATIBLEVIDEOFILEEXTENSIONS;
+            this._ffmpeg = DEF_FFMPEG;
+            this._ffprobe = DEF_FFPROBE;
+            this._waveViz = DEF_WAVEVIZ;
+            this._transcripter = DEF_TRANSCRIPTER;
+            this._distillery = DEF_DISTILLERY;
             
             this.IsChanged = false;
         }
@@ -73,62 +75,15 @@ namespace de.fhb.oll.mediacategorizer.settings
             return (this.GetType().FullName + @": " + (
                 (Environment.NewLine + @"    Parallelization = " + _parallelization.ToString().Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    ParallelTasks = " + _parallelTasks.ToString(formatProvider).Replace("\n", "\n    ")) + 
-                (Environment.NewLine + @"    CompatibleMediaFileExtensions = " + (!ReferenceEquals(_compatibleMediaFileExtensions, null) ? _compatibleMediaFileExtensions.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    DownloadTimeout = " + _downloadTimeout.ToString(formatProvider).Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    CompatibleAudioFileExtensions = " + (!ReferenceEquals(_compatibleAudioFileExtensions, null) ? _compatibleAudioFileExtensions.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
+                (Environment.NewLine + @"    CompatibleVideoFileExtensions = " + (!ReferenceEquals(_compatibleVideoFileExtensions, null) ? _compatibleVideoFileExtensions.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Ffmpeg = " + (!ReferenceEquals(_ffmpeg, null) ? _ffmpeg.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Ffprobe = " + (!ReferenceEquals(_ffprobe, null) ? _ffprobe.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    WaveViz = " + (!ReferenceEquals(_waveViz, null) ? _waveViz.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Transcripter = " + (!ReferenceEquals(_transcripter, null) ? _transcripter.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    Distillery = " + (!ReferenceEquals(_distillery, null) ? _distillery.ToString(formatProvider) : @"null").Replace("\n", "\n    ")) + 
                 (Environment.NewLine + @"    JavaRuntime = " + (!ReferenceEquals(_javaRuntime, null) ? _javaRuntime.ToString(formatProvider) : @"null").Replace("\n", "\n    "))));
-        }
-        
-        #endregion
-        
-        #region Equatability
-        
-        public bool Equals(Setup o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            return (
-                (this._parallelization == o._parallelization) && 
-                (this._parallelTasks == o._parallelTasks) && 
-                object.Equals(this._compatibleMediaFileExtensions, o._compatibleMediaFileExtensions) && 
-                object.Equals(this._ffmpeg, o._ffmpeg) && 
-                object.Equals(this._ffprobe, o._ffprobe) && 
-                object.Equals(this._waveViz, o._waveViz) && 
-                object.Equals(this._transcripter, o._transcripter) && 
-                object.Equals(this._distillery, o._distillery) && 
-                object.Equals(this._javaRuntime, o._javaRuntime));
-        }
-        
-        public override bool Equals(object o)
-        {
-            if (ReferenceEquals(o, null))
-            {
-                return false;
-            }
-            if (!(o.GetType() == typeof(Setup)))
-            {
-                return false;
-            }
-            return this.Equals((Setup)o);
-        }
-        
-        public override int GetHashCode()
-        {
-            return (this.GetType().GetHashCode() ^ 
-                this._parallelization.GetHashCode() ^ 
-                this._parallelTasks.GetHashCode() ^ 
-                (!ReferenceEquals(this._compatibleMediaFileExtensions, null) ? this._compatibleMediaFileExtensions.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._ffmpeg, null) ? this._ffmpeg.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._ffprobe, null) ? this._ffprobe.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._waveViz, null) ? this._waveViz.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._transcripter, null) ? this._transcripter.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._distillery, null) ? this._distillery.GetHashCode() : 0) ^ 
-                (!ReferenceEquals(this._javaRuntime, null) ? this._javaRuntime.GetHashCode() : 0));
         }
         
         #endregion
@@ -211,40 +166,118 @@ namespace de.fhb.oll.mediacategorizer.settings
         
         #endregion
         
-        #region Property CompatibleMediaFileExtensions
+        #region Property DownloadTimeout
         
-        private string _compatibleMediaFileExtensions;
+        private int _downloadTimeout;
         
-        public event EventHandler CompatibleMediaFileExtensionsChanged;
+        public event EventHandler DownloadTimeoutChanged;
         
-        protected virtual void OnCompatibleMediaFileExtensionsChanged()
+        protected virtual void OnDownloadTimeoutChanged()
         {
             this.IsChanged = true;
-            EventHandler handler = CompatibleMediaFileExtensionsChanged;
+            EventHandler handler = DownloadTimeoutChanged;
             if (!ReferenceEquals(handler, null))
             {
                 handler(this, EventArgs.Empty);
             }
-            this.OnPropertyChanged(@"CompatibleMediaFileExtensions");
+            this.OnPropertyChanged(@"DownloadTimeout");
         }
         
-        private const string DEF_COMPATIBLEMEDIAFILEEXTENSIONS = @"mp4";
+        private const int DEF_DOWNLOADTIMEOUT = 30;
         
-        [DefaultValue(DEF_COMPATIBLEMEDIAFILEEXTENSIONS)]
-        [Category(@"Verarbeitung")]
-        [DisplayName(@"Mediendateiendungen")]
-        [Description(@"Eine Liste mit Dateiendungen für unterstützte Mediendateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.")]
-        public virtual string CompatibleMediaFileExtensions
+        [DefaultValue(DEF_DOWNLOADTIMEOUT)]
+        [Category(@"Ressourcen")]
+        [DisplayName(@"Download-Timeout")]
+        [Description(@"Die Anzahl der Sekunden, nach denen der Versuch, eine Kategorie-Ressource herunterzuladen, abgebrochen werden soll.")]
+        public virtual int DownloadTimeout
         {
-            get { return _compatibleMediaFileExtensions; }
+            get { return _downloadTimeout; }
             set
             {
-                if (string.Equals(value, _compatibleMediaFileExtensions))
+                if ((value == _downloadTimeout))
                 {
                     return;
                 }
-                _compatibleMediaFileExtensions = value;
-                this.OnCompatibleMediaFileExtensionsChanged();
+                _downloadTimeout = value;
+                this.OnDownloadTimeoutChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property CompatibleAudioFileExtensions
+        
+        private string _compatibleAudioFileExtensions;
+        
+        public event EventHandler CompatibleAudioFileExtensionsChanged;
+        
+        protected virtual void OnCompatibleAudioFileExtensionsChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = CompatibleAudioFileExtensionsChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"CompatibleAudioFileExtensions");
+        }
+        
+        private const string DEF_COMPATIBLEAUDIOFILEEXTENSIONS = @"mp3";
+        
+        [DefaultValue(DEF_COMPATIBLEAUDIOFILEEXTENSIONS)]
+        [Category(@"Ressourcen")]
+        [DisplayName(@"Audiodateiendungen")]
+        [Description(@"Eine Liste mit Dateiendungen für unterstützte Audiodateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.")]
+        public virtual string CompatibleAudioFileExtensions
+        {
+            get { return _compatibleAudioFileExtensions; }
+            set
+            {
+                if (string.Equals(value, _compatibleAudioFileExtensions))
+                {
+                    return;
+                }
+                _compatibleAudioFileExtensions = value;
+                this.OnCompatibleAudioFileExtensionsChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property CompatibleVideoFileExtensions
+        
+        private string _compatibleVideoFileExtensions;
+        
+        public event EventHandler CompatibleVideoFileExtensionsChanged;
+        
+        protected virtual void OnCompatibleVideoFileExtensionsChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = CompatibleVideoFileExtensionsChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"CompatibleVideoFileExtensions");
+        }
+        
+        private const string DEF_COMPATIBLEVIDEOFILEEXTENSIONS = @"mp4";
+        
+        [DefaultValue(DEF_COMPATIBLEVIDEOFILEEXTENSIONS)]
+        [Category(@"Ressourcen")]
+        [DisplayName(@"Videodateiendungen")]
+        [Description(@"Eine Liste mit Dateiendungen für unterstützte Videodateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.")]
+        public virtual string CompatibleVideoFileExtensions
+        {
+            get { return _compatibleVideoFileExtensions; }
+            set
+            {
+                if (string.Equals(value, _compatibleVideoFileExtensions))
+                {
+                    return;
+                }
+                _compatibleVideoFileExtensions = value;
+                this.OnCompatibleVideoFileExtensionsChanged();
             }
         }
         

@@ -35,17 +35,24 @@ namespace de.fhb.oll.mediacategorizer.model
         Wikipedia,
     }
     
+    public enum MediaType
+    {
+        Unknown,
+        Audio,
+        Video,
+    }
+    
     public partial class Project : INotifyPropertyChanged, IChangeTracking
     {
         public Project()
         {
-            _name = DEF_NAME;
-            _description = DEF_DESCRIPTION;
-            _outputDir = DEF_OUTPUTDIR;
-            _resultFile = DEF_RESULTFILE;
-            Configuration = new Configuration();
-            Categories = new global::System.Collections.ObjectModel.ObservableCollection<Category>();
-            Media = new global::System.Collections.ObjectModel.ObservableCollection<Media>();
+            this._name = DEF_NAME;
+            this._description = DEF_DESCRIPTION;
+            this._outputDir = DEF_OUTPUTDIR;
+            this._resultFile = DEF_RESULTFILE;
+            this.Configuration = new Configuration();
+            this.Categories = new global::System.Collections.ObjectModel.ObservableCollection<Category>();
+            this.Media = new global::System.Collections.ObjectModel.ObservableCollection<Media>();
             this.Initialize();
             
             this.IsChanged = false;
@@ -424,24 +431,24 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public Configuration()
         {
-            _confidenceTestDuration = DEF_CONFIDENCETESTDURATION;
-            _profileSelectionCriterion = DEF_PROFILESELECTIONCRITERION;
-            _minConfidence = DEF_MINCONFIDENCE;
-            _goodConfidence = DEF_GOODCONFIDENCE;
-            _minMatchScore = DEF_MINMATCHSCORE;
-            IndexFilter = new FilterParameter();
-            Waveform = new WaveformParameter();
-            MainCloud = new CloudParameter();
-            MediaCloud = new CloudParameter();
-            CategoryCloud = new CloudParameter();
-            _rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
-            _cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
-            _visualizeResult = DEF_VISUALIZERESULT;
-            _showResult = DEF_SHOWRESULT;
-            _skipWordClouds = DEF_SKIPWORDCLOUDS;
-            _skipWordIncludes = DEF_SKIPWORDINCLUDES;
-            _skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
-            _skipMediaCopy = DEF_SKIPMEDIACOPY;
+            this._confidenceTestDuration = DEF_CONFIDENCETESTDURATION;
+            this._profileSelectionCriterion = DEF_PROFILESELECTIONCRITERION;
+            this._minConfidence = DEF_MINCONFIDENCE;
+            this._goodConfidence = DEF_GOODCONFIDENCE;
+            this._minMatchScore = DEF_MINMATCHSCORE;
+            this.IndexFilter = new FilterParameter();
+            this.Waveform = new WaveformParameter();
+            this.MainCloud = new CloudParameter();
+            this.MediaCloud = new CloudParameter();
+            this.CategoryCloud = new CloudParameter();
+            this._rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
+            this._cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
+            this._visualizeResult = DEF_VISUALIZERESULT;
+            this._showResult = DEF_SHOWRESULT;
+            this._skipWordClouds = DEF_SKIPWORDCLOUDS;
+            this._skipWordIncludes = DEF_SKIPWORDINCLUDES;
+            this._skipMatchIncludes = DEF_SKIPMATCHINCLUDES;
+            this._skipMediaCopy = DEF_SKIPMEDIACOPY;
             
             this.IsChanged = false;
         }
@@ -1258,14 +1265,14 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public FilterParameter()
         {
-            _blacklistResource = DEF_BLACKLISTRESOURCE;
-            _blacklistMaxSize = DEF_BLACKLISTMAXSIZE;
-            _filterNotShort = DEF_FILTERNOTSHORT;
-            _filterNoun = DEF_FILTERNOUN;
-            _filterMinConfidence = DEF_FILTERMINCONFIDENCE;
-            _filterGoodConfidence = DEF_FILTERGOODCONFIDENCE;
-            _filterNoPunctuation = DEF_FILTERNOPUNCTUATION;
-            _filterNotInBlacklist = DEF_FILTERNOTINBLACKLIST;
+            this._blacklistResource = DEF_BLACKLISTRESOURCE;
+            this._blacklistMaxSize = DEF_BLACKLISTMAXSIZE;
+            this._filterNotShort = DEF_FILTERNOTSHORT;
+            this._filterNoun = DEF_FILTERNOUN;
+            this._filterMinConfidence = DEF_FILTERMINCONFIDENCE;
+            this._filterGoodConfidence = DEF_FILTERGOODCONFIDENCE;
+            this._filterNoPunctuation = DEF_FILTERNOPUNCTUATION;
+            this._filterNotInBlacklist = DEF_FILTERNOTINBLACKLIST;
             
             this.IsChanged = false;
         }
@@ -1609,8 +1616,8 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public WaveformParameter()
         {
-            _width = DEF_WIDTH;
-            _height = DEF_HEIGHT;
+            this._width = DEF_WIDTH;
+            this._height = DEF_HEIGHT;
             this.Initialize();
             
             this.IsChanged = false;
@@ -1664,7 +1671,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Width");
         }
         
-        private const int DEF_WIDTH = 640;
+        private const int DEF_WIDTH = 540;
         
         [DefaultValue(DEF_WIDTH)]
         [DisplayName(@"Breite (px)")]
@@ -1702,7 +1709,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.OnPropertyChanged(@"Height");
         }
         
-        private const int DEF_HEIGHT = 80;
+        private const int DEF_HEIGHT = 70;
         
         [DefaultValue(DEF_HEIGHT)]
         [DisplayName(@"Höhe (px)")]
@@ -1741,7 +1748,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [DisplayName(@"Hintergrund")]
-        [Description(@"Die Farbe des Hintergrundes.")]
+        [Description(@"Die Farbe des aktiven Hintergrundes.")]
         public virtual global::System.Windows.Media.Color BackgroundColor
         {
             get { return _backgroundColor; }
@@ -1776,7 +1783,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [DisplayName(@"Wellenform 1")]
-        [Description(@"Die erste Farbe der Wellenform.")]
+        [Description(@"Die erste Farbe der aktiven Wellenform.")]
         public virtual global::System.Windows.Media.Color Foreground1Color
         {
             get { return _foreground1Color; }
@@ -1811,7 +1818,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [DisplayName(@"Wellenform 2")]
-        [Description(@"Die zweite Farbe der Wellenform.")]
+        [Description(@"Die zweite Farbe der aktiven Wellenform.")]
         public virtual global::System.Windows.Media.Color Foreground2Color
         {
             get { return _foreground2Color; }
@@ -1846,7 +1853,7 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         [DisplayName(@"Horizontlinie")]
-        [Description(@"Die Farbe der Horizontlinie.")]
+        [Description(@"Die Farbe der aktiven Horizontlinie.")]
         public virtual global::System.Windows.Media.Color LineColor
         {
             get { return _lineColor; }
@@ -1862,22 +1869,162 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         #endregion
+        
+        #region Property PassiveBackgroundColor
+        
+        private global::System.Windows.Media.Color _passiveBackgroundColor;
+        
+        public event EventHandler PassiveBackgroundColorChanged;
+        
+        protected virtual void OnPassiveBackgroundColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PassiveBackgroundColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"PassiveBackgroundColor");
+        }
+        
+        [DisplayName(@"Passiver Hintergrund")]
+        [Description(@"Die Farbe des passiven Hintergrundes.")]
+        public virtual global::System.Windows.Media.Color PassiveBackgroundColor
+        {
+            get { return _passiveBackgroundColor; }
+            set
+            {
+                if (value.Equals(_passiveBackgroundColor))
+                {
+                    return;
+                }
+                _passiveBackgroundColor = value;
+                this.OnPassiveBackgroundColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property PassiveForeground1Color
+        
+        private global::System.Windows.Media.Color _passiveForeground1Color;
+        
+        public event EventHandler PassiveForeground1ColorChanged;
+        
+        protected virtual void OnPassiveForeground1ColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PassiveForeground1ColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"PassiveForeground1Color");
+        }
+        
+        [DisplayName(@"Passive Wellenform 1")]
+        [Description(@"Die erste Farbe der passiven Wellenform.")]
+        public virtual global::System.Windows.Media.Color PassiveForeground1Color
+        {
+            get { return _passiveForeground1Color; }
+            set
+            {
+                if (value.Equals(_passiveForeground1Color))
+                {
+                    return;
+                }
+                _passiveForeground1Color = value;
+                this.OnPassiveForeground1ColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property PassiveForeground2Color
+        
+        private global::System.Windows.Media.Color _passiveForeground2Color;
+        
+        public event EventHandler PassiveForeground2ColorChanged;
+        
+        protected virtual void OnPassiveForeground2ColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PassiveForeground2ColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"PassiveForeground2Color");
+        }
+        
+        [DisplayName(@"Passive Wellenform 2")]
+        [Description(@"Die zweite Farbe der passiven Wellenform.")]
+        public virtual global::System.Windows.Media.Color PassiveForeground2Color
+        {
+            get { return _passiveForeground2Color; }
+            set
+            {
+                if (value.Equals(_passiveForeground2Color))
+                {
+                    return;
+                }
+                _passiveForeground2Color = value;
+                this.OnPassiveForeground2ColorChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property PassiveLineColor
+        
+        private global::System.Windows.Media.Color _passiveLineColor;
+        
+        public event EventHandler PassiveLineColorChanged;
+        
+        protected virtual void OnPassiveLineColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PassiveLineColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"PassiveLineColor");
+        }
+        
+        [DisplayName(@"Passive Horizontlinie")]
+        [Description(@"Die Farbe der passiven Horizontlinie.")]
+        public virtual global::System.Windows.Media.Color PassiveLineColor
+        {
+            get { return _passiveLineColor; }
+            set
+            {
+                if (value.Equals(_passiveLineColor))
+                {
+                    return;
+                }
+                _passiveLineColor = value;
+                this.OnPassiveLineColorChanged();
+            }
+        }
+        
+        #endregion
     }
     
     public partial class CloudParameter : INotifyPropertyChanged, IChangeTracking
     {
         public CloudParameter()
         {
-            _width = DEF_WIDTH;
-            _height = DEF_HEIGHT;
-            _precision = DEF_PRECISION;
-            _orderPriority = DEF_ORDERPRIORITY;
-            _minOccurence = DEF_MINOCCURENCE;
-            FontFamily = new global::System.Windows.Media.FontFamily();
-            _fontBold = DEF_FONTBOLD;
-            _fontItalic = DEF_FONTITALIC;
-            _minFontSize = DEF_MINFONTSIZE;
-            _maxFontSize = DEF_MAXFONTSIZE;
+            this._width = DEF_WIDTH;
+            this._height = DEF_HEIGHT;
+            this._precision = DEF_PRECISION;
+            this._orderPriority = DEF_ORDERPRIORITY;
+            this._minOccurence = DEF_MINOCCURENCE;
+            this.FontFamily = new global::System.Windows.Media.FontFamily();
+            this._fontBold = DEF_FONTBOLD;
+            this._fontItalic = DEF_FONTITALIC;
+            this._minFontSize = DEF_MINFONTSIZE;
+            this._maxFontSize = DEF_MAXFONTSIZE;
             this.Initialize();
             
             this.IsChanged = false;
@@ -2368,8 +2515,9 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public CategoryResource()
         {
-            _type = DEF_TYPE;
-            _url = DEF_URL;
+            this._type = DEF_TYPE;
+            this._url = DEF_URL;
+            this._cachedFile = DEF_CACHEDFILE;
             
             this.IsChanged = false;
         }
@@ -2476,15 +2624,51 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         #endregion
+        
+        #region Property CachedFile
+        
+        private string _cachedFile;
+        
+        public event EventHandler CachedFileChanged;
+        
+        protected virtual void OnCachedFileChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = CachedFileChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"CachedFile");
+        }
+        
+        private const string DEF_CACHEDFILE = @"null";
+        
+        [DefaultValue(DEF_CACHEDFILE)]
+        public virtual string CachedFile
+        {
+            get { return _cachedFile; }
+            set
+            {
+                if (string.Equals(value, _cachedFile))
+                {
+                    return;
+                }
+                _cachedFile = value;
+                this.OnCachedFileChanged();
+            }
+        }
+        
+        #endregion
     }
     
     public partial class Category : INotifyPropertyChanged, IChangeTracking
     {
         public Category()
         {
-            _id = DEF_ID;
-            _name = DEF_NAME;
-            Resources = new global::System.Collections.ObjectModel.ObservableCollection<CategoryResource>();
+            this._id = DEF_ID;
+            this._name = DEF_NAME;
+            this.Resources = new global::System.Collections.ObjectModel.ObservableCollection<CategoryResource>();
             
             this.IsChanged = false;
         }
@@ -2668,6 +2852,8 @@ namespace de.fhb.oll.mediacategorizer.model
     {
         public Media()
         {
+            this.EncodedMediaFiles = new global::System.Collections.ObjectModel.ObservableCollection<MediaFile>();
+            
             this.IsChanged = false;
         }
         
@@ -2801,36 +2987,144 @@ namespace de.fhb.oll.mediacategorizer.model
         
         #endregion
         
-        #region Property AudioFile
+        #region Property MediaType
         
         [NonSerialized]
-        private string _audioFile;
+        private MediaType _mediaType;
         
-        public event EventHandler AudioFileChanged;
+        public event EventHandler MediaTypeChanged;
         
-        protected virtual void OnAudioFileChanged()
+        protected virtual void OnMediaTypeChanged()
         {
             this.IsChanged = true;
-            EventHandler handler = AudioFileChanged;
+            EventHandler handler = MediaTypeChanged;
             if (!ReferenceEquals(handler, null))
             {
                 handler(this, EventArgs.Empty);
             }
-            this.OnPropertyChanged(@"AudioFile");
+            this.OnPropertyChanged(@"MediaType");
         }
         
         [XmlIgnore]
-        public virtual string AudioFile
+        public virtual MediaType MediaType
         {
-            get { return _audioFile; }
+            get { return _mediaType; }
             set
             {
-                if (string.Equals(value, _audioFile))
+                if ((value == _mediaType))
                 {
                     return;
                 }
-                _audioFile = value;
-                this.OnAudioFileChanged();
+                _mediaType = value;
+                this.OnMediaTypeChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property EncodedMediaFiles
+        
+        [NonSerialized]
+        private global::System.Collections.ObjectModel.ObservableCollection<MediaFile> _encodedMediaFiles;
+        
+        public event EventHandler EncodedMediaFilesChanged;
+        
+        protected virtual void OnEncodedMediaFilesChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = EncodedMediaFilesChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"EncodedMediaFiles");
+        }
+        
+        private void EncodedMediaFilesItemPropertyChanged(object sender, EventArgs ea)
+        {
+            this.OnEncodedMediaFilesChanged();
+        }
+        
+        private void EncodedMediaFilesCollectionChangedHandler(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs ea)
+        {
+            if (!ReferenceEquals(ea.OldItems, null))
+            {
+                foreach (MediaFile item in ea.OldItems)
+                {
+                    if (!ReferenceEquals(item, null))
+                    {
+                        item.PropertyChanged -= this.EncodedMediaFilesItemPropertyChanged;
+                    }
+                }
+            }
+            this.OnEncodedMediaFilesChanged();
+            if (!ReferenceEquals(ea.NewItems, null))
+            {
+                foreach (MediaFile item in ea.NewItems)
+                {
+                    if (!ReferenceEquals(item, null))
+                    {
+                        item.PropertyChanged += this.EncodedMediaFilesItemPropertyChanged;
+                    }
+                }
+            }
+        }
+        
+        [XmlIgnore]
+        public virtual global::System.Collections.ObjectModel.ObservableCollection<MediaFile> EncodedMediaFiles
+        {
+            get { return _encodedMediaFiles; }
+            set
+            {
+                if ((value == _encodedMediaFiles))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_encodedMediaFiles, null))
+                {
+                    _encodedMediaFiles.CollectionChanged -= this.EncodedMediaFilesCollectionChangedHandler;
+                }
+                _encodedMediaFiles = value;
+                if (!ReferenceEquals(_encodedMediaFiles, null))
+                {
+                    _encodedMediaFiles.CollectionChanged += this.EncodedMediaFilesCollectionChangedHandler;
+                }
+                this.OnEncodedMediaFilesChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property ExtractedAudioFile
+        
+        [NonSerialized]
+        private string _extractedAudioFile;
+        
+        public event EventHandler ExtractedAudioFileChanged;
+        
+        protected virtual void OnExtractedAudioFileChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ExtractedAudioFileChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"ExtractedAudioFile");
+        }
+        
+        [XmlIgnore]
+        public virtual string ExtractedAudioFile
+        {
+            get { return _extractedAudioFile; }
+            set
+            {
+                if (string.Equals(value, _extractedAudioFile))
+                {
+                    return;
+                }
+                _extractedAudioFile = value;
+                this.OnExtractedAudioFileChanged();
             }
         }
         
@@ -2901,6 +3195,41 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _waveformFile = value;
                 this.OnWaveformFileChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property WaveformFileBackground
+        
+        [NonSerialized]
+        private string _waveformFileBackground;
+        
+        public event EventHandler WaveformFileBackgroundChanged;
+        
+        protected virtual void OnWaveformFileBackgroundChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = WaveformFileBackgroundChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"WaveformFileBackground");
+        }
+        
+        [XmlIgnore]
+        public virtual string WaveformFileBackground
+        {
+            get { return _waveformFileBackground; }
+            set
+            {
+                if (string.Equals(value, _waveformFileBackground))
+                {
+                    return;
+                }
+                _waveformFileBackground = value;
+                this.OnWaveformFileBackgroundChanged();
             }
         }
         
@@ -3006,6 +3335,111 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _resultsFile = value;
                 this.OnResultsFileChanged();
+            }
+        }
+        
+        #endregion
+    }
+    
+    public partial class MediaFile : INotifyPropertyChanged, IChangeTracking
+    {
+        public MediaFile()
+        {
+            this.IsChanged = false;
+        }
+        
+        #region Change Tracking
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
+        [NonSerialized]
+        private bool _isChanged = false;
+        
+        [Browsable(false)]
+        [XmlIgnore]
+        public bool IsChanged
+        {
+            get { return this._isChanged; }
+            protected set { this._isChanged = value; }
+        }
+        
+        public void AcceptChanges()
+        {
+            this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property Path
+        
+        private string _path;
+        
+        public event EventHandler PathChanged;
+        
+        protected virtual void OnPathChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = PathChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Path");
+        }
+        
+        public virtual string Path
+        {
+            get { return _path; }
+            set
+            {
+                if (string.Equals(value, _path))
+                {
+                    return;
+                }
+                _path = value;
+                this.OnPathChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property MimeType
+        
+        private string _mimeType;
+        
+        public event EventHandler MimeTypeChanged;
+        
+        protected virtual void OnMimeTypeChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = MimeTypeChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"MimeType");
+        }
+        
+        public virtual string MimeType
+        {
+            get { return _mimeType; }
+            set
+            {
+                if (string.Equals(value, _mimeType))
+                {
+                    return;
+                }
+                _mimeType = value;
+                this.OnMimeTypeChanged();
             }
         }
         

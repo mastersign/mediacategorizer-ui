@@ -35,11 +35,11 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private void ProcessMedia(Media m, Action<float> progressHandler, Action<string> errorHandler)
         {
-            m.AudioFile = BuildAudioPath(m);
-            if (!File.Exists(m.AudioFile))
+            m.ExtractedAudioFile = BuildAudioPath(m);
+            if (!File.Exists(m.ExtractedAudioFile))
             {
                 var ffmpeg = GetFfmpegTool();
-                if (!ffmpeg.ExtractAudio(m.MediaFile, m.AudioFile, progressHandler))
+                if (!ffmpeg.ExtractAudio(m.MediaFile, m.ExtractedAudioFile, progressHandler))
                 {
                     errorHandler("FFmpeg wurde mit einem Fehler beendet");
                 }

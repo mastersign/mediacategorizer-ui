@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="de.fhb.oll.mediacategorizer.MainWindow">
+    <Position X="1" Y="0.5" Width="4" />
+    <Members>
+      <Field Name="baseWindowTitle" Hidden="true" />
+      <Method Name="CheckProjectStateBeforeClosing" Hidden="true" />
+      <Method Name="ClosedHandler" Hidden="true" />
+      <Method Name="ClosingHandler" Hidden="true" />
+      <Method Name="ExpanderExpandedHandler" Hidden="true" />
+      <Method Name="FrameDataContextChangedHandler" Hidden="true" />
+      <Method Name="FrameLoadCompleteHandler" Hidden="true" />
+      <Field Name="lastProjectChangedState" Hidden="true" />
+      <Method Name="MainWindow" Hidden="true" />
+      <Method Name="MenuHelpHandler" Hidden="true" />
+      <Method Name="MenuInfoHandler" Hidden="true" />
+      <Method Name="MenuNewProjectHandler" Hidden="true" />
+      <Method Name="MenuOpenProjectHandler" Hidden="true" />
+      <Method Name="MenuSaveProjectAsHandler" Hidden="true" />
+      <Method Name="MenuSaveProjectHandler" Hidden="true" />
+      <Method Name="MenuSetupHandler" Hidden="true" />
+      <Method Name="ProcessChainEndedHandler" Hidden="true" />
+      <Method Name="ProcessChainPropertyChangedHandler" Hidden="true" />
+      <Method Name="ProcessChainStartedHandler" Hidden="true" />
+      <Field Name="project" Hidden="true" />
+      <Field Name="PROJECT_FILE_EXT" Hidden="true" />
+      <Method Name="ProjectChangedHandler" Hidden="true" />
+      <Method Name="QueryProjectFileForOpening" Hidden="true" />
+      <Method Name="QueryProjectFileForSaving" Hidden="true" />
+      <Method Name="UpdatePageDataContext" Hidden="true" />
+      <Method Name="UpdateTaskBarState" Hidden="true" />
+      <Method Name="UpdateTitle" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAABAKAJAABAgADUAIBCiEBQAggADAAAGAAQABDDAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.PageStart" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>PageStart.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.PageCategories" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAIAAAAAAACAAAAAAAAAAAAAAAAAAABIAAAAAAAAA=</HashCode>
+      <FileName>PageCategories.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.PageMedia" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAACAAAAAAEAACAAAQAAACAAAgAAAAgAgAAA=</HashCode>
+      <FileName>PageMedia.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.PageParameters" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PageParameters.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.PageProcessing" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAgQAAAAAAAAAIAAAAAAAAAAACgAAAAAAAAAAAA=</HashCode>
+      <FileName>PageProcessing.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.PageAbout" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAgAAAAACAEAACAAAAABAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>PageAbout.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.PageSetup" Collapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PageSetup.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

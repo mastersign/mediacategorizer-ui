@@ -9,21 +9,20 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="28"/>
             <RowDefinition/>
-            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding Title, ElementName=page}" Style="{StaticResource PageHeaderStyle}" />
-        <DataGrid Grid.Row="1" x:Name="mediaDataGrid" Margin="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Background="{Binding Background, ElementName=page}" ItemsSource="{Binding Media}" GridLinesVisibility="None" AutoGenerateColumns="False" SelectionMode="Extended" HeadersVisibility="Column" CanUserResizeRows="False" CanUserAddRows="True" CanUserDeleteRows="True">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button x:Name="btnCreateMedia" Content="Medien hinzufügen" Style="{DynamicResource LabelButtonStyle}" Click="CreateMediaHandler" />
+            <Button x:Name="btnDeleteMedia" Content="Medien entfernen" Style="{DynamicResource LabelButtonStyle}" Click="DeleteMediaHandler" IsEnabled="False" />
+        </StackPanel>
+        <DataGrid Grid.Row="2" x:Name="mediaDataGrid" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Background="{Binding Background, ElementName=page}" ItemsSource="{Binding Media}" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" SelectionMode="Extended" HeadersVisibility="Column" CanUserResizeRows="False" CanUserAddRows="False" DragOver="DragOverHandler" Drop="DropHandler" AllowDrop="True" SelectionChanged="MediaSelectionChangedHandler" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="ID" Width="1*"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="2*"/>
                 <DataGridTextColumn Binding="{Binding MediaFile}" Header="Mediendatei" Width="3*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Row="2" Margin="24,24,24,0" AllowDrop="True" DragEnter="DragEnterHandler" DragOver="DragOverHandler" DragLeave="DragLeaveHandler" Drop="DropHandler" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
-            <Border x:Name="dropBorder" BorderBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderThickness="4" Padding="4,4,4,8" CornerRadius="8" >
-                <TextBlock TextWrapping="Wrap" Text="Dateien oder Ordner mit der Maus hier ablegen" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" FontSize="15"/>
-            </Border>
-        </Grid>
     </Grid>
 </Page>

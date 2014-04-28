@@ -67,7 +67,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 Debug.WriteLine("WARNING: Duration of 0 for media " + m.Name);
             }
             var transcripter = GetTranscripterTool(); 
-            transcripter.RunSpeechRecognition(m.AudioFile, m.ResultsFile, (float)m.Duration, progressHandler);
+            transcripter.RunSpeechRecognition(m.ExtractedAudioFile, m.ResultsFile, (float)m.Duration, progressHandler);
         }
     }
 }

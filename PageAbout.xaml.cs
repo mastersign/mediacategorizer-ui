@@ -100,5 +100,10 @@ namespace de.fhb.oll.mediacategorizer
         {
             Process.Start("http://opensource.org/licenses/MIT");
         }
+
+        private void WebsiteClickHandler(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Process.Start(tbWebsite.Text);
+        }
     }
 }

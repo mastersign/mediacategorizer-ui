@@ -76,11 +76,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BrowserWindow.xaml.cs">
+      <DependentUpon>BrowserWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="edn\EdnVector.cs" />
     <Compile Include="edn\IEdnWritable.cs" />
     <Compile Include="edn\Keyword.cs" />
-    <Compile Include="ILogWriter.cs" />
-    <Compile Include="LogWriter.cs" />
+    <Compile Include="processing\CategoryResourceDownloadProcess.cs" />
+    <Compile Include="processing\MediaEncodingProcess.cs" />
+    <Compile Include="settings\Setup.cs" />
+    <Compile Include="tools\ILogWriter.cs" />
+    <Compile Include="tools\LogWriter.cs" />
     <Compile Include="model\EDN.cs" />
     <Compile Include="edn\EdnWriter.cs" />
     <Compile Include="model\Model.Designer.cs">
@@ -124,6 +130,10 @@
     <Compile Include="tools\ToolProvider.cs" />
     <Compile Include="tools\TranscripterTool.cs" />
     <Compile Include="tools\WaveVizTool.cs" />
+    <Page Include="BrowserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PageAbout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -204,6 +214,21 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
+    <None Include="diagrams\Architecture.dgml" />
+    <None Include="diagrams\Configuration.cd" />
+    <None Include="diagrams\IProcess.cd" />
+    <None Include="diagrams\Namespaces.dgml" />
+    <None Include="diagrams\Project.cd" />
+    <None Include="diagrams\Process.cd" />
+    <None Include="diagrams\ProcessChain.cd" />
+    <None Include="diagrams\Setup.cd" />
+    <None Include="diagrams\ToolFFmpeg.cd" />
+    <None Include="diagrams\ToolDistillery.cd" />
+    <None Include="diagrams\ToolBase.cd" />
+    <None Include="diagrams\ToolWaveViz.cd" />
+    <None Include="diagrams\ToolTranscripter.cd" />
+    <None Include="diagrams\ToolFFprobe.cd" />
+    <None Include="diagrams\UI.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -236,6 +261,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Browser.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

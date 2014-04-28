@@ -115,7 +115,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             if (!File.Exists(file))
             {
                 var transcripter = GetTranscripterTool();
-                var result = transcripter.RunConfidenceTest(m.AudioFile, 
+                var result = transcripter.RunConfidenceTest(m.ExtractedAudioFile, 
                     Project.Configuration.ConfidenceTestDuration, progressHandler);
                 using (var w = new StreamWriter(file, false, Encoding.UTF8))
                 {

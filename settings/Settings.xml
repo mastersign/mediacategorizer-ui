@@ -6,7 +6,6 @@
   <ModelFeatures>
     <ChangeTracking level="Tracking" escalateChangeState="true" />
     <ToString />
-    <Equatable />
   </ModelFeatures>
 
   <Types>
@@ -25,10 +24,23 @@
         <Description>Die manuelle Angabe für die maximale Anzahl von parallelen Aufgaben in einem Prozess.</Description>
         <DefaultValue>2</DefaultValue>
       </Property>
-      <Property name="CompatibleMediaFileExtensions" type="string">
-        <Category>Verarbeitung</Category>
-        <DisplayName>Mediendateiendungen</DisplayName>
-        <Description>Eine Liste mit Dateiendungen für unterstützte Mediendateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.</Description>
+      
+      <Property name="DownloadTimeout" type="int">
+        <Category>Ressourcen</Category>
+        <DisplayName>Download-Timeout</DisplayName>
+        <Description>Die Anzahl der Sekunden, nach denen der Versuch, eine Kategorie-Ressource herunterzuladen, abgebrochen werden soll.</Description>
+        <DefaultValue>30</DefaultValue>
+      </Property>
+      <Property name="CompatibleAudioFileExtensions" type="string">
+        <Category>Ressourcen</Category>
+        <DisplayName>Audiodateiendungen</DisplayName>
+        <Description>Eine Liste mit Dateiendungen für unterstützte Audiodateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.</Description>
+        <DefaultValue>mp3</DefaultValue>
+      </Property>
+      <Property name="CompatibleVideoFileExtensions" type="string">
+        <Category>Ressourcen</Category>
+        <DisplayName>Videodateiendungen</DisplayName>
+        <Description>Eine Liste mit Dateiendungen für unterstützte Videodateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.</Description>
         <DefaultValue>mp4</DefaultValue>
       </Property>
 

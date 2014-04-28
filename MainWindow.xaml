@@ -14,16 +14,18 @@
             <RowDefinition/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
-        <Menu x:Name="menuProject" Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="0" Margin="0,2">
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Menu x:Name="menuMain" Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="1" Margin="0,2,24,2" HorizontalAlignment="Right" FlowDirection="RightToLeft">
+                <MenuItem Header="INFO" Click="MenuInfoHandler" />
+                <MenuItem Header="EINSTELLUNGEN" Click="MenuSetupHandler" />
+            </Menu>
+            <Menu x:Name="menuProject" Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="0" Margin="0,2" HorizontalAlignment="Left">
             <MenuItem Header="NEU" Click="MenuNewProjectHandler" />
             <MenuItem Header="ÖFFNEN" Click="MenuOpenProjectHandler" />
             <MenuItem Header="SPEICHERN" Click="MenuSaveProjectHandler" />
             <MenuItem Header="SPEICHERN UNTER..." Click="MenuSaveProjectAsHandler" />
         </Menu>
-        <Menu x:Name="menuMain" Style="{DynamicResource CleanMenuStyle}" Height="21" Padding="2,0" Grid.Row="0" Grid.Column="1" Margin="0,2,24,2" FlowDirection="RightToLeft">
-            <MenuItem Header="INFO" Click="MenuInfoHandler" />
-            <MenuItem Header="EINSTELLUNGEN" Click="MenuSetupHandler" />
-        </Menu>
+        </Grid>
         <Image Grid.Row="0" Grid.Column="1" Source="/help.png" Width="16" Height="16" MouseLeftButtonUp="MenuHelpHandler" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,2"/>
         <Frame x:Name="frame" Content="Frame" Grid.Row="1" Grid.Column="0" Margin="8" NavigationUIVisibility="Hidden"
                LoadCompleted="FrameLoadCompleteHandler" DataContextChanged="FrameDataContextChangedHandler"/>
@@ -35,7 +37,7 @@
                 <TextBlock TextWrapping="Wrap" Text="Richten Sie die Kategorien mit ihren Beispieldokumenten ein." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
             </Expander>
             <Expander Header="Medien" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" Tag="Media" FontWeight="Bold">
-                <TextBlock TextWrapping="Wrap" Text="Listen Sie alle Videos auf, die analysiert werden sollen." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
+                <TextBlock TextWrapping="Wrap" Text="Listen Sie alle Medien auf, die analysiert werden sollen." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>
             </Expander>
             <Expander Header="Parameter" Margin="0,0,0,8" Expanded="ExpanderExpandedHandler" Tag="Parameters" FontWeight="Bold">
                 <TextBlock TextWrapping="Wrap" Text="Passen Sie die Parameter für die Analyse und die Ergebnisausgabe an." VerticalAlignment="Top" Margin="24,4,0,0" FontWeight="Normal"/>

@@ -24,6 +24,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -37,9 +38,11 @@
             <TextBlock x:Name="tbDescription" Grid.Column="2"  Grid.Row="3" Text="Keine Beschreibung" Padding="8,5,5,5" TextWrapping="Wrap"/>
             <TextBlock Grid.Column="1" Grid.Row="4" Text="Hersteller" Padding="0,5" />
             <TextBlock x:Name="tbCompany" Grid.Column="2"  Grid.Row="4" Text="Kein Unternehmen" Padding="8,5,5,5" TextWrapping="Wrap"/>
-            <TextBlock Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Text="Lizenz" Padding="0,5" />
-            <TextBlock x:Name="tbLicense" Grid.Column="2" Grid.Row="5" VerticalAlignment="Bottom" Text="The MIT License" Padding="5" Height="26" MouseLeftButtonUp="LicenseClickHandler" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" Cursor="Hand"/>
-            <TextBlock x:Name="tbCopyright" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Text="Kein Copyright" Padding="0,5,5,5" TextWrapping="Wrap" Height="26"/>
+            <TextBlock Grid.Column="1" Grid.Row="5" Text="Website" Padding="0,5" />
+            <TextBlock x:Name="tbWebsite" Grid.Column="2"  Grid.Row="5" Text="http://mastersign.github.io/mediacategorizer/" Padding="8,5,5,5" MouseLeftButtonUp="WebsiteClickHandler" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" Cursor="Hand"/>
+            <TextBlock Grid.Column="1" Grid.Row="6" VerticalAlignment="Bottom" Text="Lizenz" Padding="0,5" />
+            <TextBlock x:Name="tbLicense" Grid.Column="2" Grid.Row="6" VerticalAlignment="Bottom" Text="The MIT License" Padding="5" Height="26" MouseLeftButtonUp="LicenseClickHandler" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" Cursor="Hand"/>
+            <TextBlock x:Name="tbCopyright" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" Text="Kein Copyright" Padding="0,5,5,5" TextWrapping="Wrap" Height="26"/>
         </Grid>
     </Grid>
 </Page>
