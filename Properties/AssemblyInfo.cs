@@ -8,7 +8,7 @@ using System.Windows;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
 [assembly: AssemblyTitle("Media Categorizer")]
-[assembly: AssemblyDescription("Benutzeroberfläche zur Erstellung und Verwaltung von Projekten zur Kategorisierung von Videos.")]
+[assembly: AssemblyDescription("Benutzeroberfläche für die Erstellung und Verwaltung von Projekten zur Kategorisierung von Audio- und Videodateien.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fachhochschule Brandenburg")]
 [assembly: AssemblyProduct("MediaCategorizer")]
