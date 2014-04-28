@@ -57,23 +57,26 @@
       <Property name="MinConfidence" type="float">
         <Category>Analyse</Category>
         <DisplayName>Minimale Erkennungssicherheit</DisplayName>
-        <Description>Die minimale Erkennungssicherheit für Worte die in die Analyse berücksichtigt werden sollen.</Description>
+        <Description>Die minimale Erkennungssicherheit für Worte die in der Analyse berücksichtigt werden sollen.</Description>
         <DefaultValue>0.4</DefaultValue>
       </Property>
       <Property name="GoodConfidence" type="float">
         <Category>Analyse</Category>
         <DisplayName>Gute Erkennungssicherheit</DisplayName>
-        <Description>Die Erkennungssicherheit für Worte die in der Ausgabe erscheinen dürfen.</Description>
+        <Description>Die minimale Erkennungssicherheit für Worte die in der Ausgabe verwendet werden dürfen.</Description>
         <DefaultValue>0.7</DefaultValue>
       </Property>
+      <!--
       <Property name="MinRelativeAppearance" type="float">
         <Category>Analyse</Category>
         <DisplayName>Minimales Erscheinen</DisplayName>
         <DefaultValue>0.25</DefaultValue>
       </Property>
+      -->
       <Property name="MinMatchScore" type="float">
         <Category>Analyse</Category>
         <DisplayName>Minimale Übereinstimmung</DisplayName>
+        <Description>Die minimale Übereinstimmung für eine Zuordnung zwischen einem Video und einer Kategorie.</Description>
         <DefaultValue>0.02</DefaultValue>
       </Property>
 
@@ -180,7 +183,7 @@
       </Property>
       <Property name="BlacklistMaxSize" type="int">
         <DisplayName>Blacklist-Worte</DisplayName>
-        <Description>Gibt die Anzahl der Worte an, die vom Anfang der Blacklist für das Filtern verwendet werden. Es wird eine nach Relevanz sortierte Blacklist vorausgesetzt.</Description>
+        <Description>Die obere Grenze für die Anzahl der Worte, die vom Anfang der Blacklist für das Filtern verwendet werden. Es wird eine nach Relevanz sortierte Blacklist vorausgesetzt.</Description>
         <DefaultValue>2000</DefaultValue>
       </Property>
 

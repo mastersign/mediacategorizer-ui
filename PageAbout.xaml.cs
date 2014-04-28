@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -94,5 +95,10 @@ namespace de.fhb.oll.mediacategorizer
         }
 
         #endregion
+
+        private void LicenseClickHandler(object sender, EventArgs e)
+        {
+            Process.Start("http://opensource.org/licenses/MIT");
+        }
     }
 }
