@@ -49,7 +49,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AgoAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AgoAACAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>processing\PrepareProjectProcess.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -57,8 +57,8 @@
     <Position X="4" Y="3.5" Width="2.75" />
     <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
       <Path>
-        <Point X="3.25" Y="5.875" />
-        <Point X="3.625" Y="5.875" />
+        <Point X="3.25" Y="6.375" />
+        <Point X="3.625" Y="6.375" />
         <Point X="3.625" Y="3.846" />
         <Point X="4" Y="3.846" />
       </Path>
@@ -69,7 +69,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase">
-    <Position X="0.5" Y="4.5" Width="2.75" />
+    <Position X="0.5" Y="5" Width="2.75" />
     <Members>
       <Method Name="ErrorHandler" Hidden="true" />
       <Field Name="errors" Hidden="true" />
@@ -94,8 +94,8 @@
     <Position X="4" Y="4.5" Width="2.75" />
     <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
       <Path>
-        <Point X="3.25" Y="5.875" />
-        <Point X="3.625" Y="5.875" />
+        <Point X="3.25" Y="6.375" />
+        <Point X="3.625" Y="6.375" />
         <Point X="3.625" Y="4.846" />
         <Point X="4" Y="4.846" />
       </Path>
@@ -109,10 +109,10 @@
     <Position X="4" Y="5.5" Width="2.75" />
     <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
       <Path>
-        <Point X="3.25" Y="5.875" />
-        <Point X="3.625" Y="5.875" />
-        <Point X="3.625" Y="5.688" />
-        <Point X="4" Y="5.688" />
+        <Point X="3.25" Y="6.375" />
+        <Point X="3.625" Y="6.375" />
+        <Point X="3.625" Y="5.846" />
+        <Point X="4" Y="5.846" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -121,13 +121,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.processing.ProfileSelectionProcess" Collapsed="true">
-    <Position X="4" Y="6.5" Width="2.75" />
+    <Position X="4" Y="7.5" Width="2.75" />
     <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
       <Path>
-        <Point X="3.25" Y="5.875" />
-        <Point X="3.625" Y="5.875" />
-        <Point X="3.625" Y="6.846" />
-        <Point X="4" Y="6.846" />
+        <Point X="3.25" Y="6.375" />
+        <Point X="3.625" Y="6.375" />
+        <Point X="3.625" Y="7.846" />
+        <Point X="4" Y="7.846" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -136,13 +136,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.processing.SpeechRecognitionProcess" Collapsed="true">
-    <Position X="4" Y="7.5" Width="2.75" />
+    <Position X="4" Y="8.5" Width="2.75" />
     <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
       <Path>
-        <Point X="3.25" Y="5.875" />
-        <Point X="3.625" Y="5.875" />
-        <Point X="3.625" Y="7.846" />
-        <Point X="4" Y="7.846" />
+        <Point X="3.25" Y="6.375" />
+        <Point X="3.625" Y="6.375" />
+        <Point X="3.625" Y="8.846" />
+        <Point X="4" Y="8.846" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -178,6 +178,21 @@
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>processing\FinalizeProjectProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.processing.MediaEncodingProcess" Collapsed="true">
+    <Position X="4" Y="6.5" Width="2.75" />
+    <InheritanceLine Type="de.fhb.oll.mediacategorizer.processing.MultiTaskProcessBase" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="6.375" />
+        <Point X="3.625" Y="6.375" />
+        <Point X="3.625" Y="6.846" />
+        <Point X="4" Y="6.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAgCAQBAAABAAACAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>processing\MediaEncodingProcess.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -28,7 +28,7 @@
       <Property name="OutputDir" type="string">
         <DefaultValue>output</DefaultValue>
       </Property>
-      
+
       <Property name="ResultFile" type="string">
         <DefaultValue>result.xml</DefaultValue>
       </Property>
@@ -53,7 +53,7 @@
         <Description>Definiert das Auswahlkriterium anhand dessen das optimale Spracherkennungsprofil je Medium ausgewählt wird.</Description>
         <DefaultValue>MeanPhraseConfidence</DefaultValue>
       </Property>
-      
+
       <Property name="MinConfidence" type="float">
         <Category>Analyse</Category>
         <DisplayName>Minimale Erkennungssicherheit</DisplayName>
@@ -162,6 +162,85 @@
         <Description>Gibt an, ob das Kopieren der Medien in die Ausgabe übersprungen werden soll.</Description>
         <DefaultValue>false</DefaultValue>
       </Property>
+
+      <Property name="UseTranscoding" type="bool">
+        <Category>Transkodierung</Category>
+        <DisplayName>Medien Transkodieren</DisplayName>
+        <Description>Gibt an, ob die Originalmedien für die Einbettung in die Ergebniswebseite umgewandelt werden sollen.</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="VideoToAudio" type="bool">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video in Audio umwandeln</DisplayName>
+        <Description>Gibt an, ob bei Videomedien nur die Tonspur in die Ergebniswebseite eingebunden werden soll.</Description>
+        <DefaultValue>false</DefaultValue>
+      </Property>
+      <Property name="VideoWidth" type="int">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video-Breite</DisplayName>
+        <Description>Gibt die Breite des Video-Bildes an. Die Höhe ergibt sich aus dem Seitenverhältnis des Originalvideos.</Description>
+        <DefaultValue>540</DefaultValue>
+      </Property>
+      <Property name="VideoTranscodeH264" type="bool">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video-Format MP4</DisplayName>
+        <Description>Aktiviert die Transkodierung von Video-Dateien in H.264/AAC kodierte MP4-Dateien. (IE 9, Chrome 3, Firefox 21, Konqueror 4.4, Safari 3.1, Android 3.0)</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="VideoTranscodeOGG" type="bool">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video-Format OGG</DisplayName>
+        <Description>Aktiviert die Transkodierung von Video-Dateien in Theora/Vorbis kodierte OGG-Dateien. (Chrome 3, Firefox 3.5, Konqueror 4.4, Opera 10.50, Android 2.3)</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="VideoTranscodeWebM" type="bool">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video-Format WebM</DisplayName>
+        <Description>Aktiviert die Transkodierung von Video-Dateien in VP8/Vorbis kodierte WebM-Dateien. (Chrome 6, Firefox 4.0, Konqueror 4.4, Opera 10.60, Android 2.3)</Description>
+        <DefaultValue>false</DefaultValue>
+      </Property>
+      <Property name="AudioTranscodeMP3" type="bool">
+        <Category>Transkodierung</Category>
+        <DisplayName>Audio-Format MP3</DisplayName>
+        <Description>Aktiviert die Transkodierung von Audio-Dateien in MP3-Dateien. (IE 9, Chrome, Firefox 21, Opera 14, Safari 3.1)</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="AudioTranscodeOGG" type="bool">
+        <Category>Transkodierung</Category>
+        <DisplayName>Audio-Format OGG</DisplayName>
+        <Description>Aktiviert die Transkodierung von Audio-Dateien in Vorbis kodierte OGG-Dateien. (Chrome 9, Firefox 3.5, Opera 10.50, Safari)</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+      <Property name="VideoParameterH264" type="VideoEncodingParameter">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video-Parameter MP4</DisplayName>
+        <Description>Die Parameter für die Video-Transkodierung in das MP4-Format.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+      <Property name="VideoParameterOGG" type="VideoEncodingParameter">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video-Parameter OGG</DisplayName>
+        <Description>Die Parameter für die Video-Transkodierung in das OGG-Format.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+      <Property name="VideoParameterWebM" type="VideoEncodingParameter">
+        <Category>Transkodierung</Category>
+        <DisplayName>Video-Parameter WebM</DisplayName>
+        <Description>Die Parameter für die Video-Transkodierung in das WebM-Format.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+      <Property name="AudioParameterMP3" type="AudioEncodingParameter">
+        <Category>Transkodierung</Category>
+        <DisplayName>Audio-Parameter MP3</DisplayName>
+        <Description>Die Parameter für die Audio-Transkodierung in das MP3-Format.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+      <Property name="AudioParameterOGG" type="AudioEncodingParameter">
+        <Category>Transkodierung</Category>
+        <DisplayName>Audio-Parameter OGG</DisplayName>
+        <Description>Die Parameter für die Audio-Transkodierung in das OGG-Format.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
     </Class>
 
     <Enum name="ProfileSelectionCriterion">
@@ -219,9 +298,40 @@
       </Property>
     </Class>
 
+    <Class name="VideoEncodingParameter">
+      <Property name="VideoBitrate" type="int">
+        <DisplayName>Video-Bitrate (KB)</DisplayName>
+        <Description>Die Ziel-Bitrate des Video-Datenstroms.</Description>
+        <DefaultValue>110</DefaultValue>
+      </Property>
+      <Property name="AudioBitrate" type="int">
+        <DisplayName>Audio-Bitrate (KB)</DisplayName>
+        <Description>Die Ziel-Bitrate des Audio-Datestroms.</Description>
+        <DefaultValue>48</DefaultValue>
+      </Property>
+      <Property name="JoinChannels" type="bool">
+        <DisplayName>Mono-Tonspur</DisplayName>
+        <Description>Gibt an, ob die Audio-Kanäle des Originalmediums in einen Mono-Kanal konvertiert werden sollen.</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+    </Class>
+
+    <Class name="AudioEncodingParameter">
+      <Property name="AudioBitrate" type="int">
+        <DisplayName>Audio-Bitrate (KB)</DisplayName>
+        <Description>Die Ziel-Bitrate des Audio-Datestroms.</Description>
+        <DefaultValue>48</DefaultValue>
+      </Property>
+      <Property name="JoinChannels" type="bool">
+        <DisplayName>Mono-Tonspur</DisplayName>
+        <Description>Gibt an, ob die Audio-Kanäle des Originalmediums in einen Mono-Kanal konvertiert werden sollen.</Description>
+        <DefaultValue>true</DefaultValue>
+      </Property>
+    </Class>
+
     <Class name="WaveformParameter">
       <CustomInitializer>Initialize</CustomInitializer>
-      
+
       <Property name="Width" type="int">
         <DisplayName>Breite (px)</DisplayName>
         <Description>Die Breite der Wellenformvisualisierung in Pixel.</Description>
@@ -232,7 +342,7 @@
         <Description>Die Höhe der Wellenformvisualisierung in Pixel.</Description>
         <DefaultValue>70</DefaultValue>
       </Property>
-      
+
       <Property name="BackgroundColor" type="System.Windows.Media.Color">
         <DisplayName>Hintergrund</DisplayName>
         <Description>Die Farbe des aktiven Hintergrundes.</Description>
@@ -320,7 +430,7 @@
         <Description>Ein Wert der angibt, ob die Schrift kursiv gedruckt werden soll.</Description>
         <DefaultValue>false</DefaultValue>
       </Property>
-      
+
       <Property name="MinFontSize" type="float">
         <DisplayName>Schriftgröße (minimal)</DisplayName>
         <Description>Die kleinstmögliche Schriftgröße von Worten in der Wolke.</Description>
@@ -401,6 +511,6 @@
       <Member name="Audio" />
       <Member name="Video" />
     </Enum>
-    
+
   </Types>
 </Model>

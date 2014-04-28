@@ -82,6 +82,8 @@
     <Compile Include="edn\EdnVector.cs" />
     <Compile Include="edn\IEdnWritable.cs" />
     <Compile Include="edn\Keyword.cs" />
+    <Compile Include="model\AudioEncodingParameter.cs" />
+    <Compile Include="model\VideoEncodingParameter.cs" />
     <Compile Include="processing\CategoryResourceDownloadProcess.cs" />
     <Compile Include="processing\MediaEncodingProcess.cs" />
     <Compile Include="settings\Setup.cs" />
@@ -218,6 +220,7 @@
     <None Include="diagrams\Configuration.cd" />
     <None Include="diagrams\IProcess.cd" />
     <None Include="diagrams\Namespaces.dgml" />
+    <None Include="diagrams\ProcesseDependencies.dgml" />
     <None Include="diagrams\Project.cd" />
     <None Include="diagrams\Process.cd" />
     <None Include="diagrams\ProcessChain.cd" />

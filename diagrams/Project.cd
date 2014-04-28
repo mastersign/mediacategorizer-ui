@@ -59,11 +59,11 @@
     <AssociationLine Name="Media" Type="de.fhb.oll.mediacategorizer.model.Media" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="2.75" Y="3.901" />
-        <Point X="2.75" Y="6.875" />
-        <Point X="4.25" Y="6.875" />
+        <Point X="2.75" Y="6.509" />
+        <Point X="4.5" Y="6.509" />
       </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.152" Y="-0.325" />
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.933" Y="0.821" Height="0.182" Width="0.726" />
       </MemberNameLabel>
     </AssociationLine>
     <AssociationLine Name="ProcessChain" Type="de.fhb.oll.mediacategorizer.processing.ProcessChain" FixedFromPoint="true" FixedToPoint="true">
@@ -116,11 +116,11 @@
     <AssociationLine Name="Resources" Type="de.fhb.oll.mediacategorizer.model.CategoryResource" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="3.688" Y="3.238" />
-        <Point X="3.688" Y="4.648" />
-        <Point X="4.5" Y="4.648" />
+        <Point X="3.688" Y="4.318" />
+        <Point X="4.5" Y="4.318" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="-2.763" Y="0.985" Height="0.182" Width="3.483" />
+        <Position X="-0.263" Y="0.662" Height="0.182" Width="0.983" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -133,60 +133,83 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.model.Media" BaseTypeListCollapsed="true">
-    <Position X="4.25" Y="5.75" Width="2.75" />
+    <Position X="4.5" Y="6" Width="2.5" />
     <Members>
-      <Field Name="_audioFile" Hidden="true" />
       <Field Name="_duration" Hidden="true" />
+      <Field Name="_encodedMediaFiles" Hidden="true" />
+      <Field Name="_extractedAudioFile" Hidden="true" />
       <Field Name="_id" Hidden="true" />
       <Field Name="_isChanged" Hidden="true" />
       <Field Name="_mediaFile" Hidden="true" />
+      <Field Name="_mediaType" Hidden="true" />
       <Field Name="_name" Hidden="true" />
       <Field Name="_recognitionProfile" Hidden="true" />
       <Field Name="_recognitionProfileName" Hidden="true" />
       <Field Name="_resultsFile" Hidden="true" />
       <Field Name="_waveformFile" Hidden="true" />
+      <Field Name="_waveformFileBackground" Hidden="true" />
       <Method Name="AcceptChanges" Hidden="true" />
-      <Event Name="AudioFileChanged" Hidden="true" />
       <Event Name="DurationChanged" Hidden="true" />
+      <Event Name="EncodedMediaFilesChanged" Hidden="true" />
+      <Method Name="EncodedMediaFilesCollectionChangedHandler" Hidden="true" />
+      <Method Name="EncodedMediaFilesItemPropertyChanged" Hidden="true" />
+      <Event Name="ExtractedAudioFileChanged" Hidden="true" />
       <Event Name="IdChanged" Hidden="true" />
       <Property Name="IsChanged" Hidden="true" />
       <Method Name="Media" Hidden="true" />
       <Event Name="MediaFileChanged" Hidden="true" />
+      <Event Name="MediaTypeChanged" Hidden="true" />
       <Event Name="NameChanged" Hidden="true" />
-      <Method Name="OnAudioFileChanged" Hidden="true" />
       <Method Name="OnDurationChanged" Hidden="true" />
+      <Method Name="OnEncodedMediaFilesChanged" Hidden="true" />
+      <Method Name="OnExtractedAudioFileChanged" Hidden="true" />
       <Method Name="OnIdChanged" Hidden="true" />
       <Method Name="OnMediaFileChanged" Hidden="true" />
+      <Method Name="OnMediaTypeChanged" Hidden="true" />
       <Method Name="OnNameChanged" Hidden="true" />
       <Method Name="OnPropertyChanged" Hidden="true" />
       <Method Name="OnRecognitionProfileChanged" Hidden="true" />
       <Method Name="OnRecognitionProfileNameChanged" Hidden="true" />
       <Method Name="OnResultsFileChanged" Hidden="true" />
+      <Method Name="OnWaveformFileBackgroundChanged" Hidden="true" />
       <Method Name="OnWaveformFileChanged" Hidden="true" />
       <Event Name="PropertyChanged" Hidden="true" />
       <Event Name="RecognitionProfileChanged" Hidden="true" />
       <Event Name="RecognitionProfileNameChanged" Hidden="true" />
       <Event Name="ResultsFileChanged" Hidden="true" />
+      <Event Name="WaveformFileBackgroundChanged" Hidden="true" />
       <Event Name="WaveformFileChanged" Hidden="true" />
       <Method Name="WriteTo" Hidden="true" />
     </Members>
+    <AssociationLine Name="EncodedMediaFiles" Type="de.fhb.oll.mediacategorizer.model.MediaFile">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.287" Y="0.195" Height="0.182" Width="1.506" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AIICKEMIABwChCAAIBBAESQCgAA8AADggAIQBCAYAAE=</HashCode>
+      <HashCode>AAICKENICRwGpCgAIBBAEaQCgAI0BATiAgIQDiAcAAE=</HashCode>
       <FileName>model\EDN.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="EncodedMediaFiles" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="de.fhb.oll.mediacategorizer.model.CategoryResource" BaseTypeListCollapsed="true">
     <Position X="4.5" Y="4" Width="2.5" />
     <Members>
+      <Field Name="_cachedFile" Hidden="true" />
       <Field Name="_isChanged" Hidden="true" />
       <Field Name="_type" Hidden="true" />
       <Field Name="_url" Hidden="true" />
       <Method Name="AcceptChanges" Hidden="true" />
+      <Event Name="CachedFileChanged" Hidden="true" />
       <Method Name="CategoryResource" Hidden="true" />
+      <Field Name="DEF_CACHEDFILE" Hidden="true" />
       <Field Name="DEF_TYPE" Hidden="true" />
       <Field Name="DEF_URL" Hidden="true" />
       <Property Name="IsChanged" Hidden="true" />
+      <Method Name="OnCachedFileChanged" Hidden="true" />
       <Method Name="OnPropertyChanged" Hidden="true" />
       <Method Name="OnTypeChanged" Hidden="true" />
       <Method Name="OnUrlChanged" Hidden="true" />
@@ -197,7 +220,7 @@
       <Method Name="WriteTo" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAgwARAYAAAEAAAgASEAAAgCQAAAAgAAAA=</HashCode>
+      <HashCode>AAAAIAAABAAgwARAYAAkEIgAgASEAAAgCQAAAAgAAAA=</HashCode>
       <FileName>model\EDN.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -207,6 +230,29 @@
     <TypeIdentifier>
       <HashCode>AgAABEIACCFABcBQOAAiSCEAqgkhYAQCAKAAEQCAApA=</HashCode>
       <FileName>processing\ProcessChain.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.model.MediaFile">
+    <Position X="0.5" Y="7.75" Width="2" />
+    <Members>
+      <Field Name="_isChanged" Hidden="true" />
+      <Field Name="_mimeType" Hidden="true" />
+      <Field Name="_path" Hidden="true" />
+      <Method Name="AcceptChanges" Hidden="true" />
+      <Property Name="IsChanged" Hidden="true" />
+      <Method Name="MediaFile" Hidden="true" />
+      <Event Name="MimeTypeChanged" Hidden="true" />
+      <Method Name="OnMimeTypeChanged" Hidden="true" />
+      <Method Name="OnPathChanged" Hidden="true" />
+      <Method Name="OnPropertyChanged" Hidden="true" />
+      <Event Name="PathChanged" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Method Name="WriteTo" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAACQAYAIAAAEBAAgAAGAAAgAAAAAAAAAAQ=</HashCode>
+      <FileName>model\EDN.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
