@@ -45,14 +45,16 @@ namespace de.fhb.oll.mediacategorizer.processing
             OnProgress("Spracherkennung durchführen");
             PhaseCount = processGroups.Count;
             CurrentPhase = 0;
+            var originalProfile = ProfileManagement.GetCurrentSpeechRecognitionProfileId();
             foreach (var pId in processGroups.Keys)
             {
                 var group = processGroups[pId];
-
                 WorkItem = profiles[pId];
+                ProfileManagement.SetCurrentSpeechRecognitionProfile(pId);
                 RunTasks(group.Select(m => (ProcessTask)((pH, eH) => RunRecognition(m, pH, eH))).ToArray());
                 CurrentPhase = CurrentPhase + 1;
             }
+            ProfileManagement.SetCurrentSpeechRecognitionProfile(originalProfile);
             WorkItem = null;
         }
 
