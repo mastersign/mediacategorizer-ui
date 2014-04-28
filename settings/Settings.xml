@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://scaleton.mastersign.de/2013/model"
+       xsi:schemaLocation="http://scaleton.mastersign.de/2013/model http://scaleton.mastersign.de/Scaleton_Model_2013.xsd">
+
+  <ModelFeatures>
+    <ChangeTracking level="Tracking" escalateChangeState="true" />
+    <ToString />
+    <Equatable />
+  </ModelFeatures>
+
+  <Types>
+    
+    <Class name="Setup">
+
+      <Property name="Parallelization" type="ParallelizationMode">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Parallelisierung</DisplayName>
+        <Description>Gibt an, ob die Anzahl der parallelen Aufgaben je Prozess automatisch ermittelt werden soll, oder ob der Wert von 'Parallele Aufgaben' verwendet werden soll.</Description>
+        <DefaultValue>Auto</DefaultValue>
+      </Property>
+      <Property name="ParallelTasks" type="int">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Parallele Aufgaben</DisplayName>
+        <Description>Die manuelle Angabe für die maximale Anzahl von parallelen Aufgaben in einem Prozess.</Description>
+        <DefaultValue>2</DefaultValue>
+      </Property>
+      <Property name="CompatibleMediaFileExtensions" type="string">
+        <Category>Verarbeitung</Category>
+        <DisplayName>Mediendateiendungen</DisplayName>
+        <Description>Eine Liste mit Dateiendungen für unterstützte Mediendateien. Die Endungen werden ohne führenden Punkt angegeben und durch Leerzeichen getrennt.</Description>
+        <DefaultValue>mp4</DefaultValue>
+      </Property>
+
+      <Property name="Ffmpeg">
+        <Category>Hilfsprogramme</Category>
+        <DisplayName>FFmpeg</DisplayName>
+        <Description>Der Pfad von ffmpeg.exe.</Description>
+        <DefaultValue>tools/ffmpeg/bin/ffmpeg.exe</DefaultValue>
+      </Property>
+      <Property name="Ffprobe">
+        <Category>Hilfsprogramme</Category>
+        <DisplayName>FFprobe</DisplayName>
+        <Description>Der Pfad von ffprobe.exe.</Description>
+        <DefaultValue>tools/ffmpeg/bin/ffprobe.exe</DefaultValue>
+      </Property>
+      <Property name="WaveViz">
+        <Category>Hilfsprogramme</Category>
+        <DisplayName>WaveViz</DisplayName>
+        <Description>Der Pfad von WaveViz.exe.</Description>
+        <DefaultValue>tools/WaveViz/WaveViz.exe</DefaultValue>
+      </Property>
+      <Property name="Transcripter">
+        <Category>Hilfsprogramme</Category>
+        <DisplayName>Transcripter</DisplayName>
+        <Description>Der Pfad von Transcripter.exe.</Description>
+        <DefaultValue>tools/Transcripter/Transcripter.exe</DefaultValue>
+      </Property>
+      <Property name="Distillery">
+        <Category>Hilfsprogramme</Category>
+        <DisplayName>distillery</DisplayName>
+        <Description>Der Pfad von distillery.jar.</Description>
+        <DefaultValue>tools/distillery.jar</DefaultValue>
+      </Property>
+      <Property name="JavaRuntime">
+        <Category>Hilfsprogramme</Category>
+        <DisplayName>JRE</DisplayName>
+        <Description>Der Pfad zu java.exe oder leer wenn die Java-Laufzeitumgebung automatisch ermittelt werden soll.</Description>
+      </Property>
+
+    </Class>
+
+    <Enum name="ParallelizationMode">
+      <Member name="None" />
+      <Member name="Auto" />
+      <Member name="Manual" />
+    </Enum>
+
+  </Types>
+</Model>

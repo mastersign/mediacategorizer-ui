@@ -4,13 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BA1ACDF4-C963-4512-9EE7-E214814099DC}</ProjectGuid>
+    <ProjectGuid>{B4759E0C-90F4-4F6A-938B-63932AD5D8EE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>de.fhb.oll.mediacategorizer</RootNamespace>
     <AssemblyName>MediaCategorizer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -21,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,49 +34,197 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>lib\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </ApplicationDefinition>
+    <Compile Include="edn\EdnVector.cs" />
+    <Compile Include="edn\IEdnWritable.cs" />
+    <Compile Include="edn\Keyword.cs" />
+    <Compile Include="ILogWriter.cs" />
+    <Compile Include="LogWriter.cs" />
+    <Compile Include="model\EDN.cs" />
+    <Compile Include="edn\EdnWriter.cs" />
+    <Compile Include="model\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.xml</DependentUpon>
+    </Compile>
+    <Compile Include="model\WaveformParameter.cs" />
+    <Compile Include="PageSetup.xaml.cs">
+      <DependentUpon>PageSetup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="processing\AnalyzeResultsAndWriteOutputProcess.cs" />
+    <Compile Include="processing\AudioExtractionProcess.cs" />
+    <Compile Include="processing\DummyProcess.cs" />
+    <Compile Include="processing\MediaInspectionProcess.cs" />
+    <Compile Include="processing\MultiTaskProcessBase.cs" />
+    <Compile Include="processing\ProcessResultEventArgs.cs" />
+    <Compile Include="processing\IProcess.cs" />
+    <Compile Include="processing\FinalizeProjectProcess.cs" />
+    <Compile Include="processing\PrepareProjectProcess.cs" />
+    <Compile Include="processing\ProcessBase.cs" />
+    <Compile Include="processing\ProcessChain.cs" />
+    <Compile Include="processing\ProcessState.cs" />
+    <Compile Include="processing\ProcessProgressEventArgs.cs" />
+    <Compile Include="processing\ProfileSelectionProcess.cs" />
+    <Compile Include="processing\SpeechRecognitionProcess.cs" />
+    <Compile Include="processing\WaveformProcess.cs" />
+    <Compile Include="settings\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.xml</DependentUpon>
+    </Compile>
+    <Compile Include="settings\SetupManager.cs" />
+    <Compile Include="tools\DistilleryTool.cs" />
+    <Compile Include="tools\FfprobeTool.cs" />
+    <Compile Include="tools\FfmpegTool.cs" />
+    <Compile Include="tools\ToolBase.cs" />
+    <Compile Include="tools\ToolProvider.cs" />
+    <Compile Include="tools\TranscripterTool.cs" />
+    <Compile Include="tools\WaveVizTool.cs" />
+    <Page Include="PageSetup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="PageCategories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageMedia.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageParameters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageProcessing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="model\Category.cs" />
+    <Compile Include="model\CloudParameter.cs" />
+    <Compile Include="model\FilterParameter.cs" />
+    <Compile Include="model\ModelBase.cs" />
+    <Compile Include="model\Project.cs" />
+    <Compile Include="PageCategories.xaml.cs">
+      <DependentUpon>PageCategories.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageMedia.xaml.cs">
+      <DependentUpon>PageMedia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageParameters.xaml.cs">
+      <DependentUpon>PageParameters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageProcessing.xaml.cs">
+      <DependentUpon>PageProcessing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageStart.xaml.cs">
+      <DependentUpon>PageStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="model\Model.xml">
+      <SubType>Designer</SubType>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+      <Generator>Scaleton Code Generator</Generator>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="settings\Settings.xml">
+      <SubType>Designer</SubType>
+      <Generator>Scaleton Code Generator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
