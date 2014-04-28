@@ -68,6 +68,10 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
             var transcripter = GetTranscripterTool(); 
             transcripter.RunSpeechRecognition(m.ExtractedAudioFile, m.ResultsFile, (float)m.Duration, progressHandler);
+            if (IsCanceled && File.Exists(m.ResultsFile))
+            {
+                File.Delete(m.ResultsFile);
+            }
         }
     }
 }

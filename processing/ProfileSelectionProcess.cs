@@ -39,6 +39,8 @@ namespace de.fhb.oll.mediacategorizer.processing
             OnProgress("Erkennungssicherheiten ermitteln");
             RunTestsForProfiles();
 
+            if (IsCanceled) return;
+
             OnProgress("Erkennungssicherheiten auswerten");
             var criterion = GetCriterion();
             foreach (var m in Project.GetMedia())
@@ -93,6 +95,7 @@ namespace de.fhb.oll.mediacategorizer.processing
                 WorkItem = profile.Value;
                 RunTestsForProfile(profile.Key);
                 CurrentPhase = CurrentPhase + 1;
+                if (IsCanceled) break;
             }
             ProfileManagement.SetCurrentSpeechRecognitionProfile(originalProfile);
             WorkItem = null;
@@ -116,9 +119,12 @@ namespace de.fhb.oll.mediacategorizer.processing
                 var transcripter = GetTranscripterTool();
                 var result = transcripter.RunConfidenceTest(m.ExtractedAudioFile, 
                     Project.Configuration.ConfidenceTestDuration, progressHandler);
-                using (var w = new StreamWriter(file, false, Encoding.UTF8))
+                if (!IsCanceled)
                 {
-                    result.Write(w);
+                    using (var w = new StreamWriter(file, false, Encoding.UTF8))
+                    {
+                        result.WriteTo(w);
+                    }
                 }
             }
             using (var r = new StreamReader(file, Encoding.UTF8))

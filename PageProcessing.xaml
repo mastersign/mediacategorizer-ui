@@ -126,5 +126,6 @@
         </Grid>
 
         <Button x:Name="btnStartProcessing" Content="Starten" HorizontalAlignment="Right" Margin="0" Grid.Row="2" VerticalAlignment="Bottom" Click="StartProcessHandler" Padding="8,2"/>
+        <Button x:Name="btnCancelProcessing" Content="Abbrechen" HorizontalAlignment="Right" Margin="0,0,66,0" Grid.Row="2" VerticalAlignment="Bottom" Click="CancelProcessHandler" Padding="8,2" IsEnabled="False"/>
     </Grid>
 </Page>

@@ -40,27 +40,45 @@ namespace de.fhb.oll.mediacategorizer.processing
             if (!File.Exists(m.WaveformFile))
             {
                 var waveviz = GetWaveVizTool();
-                if (!waveviz.GenerateWaveVisualization(m.ExtractedAudioFile, m.WaveformFile,
+                var result = waveviz.GenerateWaveVisualization(m.ExtractedAudioFile, m.WaveformFile,
                     parameter.Width, parameter.Height,
                     parameter.BackgroundColor, parameter.Foreground1Color,
-                    parameter.Foreground2Color, parameter.LineColor))
+                    parameter.Foreground2Color, parameter.LineColor);
+                if (IsCanceled)
+                {
+                    if (File.Exists(m.WaveformFile))
+                    {
+                        File.Delete(m.WaveformFile);
+                    }
+                }
+                else if (!result)
                 {
                     errorHandler("WaveViz wurde mit einem Fehler beendet");
                 }
             }
+            if (IsCanceled) return;
             progressHandler(0.5f);
             m.WaveformFileBackground = BuildWaveformPath(m, "_bg");
             if (!File.Exists(m.WaveformFileBackground))
             {
                 var waveviz = GetWaveVizTool();
-                if (!waveviz.GenerateWaveVisualization(m.ExtractedAudioFile, m.WaveformFileBackground,
+                var result = waveviz.GenerateWaveVisualization(m.ExtractedAudioFile, m.WaveformFileBackground,
                     parameter.Width, parameter.Height,
                     parameter.PassiveBackgroundColor, parameter.PassiveForeground1Color,
-                    parameter.PassiveForeground2Color, parameter.PassiveLineColor))
+                    parameter.PassiveForeground2Color, parameter.PassiveLineColor);
+                if (IsCanceled)
+                {
+                    if (File.Exists(m.WaveformFileBackground))
+                    {
+                        File.Delete(m.WaveformFileBackground);
+                    }
+                }
+                else if (!result)
                 {
                     errorHandler("WaveViz wurde mit einem Fehler beendet");
                 }
             }
+            if (IsCanceled) return;
             progressHandler(1.0f);
         }
     }

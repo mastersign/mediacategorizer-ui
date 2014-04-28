@@ -95,7 +95,7 @@ namespace de.fhb.oll.mediacategorizer.tools
                     l => l.Trim().Split('=')[1]);
             }
 
-            public void Write(TextWriter tw)
+            public void WriteTo(TextWriter tw)
             {
                 foreach (var kvp in values)
                 {

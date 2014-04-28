@@ -114,12 +114,24 @@ namespace de.fhb.oll.mediacategorizer.processing
             var audioProgressHandler = (Action<float>)(p => progressHandler((no[0] + p) / cnt));
             var audioHandler = (Action<FfmpegTool.AudioFormat, AudioEncodingParameter>)((f, p) =>
             {
+                if (IsCanceled) return;
                 var ext = GetExtension(f);
                 var targetPath = baseTargetPath + ext;
                 if (!File.Exists(targetPath))
                 {
                     var res = GetFfmpegTool().TranscodeAudio(
                         m.MediaFile, targetPath, f, p.AudioBitrate, p.JoinChannels, audioProgressHandler);
+                    if (IsCanceled)
+                    {
+                        Console.WriteLine("Canceled: {0}", targetPath);
+                        if (File.Exists(targetPath))
+                        {
+                            Console.WriteLine("Deleting file {0} ...", targetPath);
+                            File.Delete(targetPath);
+                            Console.WriteLine("... deleted file {0}", targetPath);
+                        }
+                        return;
+                    }
                     if (!res)
                     {
                         errorHandler("Transkodierung von '" + m.MediaFile + "' in das Audio-Format " + f +
@@ -159,8 +171,9 @@ namespace de.fhb.oll.mediacategorizer.processing
                 (cfg.VideoTranscodeWebM ? 1 : 0);
             int[] no = { 0 };
             var videoProgressHandler = (Action<float>)(p => progressHandler((no[0] + p) / cnt));
-            var processHandler = (Action<FfmpegTool.VideoFormat, VideoEncodingParameter>)((f, p) =>
+            var videoHandler = (Action<FfmpegTool.VideoFormat, VideoEncodingParameter>)((f, p) =>
             {
+                if (IsCanceled) return;
                 var ext = GetExtension(f);
                 var targetPath = baseTargetPath + ext;
                 if (!File.Exists(targetPath))
@@ -168,6 +181,14 @@ namespace de.fhb.oll.mediacategorizer.processing
                     var res = GetFfmpegTool().TranscodeVideo(
                         m.MediaFile, targetPath, f, cfg.VideoWidth, p.VideoBitrate, p.AudioBitrate, p.JoinChannels,
                         videoProgressHandler);
+                    if (IsCanceled)
+                    {
+                        if (File.Exists(targetPath))
+                        {
+                            File.Delete(targetPath);
+                        }
+                        return;
+                    }
                     if (!res)
                     {
                         errorHandler("Transkodierung von '" + m.MediaFile + "' in das Video-Format " + f +
@@ -181,9 +202,9 @@ namespace de.fhb.oll.mediacategorizer.processing
                 });
                 no[0]++;
             });
-            if (cfg.VideoTranscodeH264) processHandler(FfmpegTool.VideoFormat.Mp4, cfg.VideoParameterH264);
-            if (cfg.VideoTranscodeOGG) processHandler(FfmpegTool.VideoFormat.Ogg, cfg.VideoParameterOGG);
-            if (cfg.VideoTranscodeWebM) processHandler(FfmpegTool.VideoFormat.WebM, cfg.VideoParameterWebM);
+            if (cfg.VideoTranscodeH264) videoHandler(FfmpegTool.VideoFormat.Mp4, cfg.VideoParameterH264);
+            if (cfg.VideoTranscodeOGG) videoHandler(FfmpegTool.VideoFormat.Ogg, cfg.VideoParameterOGG);
+            if (cfg.VideoTranscodeWebM) videoHandler(FfmpegTool.VideoFormat.WebM, cfg.VideoParameterWebM);
         }
 
         private static string GetExtension(FfmpegTool.VideoFormat format)
