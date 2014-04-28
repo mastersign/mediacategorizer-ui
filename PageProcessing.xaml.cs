@@ -81,6 +81,7 @@ namespace de.fhb.oll.mediacategorizer
             lblStatus.Content = pc.IsFailed ? "Fehlgeschlagen" : "Beendet";
             btnStartProcessing.IsEnabled = true;
             timer.Change(0, Timeout.Infinite);
+            OnTimer(null);
         }
     }
 }
