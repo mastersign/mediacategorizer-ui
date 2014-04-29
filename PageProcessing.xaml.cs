@@ -60,6 +60,15 @@ namespace de.fhb.oll.mediacategorizer
             pc.Start();
         }
 
+        private void CancelProcessHandler(object sender, RoutedEventArgs e)
+        {
+            var pc = GetProcessChain();
+            if (pc.IsRunning)
+            {
+                pc.Cancel();
+            }
+        }
+
         private void DataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
             var pc = GetProcessChain();
@@ -72,15 +81,20 @@ namespace de.fhb.oll.mediacategorizer
         {
             lblStatus.Content = "Verarbeiten";
             btnStartProcessing.IsEnabled = false;
+            btnCancelProcessing.IsEnabled = true;
             timer.Change(0, 1000);
         }
 
         private void ChainEndedHandler(object sender, EventArgs e)
         {
             var pc = (ProcessChain)sender;
-            lblStatus.Content = pc.IsFailed ? "Fehlgeschlagen" : "Beendet";
+            lblStatus.Content = pc.IsCanceled 
+                ? "Abgebrochen" 
+                : (pc.IsFailed ? "Fehlgeschlagen" : "Beendet");
             btnStartProcessing.IsEnabled = true;
+            btnCancelProcessing.IsEnabled = false;
             timer.Change(0, Timeout.Infinite);
+            OnTimer(null);
         }
     }
 }

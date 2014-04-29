@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using de.fhb.oll.mediacategorizer.settings;
-using Microsoft.Win32;
 
 namespace de.fhb.oll.mediacategorizer.tools
 {
@@ -81,36 +80,6 @@ namespace de.fhb.oll.mediacategorizer.tools
             }
         }
 
-        public Tuple<Guid, string>[] GetSpeechRecognitionProfiles()
-        {
-            var tokensKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Speech\RecoProfiles\Tokens");
-            if (tokensKey == null) throw new ApplicationException("Could not find any speech recognition profiles.");
-            var tokens = tokensKey.GetSubKeyNames();
-            return tokens
-                .Select(tn => Tuple.Create(
-                    Guid.Parse(tn),
-                    tokensKey.OpenSubKey(tn).GetValue(string.Empty) as string))
-                .ToArray();
-        }
-
-        public Guid GetCurrentSpeechRecognitionProfileId()
-        {
-            var recoProfilesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Speech\RecoProfiles");
-            if (recoProfilesKey == null) throw new ApplicationException("Could not find a default speech recognition profile.");
-            var path = recoProfilesKey.GetValue("DefaultTokenId") as string;
-            var guid = path.Substring(path.LastIndexOf('\\') + 1);
-            return Guid.Parse(guid);
-        }
-
-        public void SetCurrentSpeechRecognitionProfile(Guid id)
-        {
-            var recoProfilesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Speech\RecoProfiles", true);
-            if (recoProfilesKey == null) throw new ApplicationException("Could not find a default speech recognition profile.");
-            var path = string.Format(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Speech\RecoProfiles\Tokens\{0:B}", id);
-            recoProfilesKey.SetValue("DefaultTokenId", path);
-            recoProfilesKey.Flush();
-        }
-
         public class ConfidenceTestResult
         {
             private readonly IDictionary<string, string> values;
@@ -126,7 +95,7 @@ namespace de.fhb.oll.mediacategorizer.tools
                     l => l.Trim().Split('=')[1]);
             }
 
-            public void Write(TextWriter tw)
+            public void WriteTo(TextWriter tw)
             {
                 foreach (var kvp in values)
                 {

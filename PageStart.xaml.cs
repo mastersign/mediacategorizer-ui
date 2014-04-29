@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using de.fhb.oll.mediacategorizer.model;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace de.fhb.oll.mediacategorizer
@@ -26,6 +27,11 @@ namespace de.fhb.oll.mediacategorizer
             InitializeComponent();
         }
 
+        private Project GetProject()
+        {
+            return (Project)DataContext;
+        }
+
         private void ChooseOutputDirectoryHandler(object sender, RoutedEventArgs e)
         {
             var dlg = new CommonOpenFileDialog("Ausgabeverzeichnis wählen...")
@@ -36,7 +42,7 @@ namespace de.fhb.oll.mediacategorizer
             var res = dlg.ShowDialog(Window.GetWindow(this));
             if (res == CommonFileDialogResult.Ok)
             {
-                txtOutputDirectory.Text = dlg.FileName;
+                GetProject().OutputDir = dlg.FileName;
             }
         }
     }

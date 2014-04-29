@@ -8,7 +8,7 @@ using System.Windows;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
 [assembly: AssemblyTitle("Media Categorizer")]
-[assembly: AssemblyDescription("Benutzeroberfläche zur Erstellung und Verwaltung von Projekten zur Kategorisierung von Videos.")]
+[assembly: AssemblyDescription("Benutzeroberfläche für die Erstellung und Verwaltung von Projekten zur Kategorisierung von Audio- und Videodateien.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fachhochschule Brandenburg")]
 [assembly: AssemblyProduct("MediaCategorizer")]
@@ -51,6 +51,6 @@ using System.Windows;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.5.0.0")]
-[assembly: AssemblyFileVersion("0.5.0.0")]
+[assembly: AssemblyVersion("0.6.0.0")]
+[assembly: AssemblyFileVersion("0.6.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("de-DE")]

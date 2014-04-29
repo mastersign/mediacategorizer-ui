@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using de.fhb.oll.mediacategorizer.edn;
 using de.fhb.oll.mediacategorizer.settings;
@@ -42,7 +43,11 @@ namespace de.fhb.oll.mediacategorizer.processing
             OnProgress("Analyse starten...");
             var distillery = GetDistilleryTool();
             var state = distillery.RunDistillery(jobFile, wi => { WorkItem = wi; }, OnProgress, OnProgress, OnError);
-            if (!state)
+            if (IsCanceled)
+            {
+                OnError("Der Vorgang wurde abgebrochen.");
+            }
+            else if (!state)
             {
                 OnError("Der Java-Prozess wurde mit einem Fehler beendet.");
             }

@@ -38,6 +38,7 @@
       </Property>
       <Property name="Categories" type="Category" isCollection="true" />
       <Property name="Media" type="Media" isCollection="true" />
+      <Property name="Profiles" type="Profile" isCollection="true" persistent="false" />
     </Class>
 
     <Class name="Configuration">
@@ -109,6 +110,13 @@
         <Category>Visualisierung</Category>
         <DisplayName>Kategoriewolke</DisplayName>
         <Description>Die Parameter für die Wortwolke einer Kategorie.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+
+      <Property name="Matrix" type="MatrixParameter">
+        <Category>Visualisierung</Category>
+        <DisplayName>Übereinstimmungsmatrix</DisplayName>
+        <Description>Die Parameter für die Übereinstimmungsmatrix zwischen Medien und Kategorien.</Description>
         <CustomAttribute>ExpandableObject</CustomAttribute>
       </Property>
 
@@ -452,6 +460,15 @@
       </Property>
     </Class>
 
+    <Class name="MatrixParameter">
+      <CustomInitializer>Initialize</CustomInitializer>
+      
+      <Property name="Color" type="System.Windows.Media.Color">
+        <DisplayName>Zellenfarbe</DisplayName>
+        <Description>Die Hintergrundfarbe für die Zellen in der Übereinstimmungsmatrix.</Description>
+      </Property>
+    </Class>
+
     <Enum name="CategoryResourceType">
       <Member name="Plain" />
       <Member name="Html" />
@@ -511,6 +528,14 @@
       <Member name="Audio" />
       <Member name="Video" />
     </Enum>
+
+    <Class name="Profile">
+      <Property name="Id" type="System.Guid" />
+      <Property name="Name" />
+      <Property name="Enabled" type="bool">
+        <DefaultValue>true</DefaultValue>
+      </Property>
+    </Class>
 
   </Types>
 </Model>

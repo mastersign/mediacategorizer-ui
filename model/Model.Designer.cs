@@ -53,6 +53,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.Configuration = new Configuration();
             this.Categories = new global::System.Collections.ObjectModel.ObservableCollection<Category>();
             this.Media = new global::System.Collections.ObjectModel.ObservableCollection<Media>();
+            this.Profiles = new global::System.Collections.ObjectModel.ObservableCollection<Profile>();
             this.Initialize();
             
             this.IsChanged = false;
@@ -425,6 +426,79 @@ namespace de.fhb.oll.mediacategorizer.model
         }
         
         #endregion
+        
+        #region Property Profiles
+        
+        [NonSerialized]
+        private global::System.Collections.ObjectModel.ObservableCollection<Profile> _profiles;
+        
+        public event EventHandler ProfilesChanged;
+        
+        protected virtual void OnProfilesChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ProfilesChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Profiles");
+        }
+        
+        private void ProfilesItemPropertyChanged(object sender, EventArgs ea)
+        {
+            this.OnProfilesChanged();
+        }
+        
+        private void ProfilesCollectionChangedHandler(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs ea)
+        {
+            if (!ReferenceEquals(ea.OldItems, null))
+            {
+                foreach (Profile item in ea.OldItems)
+                {
+                    if (!ReferenceEquals(item, null))
+                    {
+                        item.PropertyChanged -= this.ProfilesItemPropertyChanged;
+                    }
+                }
+            }
+            this.OnProfilesChanged();
+            if (!ReferenceEquals(ea.NewItems, null))
+            {
+                foreach (Profile item in ea.NewItems)
+                {
+                    if (!ReferenceEquals(item, null))
+                    {
+                        item.PropertyChanged += this.ProfilesItemPropertyChanged;
+                    }
+                }
+            }
+        }
+        
+        [XmlIgnore]
+        public virtual global::System.Collections.ObjectModel.ObservableCollection<Profile> Profiles
+        {
+            get { return _profiles; }
+            set
+            {
+                if ((value == _profiles))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_profiles, null))
+                {
+                    _profiles.CollectionChanged -= this.ProfilesCollectionChangedHandler;
+                }
+                _profiles = value;
+                if (!ReferenceEquals(_profiles, null))
+                {
+                    _profiles.CollectionChanged += this.ProfilesCollectionChangedHandler;
+                }
+                this.OnProfilesChanged();
+            }
+        }
+        
+        #endregion
     }
     
     public partial class Configuration : INotifyPropertyChanged, IChangeTracking
@@ -441,6 +515,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.MainCloud = new CloudParameter();
             this.MediaCloud = new CloudParameter();
             this.CategoryCloud = new CloudParameter();
+            this.Matrix = new MatrixParameter();
             this._rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
             this._cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
             this._visualizeResult = DEF_VISUALIZERESULT;
@@ -511,6 +586,10 @@ namespace de.fhb.oll.mediacategorizer.model
             if (!ReferenceEquals(_categoryCloud, null))
             {
                 _categoryCloud.AcceptChanges();
+            }
+            if (!ReferenceEquals(_matrix, null))
+            {
+                _matrix.AcceptChanges();
             }
             if (!ReferenceEquals(_videoParameterH264, null))
             {
@@ -976,6 +1055,56 @@ namespace de.fhb.oll.mediacategorizer.model
                     _categoryCloud.PropertyChanged += this.CategoryCloudPropertyChangedHandler;
                 }
                 this.OnCategoryCloudChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property Matrix
+        
+        private MatrixParameter _matrix;
+        
+        public event EventHandler MatrixChanged;
+        
+        protected virtual void OnMatrixChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = MatrixChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Matrix");
+        }
+        
+        private void MatrixPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
+        {
+            this.OnMatrixChanged();
+        }
+        
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
+        [Category(@"Visualisierung")]
+        [DisplayName(@"Übereinstimmungsmatrix")]
+        [Description(@"Die Parameter für die Übereinstimmungsmatrix zwischen Medien und Kategorien.")]
+        public virtual MatrixParameter Matrix
+        {
+            get { return _matrix; }
+            set
+            {
+                if ((value == _matrix))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_matrix, null))
+                {
+                    _matrix.PropertyChanged -= this.MatrixPropertyChangedHandler;
+                }
+                _matrix = value;
+                if (!ReferenceEquals(_matrix, null))
+                {
+                    _matrix.PropertyChanged += this.MatrixPropertyChangedHandler;
+                }
+                this.OnMatrixChanged();
             }
         }
         
@@ -3381,6 +3510,82 @@ namespace de.fhb.oll.mediacategorizer.model
         #endregion
     }
     
+    public partial class MatrixParameter : INotifyPropertyChanged, IChangeTracking
+    {
+        public MatrixParameter()
+        {
+            this.Initialize();
+            
+            this.IsChanged = false;
+        }
+        
+        #region Change Tracking
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
+        [NonSerialized]
+        private bool _isChanged = false;
+        
+        [Browsable(false)]
+        [XmlIgnore]
+        public bool IsChanged
+        {
+            get { return this._isChanged; }
+            protected set { this._isChanged = value; }
+        }
+        
+        public void AcceptChanges()
+        {
+            this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property Color
+        
+        private global::System.Windows.Media.Color _color;
+        
+        public event EventHandler ColorChanged;
+        
+        protected virtual void OnColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Color");
+        }
+        
+        [DisplayName(@"Zellenfarbe")]
+        [Description(@"Die Hintergrundfarbe für die Zellen in der Übereinstimmungsmatrix.")]
+        public virtual global::System.Windows.Media.Color Color
+        {
+            get { return _color; }
+            set
+            {
+                if (value.Equals(_color))
+                {
+                    return;
+                }
+                _color = value;
+                this.OnColorChanged();
+            }
+        }
+        
+        #endregion
+    }
+    
     public partial class CategoryResource : INotifyPropertyChanged, IChangeTracking
     {
         public CategoryResource()
@@ -4310,6 +4515,149 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _mimeType = value;
                 this.OnMimeTypeChanged();
+            }
+        }
+        
+        #endregion
+    }
+    
+    public partial class Profile : INotifyPropertyChanged, IChangeTracking
+    {
+        public Profile()
+        {
+            this._enabled = DEF_ENABLED;
+            
+            this.IsChanged = false;
+        }
+        
+        #region Change Tracking
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
+        [NonSerialized]
+        private bool _isChanged = false;
+        
+        [Browsable(false)]
+        [XmlIgnore]
+        public bool IsChanged
+        {
+            get { return this._isChanged; }
+            protected set { this._isChanged = value; }
+        }
+        
+        public void AcceptChanges()
+        {
+            this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property Id
+        
+        private Guid _id;
+        
+        public event EventHandler IdChanged;
+        
+        protected virtual void OnIdChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = IdChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Id");
+        }
+        
+        public virtual Guid Id
+        {
+            get { return _id; }
+            set
+            {
+                if (value.Equals(_id))
+                {
+                    return;
+                }
+                _id = value;
+                this.OnIdChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property Name
+        
+        private string _name;
+        
+        public event EventHandler NameChanged;
+        
+        protected virtual void OnNameChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = NameChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Name");
+        }
+        
+        public virtual string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (string.Equals(value, _name))
+                {
+                    return;
+                }
+                _name = value;
+                this.OnNameChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property Enabled
+        
+        private bool _enabled;
+        
+        public event EventHandler EnabledChanged;
+        
+        protected virtual void OnEnabledChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = EnabledChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Enabled");
+        }
+        
+        private const bool DEF_ENABLED = true;
+        
+        [DefaultValue(DEF_ENABLED)]
+        public virtual bool Enabled
+        {
+            get { return _enabled; }
+            set
+            {
+                if ((value == _enabled))
+                {
+                    return;
+                }
+                _enabled = value;
+                this.OnEnabledChanged();
             }
         }
         

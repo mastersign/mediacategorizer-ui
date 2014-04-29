@@ -33,11 +33,11 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private static string BuildResourceFileExtension(CategoryResource r)
         {
-            return r.Type == CategoryResourceType.Html || r.Type == CategoryResourceType.Wikipedia 
-                ? ".html" 
+            return r.Type == CategoryResourceType.Html || r.Type == CategoryResourceType.Wikipedia
+                ? ".html"
                 : ".txt";
         }
-        
+
         private void ProcessMedia(Category c, CategoryResource r, int index, Action<float> progressHandler,
             Action<string> errorHandler)
         {
@@ -56,11 +56,11 @@ namespace de.fhb.oll.mediacategorizer.processing
 
             if (File.Exists(r.CachedFile)) return;
 
-            var timeout = Setup.DownloadTimeout*1000;
+            var timeout = Setup.DownloadTimeout * 1000;
 
             using (var wc = new CustomWebClient(timeout))
             {
-                wc.DownloadProgressChanged += (sender, args) => progressHandler(args.ProgressPercentage/100f);
+                wc.DownloadProgressChanged += (sender, args) => progressHandler(args.ProgressPercentage / 100f);
                 var downloadTask = wc.DownloadFileTaskAsync(uri, r.CachedFile);
                 downloadTask.Wait();
                 if (downloadTask.IsFaulted)

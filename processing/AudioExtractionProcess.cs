@@ -39,7 +39,15 @@ namespace de.fhb.oll.mediacategorizer.processing
             if (!File.Exists(m.ExtractedAudioFile))
             {
                 var ffmpeg = GetFfmpegTool();
-                if (!ffmpeg.ExtractAudio(m.MediaFile, m.ExtractedAudioFile, progressHandler))
+                var result = ffmpeg.ExtractAudio(m.MediaFile, m.ExtractedAudioFile, progressHandler);
+                if (IsCanceled)
+                {
+                    if (File.Exists(m.ExtractedAudioFile))
+                    {
+                        File.Delete(m.ExtractedAudioFile);
+                    }
+                }
+                else if (!result)
                 {
                     errorHandler("FFmpeg wurde mit einem Fehler beendet");
                 }

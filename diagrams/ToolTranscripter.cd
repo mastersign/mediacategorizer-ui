@@ -27,7 +27,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAACCAAAAAAAAAAABAAAAAAAAAAAAAACIAAA=</HashCode>
+      <HashCode>AAAAAAAAAACCAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>tools\TranscripterTool.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -48,12 +48,12 @@
       <Method Name="ProfileSelectionProcess" Hidden="true" />
       <Field Name="results" Hidden="true" />
       <Method Name="RunTest" Hidden="true" />
-      <Method Name="RunTestsForAllProfiles" Hidden="true" />
       <Method Name="RunTestsForProfile" Hidden="true" />
+      <Method Name="RunTestsForProfiles" Hidden="true" />
       <Method Name="Work" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AQwBAAgAAAAAAAAAAAIQACAAAAAIAAgAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQwBAAgAAAAAAAAAAAIQICAAAAAAAAgAAAAAAAAAAAA=</HashCode>
       <FileName>processing\ProfileSelectionProcess.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -70,6 +70,13 @@
     <TypeIdentifier>
       <HashCode>AAgBAAAAAAAAAAAAgAIQAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>processing\SpeechRecognitionProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="de.fhb.oll.mediacategorizer.ProfileManagement">
+    <Position X="0.5" Y="8.25" Width="6.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>ProfileManagement.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

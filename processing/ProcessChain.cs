@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using de.fhb.oll.mediacategorizer.model;
 using de.fhb.oll.mediacategorizer.settings;
@@ -31,6 +33,8 @@ namespace de.fhb.oll.mediacategorizer.processing
         private DateTime? endTime;
 
         private bool isRunning;
+
+        private bool isCanceled;
 
         private bool isFailed;
 
@@ -78,6 +82,7 @@ namespace de.fhb.oll.mediacategorizer.processing
             Progress = 0f;
             totalProgressWeight = 0f;
             IsFailed = false;
+            IsCanceled = false;
             IsRunning = false;
             IsEnded = false;
 
@@ -240,8 +245,9 @@ namespace de.fhb.oll.mediacategorizer.processing
 
         private bool ComputeIsRunning()
         {
-            return processes.Any(p => p.State == ProcessState.Running) ||
-                (CollectWaitingProcesses().Any() && !processes.Any(p => p.State == ProcessState.Failed));
+            return (processes.Any(p => p.State == ProcessState.Running) ||
+                (CollectWaitingProcesses().Any() && processes.All(
+                    p => p.State != ProcessState.Failed)));
         }
 
         public bool IsRunning
@@ -268,6 +274,17 @@ namespace de.fhb.oll.mediacategorizer.processing
             {
                 if (isFailed == value) return;
                 isFailed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsCanceled
+        {
+            get { return isCanceled; }
+            private set
+            {
+                if (isCanceled == value) return;
+                isCanceled = true;
                 OnPropertyChanged();
             }
         }
@@ -336,6 +353,16 @@ namespace de.fhb.oll.mediacategorizer.processing
             }
             changedStateOfProject = Project.IsChanged;
             GoAhead();
+        }
+
+        public void Cancel()
+        {
+            IsCanceled = true;
+            foreach (var process in processes)
+            {
+                process.Cancel();
+            }
+            ToolBase.KillRunningToolProcesses();
         }
 
         public void InitializeLogWriter(LogWriter w)

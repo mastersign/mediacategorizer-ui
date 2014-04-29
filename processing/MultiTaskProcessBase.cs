@@ -88,7 +88,12 @@ namespace de.fhb.oll.mediacategorizer.processing
                 return;
             }
 
-            if (taskList.Count == 0 || CancelOnError && errors.Count > 0)
+            if (IsCanceled)
+            {
+                OnError("Der Vorgang wurde abgebrochen.");
+            }
+
+            if (IsCanceled || taskList.Count == 0 || (CancelOnError && errors.Count > 0))
             {
                 if (runningTasks.Count == 0)
                 {

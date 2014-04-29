@@ -39,7 +39,13 @@ namespace de.fhb.oll.mediacategorizer.processing
                         OnError("Failed.");
                         return;
                     }
+                    if (IsCanceled) break;
                 }
+                if (IsCanceled) break;
+            }
+            if (IsCanceled)
+            {
+                OnProgress("Der Vorgang wurde abgebrochen.");
             }
             Thread.Sleep(rand.Next(200, 800));
         }
