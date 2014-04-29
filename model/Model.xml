@@ -113,6 +113,13 @@
         <CustomAttribute>ExpandableObject</CustomAttribute>
       </Property>
 
+      <Property name="Matrix" type="MatrixParameter">
+        <Category>Visualisierung</Category>
+        <DisplayName>Übereinstimmungsmatrix</DisplayName>
+        <Description>Die Parameter für die Übereinstimmungsmatrix zwischen Medien und Kategorien.</Description>
+        <CustomAttribute>ExpandableObject</CustomAttribute>
+      </Property>
+
       <Property name="RejectExistingIntermediates" type="bool">
         <Category>Verarbeitung</Category>
         <DisplayName>Zwischenergebnisse verwerfen</DisplayName>
@@ -450,6 +457,15 @@
       <Property name="BackgroundColor" type="System.Windows.Media.Color">
         <DisplayName>Hintergrundfarbe</DisplayName>
         <Description>Die Farbe des Hintergrundes.</Description>
+      </Property>
+    </Class>
+
+    <Class name="MatrixParameter">
+      <CustomInitializer>Initialize</CustomInitializer>
+      
+      <Property name="Color" type="System.Windows.Media.Color">
+        <DisplayName>Zellenfarbe</DisplayName>
+        <Description>Die Hintergrundfarbe für die Zellen in der Übereinstimmungsmatrix.</Description>
       </Property>
     </Class>
 

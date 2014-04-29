@@ -515,6 +515,7 @@ namespace de.fhb.oll.mediacategorizer.model
             this.MainCloud = new CloudParameter();
             this.MediaCloud = new CloudParameter();
             this.CategoryCloud = new CloudParameter();
+            this.Matrix = new MatrixParameter();
             this._rejectExistingIntermediates = DEF_REJECTEXISTINGINTERMEDIATES;
             this._cleanupOutputDir = DEF_CLEANUPOUTPUTDIR;
             this._visualizeResult = DEF_VISUALIZERESULT;
@@ -585,6 +586,10 @@ namespace de.fhb.oll.mediacategorizer.model
             if (!ReferenceEquals(_categoryCloud, null))
             {
                 _categoryCloud.AcceptChanges();
+            }
+            if (!ReferenceEquals(_matrix, null))
+            {
+                _matrix.AcceptChanges();
             }
             if (!ReferenceEquals(_videoParameterH264, null))
             {
@@ -1050,6 +1055,56 @@ namespace de.fhb.oll.mediacategorizer.model
                     _categoryCloud.PropertyChanged += this.CategoryCloudPropertyChangedHandler;
                 }
                 this.OnCategoryCloudChanged();
+            }
+        }
+        
+        #endregion
+        
+        #region Property Matrix
+        
+        private MatrixParameter _matrix;
+        
+        public event EventHandler MatrixChanged;
+        
+        protected virtual void OnMatrixChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = MatrixChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Matrix");
+        }
+        
+        private void MatrixPropertyChangedHandler(object sender, PropertyChangedEventArgs ea)
+        {
+            this.OnMatrixChanged();
+        }
+        
+        [global::Xceed.Wpf.Toolkit.PropertyGrid.Attributes.ExpandableObject]
+        [Category(@"Visualisierung")]
+        [DisplayName(@"Übereinstimmungsmatrix")]
+        [Description(@"Die Parameter für die Übereinstimmungsmatrix zwischen Medien und Kategorien.")]
+        public virtual MatrixParameter Matrix
+        {
+            get { return _matrix; }
+            set
+            {
+                if ((value == _matrix))
+                {
+                    return;
+                }
+                if (!ReferenceEquals(_matrix, null))
+                {
+                    _matrix.PropertyChanged -= this.MatrixPropertyChangedHandler;
+                }
+                _matrix = value;
+                if (!ReferenceEquals(_matrix, null))
+                {
+                    _matrix.PropertyChanged += this.MatrixPropertyChangedHandler;
+                }
+                this.OnMatrixChanged();
             }
         }
         
@@ -3449,6 +3504,82 @@ namespace de.fhb.oll.mediacategorizer.model
                 }
                 _backgroundColor = value;
                 this.OnBackgroundColorChanged();
+            }
+        }
+        
+        #endregion
+    }
+    
+    public partial class MatrixParameter : INotifyPropertyChanged, IChangeTracking
+    {
+        public MatrixParameter()
+        {
+            this.Initialize();
+            
+            this.IsChanged = false;
+        }
+        
+        #region Change Tracking
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
+        [NonSerialized]
+        private bool _isChanged = false;
+        
+        [Browsable(false)]
+        [XmlIgnore]
+        public bool IsChanged
+        {
+            get { return this._isChanged; }
+            protected set { this._isChanged = value; }
+        }
+        
+        public void AcceptChanges()
+        {
+            this.IsChanged = false;
+        }
+        
+        #endregion
+        
+        #region Property Color
+        
+        private global::System.Windows.Media.Color _color;
+        
+        public event EventHandler ColorChanged;
+        
+        protected virtual void OnColorChanged()
+        {
+            this.IsChanged = true;
+            EventHandler handler = ColorChanged;
+            if (!ReferenceEquals(handler, null))
+            {
+                handler(this, EventArgs.Empty);
+            }
+            this.OnPropertyChanged(@"Color");
+        }
+        
+        [DisplayName(@"Zellenfarbe")]
+        [Description(@"Die Hintergrundfarbe für die Zellen in der Übereinstimmungsmatrix.")]
+        public virtual global::System.Windows.Media.Color Color
+        {
+            get { return _color; }
+            set
+            {
+                if (value.Equals(_color))
+                {
+                    return;
+                }
+                _color = value;
+                this.OnColorChanged();
             }
         }
         

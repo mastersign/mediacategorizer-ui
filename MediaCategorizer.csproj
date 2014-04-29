@@ -83,6 +83,7 @@
     <Compile Include="edn\IEdnWritable.cs" />
     <Compile Include="edn\Keyword.cs" />
     <Compile Include="model\AudioEncodingParameter.cs" />
+    <Compile Include="model\MatrixParameter.cs" />
     <Compile Include="model\Profile.cs" />
     <Compile Include="model\VideoEncodingParameter.cs" />
     <Compile Include="PageProfiles.xaml.cs">

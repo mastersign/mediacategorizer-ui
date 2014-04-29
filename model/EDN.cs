@@ -72,6 +72,7 @@ namespace de.fhb.oll.mediacategorizer.model
                         new Keyword("medium-cloud"), MediaCloud,
                         new Keyword("category-cloud"), CategoryCloud,
                         new Keyword("waveform"), Waveform,
+                        new Keyword("matrix"), Matrix,
                     }));
         }
     }
@@ -103,36 +104,17 @@ namespace de.fhb.oll.mediacategorizer.model
                 new Keyword("order-priority"), OrderPriority,
                 new Keyword("min-occurrence"), MinOccurence,
                 new Keyword("font-family"), FontFamily.Source,
-                new Keyword("font-style"), FontStyleAsEdn(),
+                new Keyword("font-style"), EdnHelper.FontStyleAsEdn(FontBold, FontItalic),
                 new Keyword("min-font-size"), MinFontSize,
                 new Keyword("max-font-size"), MaxFontSize,
-                new Keyword("color"), ColorToEdn(Color),
-                new Keyword("background-color"), ColorToEdn(BackgroundColor),
+                new Keyword("color"), EdnHelper.ColorToEdn(Color),
+                new Keyword("background-color"), EdnHelper.ColorToEdn(BackgroundColor),
             });
         }
 
         private Keyword CloudPrecisionAsEdn()
         {
             return new Keyword(Precision.ToString().ToLowerInvariant());
-        }
-
-        private EdnVector FontStyleAsEdn()
-        {
-            var l = new List<Keyword>();
-            if (FontBold) l.Add(new Keyword("bold"));
-            if (FontItalic) l.Add(new Keyword("italic"));
-            return new EdnVector(l);
-        }
-
-        private static EdnVector ColorToEdn(Color color)
-        {
-            return new EdnVector(new[]
-            {
-                (color.R / 255f),
-                (color.G / 255f),
-                (color.B / 255f),
-                (color.A / 255f),
-            });
         }
     }
 
@@ -144,6 +126,17 @@ namespace de.fhb.oll.mediacategorizer.model
             {
                 new Keyword("width"), Width,
                 new Keyword("height"), Height,
+            }, false);
+        }
+    }
+
+    partial class MatrixParameter : IEdnWritable
+    {
+        public void WriteTo(EdnWriter w)
+        {
+            w.WriteMap(new object[]
+            {
+                new Keyword("color"), EdnHelper.ColorToEdn(Color),
             }, false);
         }
     }
@@ -210,6 +203,28 @@ namespace de.fhb.oll.mediacategorizer.model
         private Keyword TypeAsEdn()
         {
             return new Keyword(Type.ToString().ToLowerInvariant());
+        }
+    }
+
+    static class EdnHelper
+    {
+        public static EdnVector ColorToEdn(Color color)
+        {
+            return new EdnVector(new[]
+            {
+                (color.R / 255f),
+                (color.G / 255f),
+                (color.B / 255f),
+                (color.A / 255f),
+            });
+        }
+
+        public static EdnVector FontStyleAsEdn(bool bold, bool italic)
+        {
+            var l = new List<Keyword>();
+            if (bold) l.Add(new Keyword("bold"));
+            if (italic) l.Add(new Keyword("italic"));
+            return new EdnVector(l);
         }
     }
 }

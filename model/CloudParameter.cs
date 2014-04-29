@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
 
 namespace de.fhb.oll.mediacategorizer.model
 {
@@ -24,7 +22,7 @@ namespace de.fhb.oll.mediacategorizer.model
         public string FontFamilyName
         {
             get { return FontFamily != null ? FontFamily.Source : null; }
-            set { FontFamily = value == null ? null : new FontFamily(value); }
+            set { FontFamily = value == null ? null : new System.Windows.Media.FontFamily(value); }
         }
 
         public override string ToString()
