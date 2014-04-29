@@ -7,7 +7,7 @@
 	  xmlns:model="clr-namespace:de.fhb.oll.mediacategorizer.model"
 	  mc:Ignorable="d" 
 	  d:DesignHeight="400" d:DesignWidth="500"
-	Title="Sprachprofile">
+	Title="Sprecherprofile">
     <Page.Resources>
         <Style x:Key="QuickChangeStyle" TargetType="{x:Type DataGridCell}">
             <EventSetter Event="PreviewMouseLeftButtonDown" Handler="DataGridCell_PreviewMouseLeftButtonDown" />
@@ -27,6 +27,6 @@
                 <DataGridTextColumn Binding="{Binding Id}" Header="ID" Width="3*" FontFamily="Consolas" FontSize="12" CanUserSort="False" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Grid.Row="2" Margin="0,10,0,0" TextWrapping="WrapWithOverflow">Hinweis: Die Auswahl der aktiven Sprachprofile wird nicht im Projekt gespeichert. Beim Öffnen eines Projektes werden automatisch alle Sprachprofile aktiviert. Achten Sie vor dem Starten der Ausführung darauf, dass Sie nur jene Sprachprofile aktivieren, die Sie benötigen.</TextBlock>
+        <TextBlock Grid.Row="2" Margin="0,10,0,0" TextWrapping="WrapWithOverflow">Hinweis: Die Auswahl der aktiven Sprecherprofile wird nicht im Projekt gespeichert. Beim Öffnen eines Projektes werden automatisch alle Profile aktiviert. Achten Sie vor dem Starten der Ausführung darauf, dass Sie nur jene Sprecherprofile aktivieren, die Sie benötigen.</TextBlock>
     </Grid>
 </Page>
